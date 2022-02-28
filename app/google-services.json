@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "326570281810",
+    "project_id": "medicalapplicenta",
+    "storage_bucket": "medicalapplicenta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326570281810:android:81a81057837315ed58088b",
+        "android_client_info": {
+          "package_name": "eu.ase.medicalapplicenta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "326570281810-qnc3thv3mnnh0ak6v4tcsdhtvk8kc8l6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJNC_Dc1ZuzeVkyQ-aHTF6yNMHHTksbaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "326570281810-qnc3thv3mnnh0ak6v4tcsdhtvk8kc8l6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

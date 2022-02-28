@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawerLayout"
+    tools:openDrawer="start"
+    android:fitsSystemWindows="true"
+    tools:context=".activitati.MainActivity">
+
+    <!--ii pun start ca sa stie cum sa se deschida
+    si ca sa nu se faca overlapping intre elemente pun fitsSystemWindows="true" -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--punem dimensiunea default cu actionBarSize
+        Toolbar simplu e din alt pachet, trb sa-l folosesc pe asta!!-->
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toolbar"
+            android:background="#77cefc"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    </LinearLayout>
+
+    <!--atasam nav view la care atasam headerul si meniul create-->
+    <!--ii pun start ca sa se pozitioneze in stanga de tot-->
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationView"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_drawer_menu"
+        android:background="#d2ecfc"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

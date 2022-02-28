@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="#77cefc"
+    tools:context=".activitati.ConectarePacientActivity"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#d2ecfc"
+        android:elevation="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:background="#d2ecfc"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="50dp"
+                android:text="Bine ai (re)venit!" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_pacient" />
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
+                android:text="Conectare pacient" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#000"
+                android:textColorHint="#000"
+                android:theme="@style/TextInputLayoutStyle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietLoginEmailPacient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email*"
+                    android:drawablePadding="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textColorHint="#000"
+                    android:drawableStart="@drawable/ic_email"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#000"
+                android:textColorHint="#000"
+                android:theme="@style/TextInputLayoutStyle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietLoginParolaPacient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Parola*"
+                    android:inputType="textPassword"
+                    android:drawablePadding="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textColorHint="#000"
+                    android:drawableStart="@drawable/ic_parola"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvResetareParola"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Am uitat parola"
+                android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:layout_gravity="end"
+                android:layout_marginEnd="9dp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <CheckBox
+                android:id="@+id/cbRamaiAutentificat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginTop="-33dp"
+                android:textColor="#000"
+                android:text="Ramai autentificat" />
+
+            <Button
+                android:id="@+id/btnLoginPacient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:background="@drawable/background_butoane"
+                android:text="Intra in cont" />
+
+            <TextView
+                android:id="@+id/tvCreareCont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nu ai cont? Creeaza unul"
+                android:layout_marginTop="9dp"
+                android:textColor="#000"
+                android:textStyle="italic"
+                android:gravity="end"
+                android:layout_marginEnd="9dp"/>
+
+            <ImageView
+                android:id="@+id/ivMedic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="80dp"
+                app:srcCompat="@drawable/ic_doctor"
+                android:layout_marginStart="20dp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/tvSuntMedic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunt medic"
+                android:textColor="#000"
+                android:layout_marginStart="9dp"
+                android:focusable="true" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

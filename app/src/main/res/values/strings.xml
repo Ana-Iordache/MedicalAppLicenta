@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MedicalAppLicenta</string>
+    <string name="open_toggle">Open</string>
+    <string name="close_toggle">Close</string>
+    <string-array name="grupe_sange">
+        <item>Necunoscuta</item>
+        <item>0+</item>
+        <item>0-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+</resources>
