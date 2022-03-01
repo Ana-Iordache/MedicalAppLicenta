@@ -6,10 +6,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +16,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -169,7 +163,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void inregistrarePacient() {
-        if (validareInput()) {
+        if (inputValid()) {
 
             String nume = tietNumePacient.getText().toString();
             String prenume = tietPrenumePacient.getText().toString();
@@ -415,7 +409,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     // TODO
     // data nasterii sa corespunda cu cnp-ul
     // greutatea si inaltimea sa fie double
-    private boolean validareInput() {
+    private boolean inputValid() {
         if (tietNumePacient.getText().toString().isEmpty()) {
             tietNumePacient.setError("Introduceti numele!");
             tietNumePacient.requestFocus();

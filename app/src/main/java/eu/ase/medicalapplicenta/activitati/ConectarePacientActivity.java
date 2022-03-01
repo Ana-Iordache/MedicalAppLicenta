@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 import eu.ase.medicalapplicenta.R;
 
 public class ConectarePacientActivity extends AppCompatActivity implements View.OnClickListener {
+//    TextView tv;
+
     TextInputEditText tietLoginEmailPacient;
     TextInputEditText tietLoginParolaPacient;
     Button btnLoginPacient;
@@ -47,6 +49,14 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conectare_pacient);
+
+//        tv = findViewById(R.id.tv);
+//        tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         tietLoginEmailPacient = findViewById(R.id.tietLoginEmailPacient);
         tietLoginParolaPacient = findViewById(R.id.tietLoginParolaPacient);
@@ -94,6 +104,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                 break;
             case R.id.ivMedic:
                 startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class));
+                finish();
                 break;
         }
     }
@@ -152,6 +163,9 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 //                        Toast.makeText(getApplicationContext(), "Accesati link-ul primit pe email pentru verificare!", Toast.LENGTH_SHORT).show();
 //                    }
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                    finish(); TODO daca dau back din main sa nu ma intoarca la login
+                    // dar daca pun asa cand dau back ma scoate din ap, e ok
+                    // dar daca vreau sa revin in ap imi deschide pagina de log in in loc de main
                 } else {
                     Toast.makeText(getApplicationContext(), "Credentiale invalide!", Toast.LENGTH_SHORT).show();
                 }

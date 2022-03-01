@@ -63,6 +63,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
                 //TODO
 //                conectareMedic();
                 Toast.makeText(getApplicationContext(), "btnLoginMedic", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             case R.id.tvResetareParola:
                 //TODO daca functioneaza la fel
@@ -70,6 +71,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
                 Toast.makeText(getApplicationContext(), "tvResetareParola", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ivPacient:
+                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
                 finish();
                 break;
         }

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -40,6 +41,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
@@ -214,8 +217,6 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.btnSalveaza: //TODO
                 actualizeazaDate();
-                seteazaAccesibilitatea(false);
-                seteazaVizibilitateButoane(View.VISIBLE, View.GONE);
                 break;
             case R.id.btnRenunta:
                 seteazaAccesibilitatea(false);
@@ -244,38 +245,66 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
     }
 
     private void actualizeazaDate() {
-        String nume = tietNumePacient.getText().toString();
-        String prenume = tietPrenumePacient.getText().toString();
-        String adresa = tietAdresa.getText().toString();
-        long nrTelefon = Long.parseLong(tietNrTelefonPacient.getText().toString());
-        double greutate = Double.parseDouble(tietGreutate.getText().toString());
-        double inaltime = Double.parseDouble(tietInaltime.getText().toString());
-        String email = tietEmailPacient.getText().toString();
+        if (inputValid()) {
 
-//        if (!nume.equals(pacient.getNume()) || !prenume.equals(pacient.getPrenume())
-//                || !adresa.equals(pacient.getAdresa()) || nrTelefon != pacient.getNrTelefon()
-//                || greutate != pacient.getGreutate() || inaltime != pacient.getInaltime()) {
-//            btnSalveaza.setEnabled(true);
+            String nume = tietNumePacient.getText().toString();
+            String prenume = tietPrenumePacient.getText().toString();
 
-        referintaUserConectat.child("nume").setValue(nume);
-        referintaUserConectat.child("prenume").setValue(prenume);
-        referintaUserConectat.child("adresa").setValue(adresa);
-        referintaUserConectat.child("nrTelefon").setValue(nrTelefon);
-        referintaUserConectat.child("greutate").setValue(greutate);
-        referintaUserConectat.child("inaltime").setValue(inaltime);
+            String adresa;
+            if (tietAdresa.getText().toString().isEmpty()) {
+                adresa = "Necunoscuta";
+                tietAdresa.setText(adresa);
+            } else {
+                adresa = tietAdresa.getText().toString();
+            }
 
-        // TODO nu se incarca si in nav_header din Main datele modificate
-        if (uri != null) {
-            incarcaPoza();
-        }
+            long nrTelefon = Long.parseLong(tietNrTelefonPacient.getText().toString());
 
-        if (!email.equals(pacientConectat.getEmail())) {
-            // TODO
-            // trb sa reautentific utilizatorul daca nu a fost recent logat
-            // deci cred ca ar trb sa l pun sa introduca parola ca sa si poata schimba emailul,
-            // ca sa o iau si sa-l reautentific eu gen
-            // sau as putea sa pun in loc de btnSchimbaParola sa pun un buton de Schimba date de autentificare
-            // si sa se deschida un fragment sau o activitate
+            double greutate;
+            if (tietGreutate.getText().toString().isEmpty()) {
+                greutate = 0.0;
+                tietGreutate.setText(String.valueOf(greutate));
+            } else{
+                greutate = Double.parseDouble(tietGreutate.getText().toString());
+            }
+
+            double inaltime;
+            if (tietInaltime.getText().toString().isEmpty()) {
+                inaltime = 0.0;
+                tietInaltime.setText(String.valueOf(inaltime));
+            } else{
+                inaltime = Double.parseDouble(tietInaltime.getText().toString());
+            }
+
+            String email = tietEmailPacient.getText().toString();
+
+            if (nume.equals(pacient.getNume()) && prenume.equals(pacient.getPrenume())
+                    && adresa.equals(pacient.getAdresa()) && nrTelefon == pacient.getNrTelefon()
+                    && greutate == pacient.getGreutate() && inaltime == pacient.getInaltime()) {
+                Toast.makeText(getApplicationContext(), "Informatiile nu au fost modificate!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+
+            referintaUserConectat.child("nume").setValue(nume);
+            referintaUserConectat.child("prenume").setValue(prenume);
+            referintaUserConectat.child("adresa").setValue(adresa);
+            referintaUserConectat.child("nrTelefon").setValue(nrTelefon);
+            referintaUserConectat.child("greutate").setValue(greutate);
+            referintaUserConectat.child("inaltime").setValue(inaltime);
+
+            if (uri != null) {
+                incarcaPoza();
+            }
+
+            if (!email.equals(pacientConectat.getEmail())) {
+                // TODO
+                // trb sa reautentific utilizatorul daca nu a fost recent logat
+                // deci cred ca ar trb sa l pun sa introduca parola ca sa si poata schimba emailul,
+                // ca sa o iau si sa-l reautentific eu gen
+                // sau as putea sa pun in loc de btnSchimbaParola sa pun un buton de Schimba date de autentificare
+                // si sa se deschida un fragment sau o activitate
 //            AuthCredential credential = EmailAuthProvider.getCredential(pacientConectat.getEmail(), "123456");
 //            pacientConectat.reauthenticate(credential)
 //                    .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -284,17 +313,105 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 //                            Log.d("reautentificareUser", "User re-authenticated.");
 //                        }
 //                    });
-            pacientConectat.updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    referintaUserConectat.child("adresaEmail").setValue(email);
-                    Log.i("actualizareEmail", "Emailul a fost actualizat!");
-                }
-            });
+                pacientConectat.updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        referintaUserConectat.child("adresaEmail").setValue(email);
+                        Log.i("actualizareEmail", "Emailul a fost actualizat!");
+                    }
+                });
+
+                // TODO sa fac si schimbare parola
+            }
+
+            Toast.makeText(getApplicationContext(), "Datele au fost actualizate!", Toast.LENGTH_SHORT).show();
+
+            seteazaAccesibilitatea(false);
+            seteazaVizibilitateButoane(View.VISIBLE, View.GONE);
+        }
+    }
+
+    private boolean inputValid() {
+        Pattern pattern;
+        Matcher matcher;
+
+        if (tietNumePacient.getText().toString().isEmpty()) {
+            tietNumePacient.setError("Introduceti numele!");
+            tietNumePacient.requestFocus();
+            return false;
         }
 
-        Toast.makeText(getApplicationContext(), "Datele au fost actualizate!", Toast.LENGTH_SHORT).show();
+        if (tietPrenumePacient.getText().toString().isEmpty()) {
+            tietPrenumePacient.setError("Introduceti prenumele!");
+            tietPrenumePacient.requestFocus();
+            return false;
+        }
+
+
+        if (tietNrTelefonPacient.getText().toString().isEmpty()) {
+            tietNrTelefonPacient.setError("Introduceti numarul de telefon!");
+            tietNrTelefonPacient.requestFocus();
+            return false;
+        }
+
+        pattern = Pattern.compile("^407[2-8][0-9]{7}$");
+        matcher = pattern.matcher(tietNrTelefonPacient.getText().toString());
+        if (!matcher.matches()) {
+            tietNrTelefonPacient.setError("Formatul acceptat este: 407xxxxxxxx!");
+            tietNrTelefonPacient.requestFocus();
+            return false;
+        }
+
+//        try {
+//            Double.parseDouble(tietGreutate.getText().toString());
+//        } catch (NumberFormatException e) {
+//            tietGreutate.setError("Introduceti o greutate valida (de ex: 45.7)!");
+//            tietGreutate.requestFocus();
+//            return false;
 //        }
+
+
+        if (!tietGreutate.getText().toString().isEmpty() && !tietGreutate.getText().toString().equals("0.0")) {
+            pattern = Pattern.compile("^[1-9][0-9]\\.[0-9]$");
+            matcher = pattern.matcher(tietGreutate.getText().toString());
+            if (!matcher.matches()) {
+                tietGreutate.setError("Introduceti o greutate valida (de ex: 45.7)!");
+                tietGreutate.requestFocus();
+                return false;
+            }
+
+        }
+
+        if (!tietInaltime.getText().toString().isEmpty() && !tietInaltime.getText().toString().equals("0.0")) {
+//            try {
+//                Double.parseDouble(tietInaltime.getText().toString());
+//            } catch (NumberFormatException e) {
+//                tietInaltime.setError("Introduceti un o inaltime valida (de ex: 1.65)!");
+//                tietInaltime.requestFocus();
+//                return false;
+//            }
+            pattern = Pattern.compile("^[1-2]\\.[0-9]{2}$");
+            matcher = pattern.matcher(tietInaltime.getText().toString());
+            if (!matcher.matches()) {
+                tietInaltime.setError("Introduceti un o inaltime valida (de ex: 1.65)!");
+                tietInaltime.requestFocus();
+                return false;
+            }
+        }
+
+        if (tietEmailPacient.getText().toString().isEmpty()) {
+            tietEmailPacient.setError("Introduceti emailul!");
+            tietEmailPacient.requestFocus();
+            return false;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(tietEmailPacient.getText().toString()).matches()) {
+            tietEmailPacient.setError("Introduceti un email valid!");
+            tietEmailPacient.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
     private void incarcaPoza() {
