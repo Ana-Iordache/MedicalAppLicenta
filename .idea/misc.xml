@@ -18,10 +18,14 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_nume.xml" value="0.1712962962962963" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_parola.xml" value="0.1712962962962963" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_telefon.xml" value="0.1712962962962963" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_admin.xml" value="0.1585144927536232" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_conectare_medic.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_conectare_pacient.xml" value="0.22" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_home_medic.xml" value="0.1585144927536232" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_inregistrare_medic.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_inregistrare_pacient.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_profil_medic.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_profil_pacient.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_resetare_parola.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/nav_header.xml" value="0.22" />

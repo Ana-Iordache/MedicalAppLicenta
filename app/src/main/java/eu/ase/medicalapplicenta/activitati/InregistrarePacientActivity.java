@@ -86,14 +86,14 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     //    String urlPoza = "";
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private FirebaseService firebaseService = new FirebaseService();
+    private FirebaseService firebaseService = new FirebaseService("Pacienti");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inregistrare_pacient);
 
-        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilPacient);
+        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilUser);
         ciwPozaProfilPacient.setOnClickListener(this);
 
         tietDataNasterii = findViewById(R.id.tietDataNasterii);
@@ -139,7 +139,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             case R.id.btnInregistrarePacient:
                 inregistrarePacient();
                 break;
-            case R.id.ciwPozaProfilPacient:
+            case R.id.ciwPozaProfilUser:
                 alegePozaProfil();
                 break;
         }
@@ -204,7 +204,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
             String adresaEmail = tietEmailPacient.getText().toString();
             String parola = tietParolaPacient.getText().toString();
-            String confirmareParola = tietConfirmareParolaPacient.getText().toString();
 
             String adresa;
             if (tietAdresa.getText().toString().isEmpty()) {
@@ -228,77 +227,13 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             }
 
 
-//        Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
-
 //        progressBar.setVisibility(View.VISIBLE);
 //        progressDialog.setMessage("Se creeaza contul...");
 //        progressDialog.setCanceledOnTouchOutside(false);
 //        progressDialog.show();
 
-//        validareInput(nume, prenume, cnp, nrTelefon, dataNasterii, adresaEmail, parola, confirmareParola);
-//        if (nume.isEmpty()) {
-//            tietNumePacient.setError("Introduceti numele!");
-//            tietNumePacient.requestFocus();
-//            return;
-//        }
-//
-//        if (prenume.isEmpty()) {
-//            tietPrenumePacient.setError("Introduceti prenumele!");
-//            tietPrenumePacient.requestFocus();
-//            return;
-//        }
-//
-//        if (String.valueOf(nrTelefon).isEmpty()) {
-//            tietNrTelefonPacient.setError("Introduceti numarul de telefon!");
-//            tietNrTelefonPacient.requestFocus();
-//            return;
-//        }
-//
-//        if (String.valueOf(cnp).isEmpty()) {
-//            tietCnp.setError("Introduceti CNP-ul!");
-//            tietCnp.requestFocus();
-//            return;
-//        }
-//
-//
-//        if (dataNasterii.equals("dd/MM/yyyy")) {
-//            tietDataNasterii.setError("Alegeti data nasterii!");
-//            tietDataNasterii.requestFocus();
-//            return;
-//        }
-//
-//        if (adresaEmail.isEmpty()) {
-//            tietEmailPacient.setError("Introduceti emailul!");
-//            tietEmailPacient.requestFocus();
-//            return;
-//        }
-//
-//        if (!Patterns.EMAIL_ADDRESS.matcher(adresaEmail).matches()) {
-//            tietEmailPacient.setError("Introduceti un email valid!");
-//            tietEmailPacient.requestFocus();
-//            return;
-//        }
-//
-//        if (parola.isEmpty()) {
-//            tietParolaPacient.setError("Introduceti parola!");
-//            tietParolaPacient.requestFocus();
-//            return;
-//        }
-//
-//        if (parola.length() < 6) {
-//            tietParolaPacient.setError("Parola trebuie sa contina cel putin 6 caractere!");
-//            tietParolaPacient.requestFocus();
-//            return;
-//        }
-//
-//        if (!parola.equals(confirmareParola)) {
-//            tietConfirmareParolaPacient.setError("Parola nu corespunde!");
-//            tietConfirmareParolaPacient.requestFocus();
-//            return;
-//        }
             int finalVarsta = varsta;
             String finalSex = sex;
-//        if () {
 
             mAuth.createUserWithEmailAndPassword(adresaEmail, parola)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -408,8 +343,11 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
     // TODO
     // data nasterii sa corespunda cu cnp-ul
-    // greutatea si inaltimea sa fie double
+    // validare greutatea si inaltimea
     private boolean inputValid() {
+        Pattern pattern;
+        Matcher matcher;
+
         if (tietNumePacient.getText().toString().isEmpty()) {
             tietNumePacient.setError("Introduceti numele!");
             tietNumePacient.requestFocus();
@@ -422,8 +360,8 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             return false;
         }
 
-        Pattern patternCnp = Pattern.compile("^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$");
-        Matcher matcherCnp = patternCnp.matcher(tietCnp.getText().toString());
+        pattern = Pattern.compile("^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$");
+        matcher = pattern.matcher(tietCnp.getText().toString());
 
         if (tietCnp.getText().toString().isEmpty()) {
             tietCnp.setError("Introduceti CNP-ul!");
@@ -431,14 +369,14 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             return false;
         }
 
-        if (!matcherCnp.matches()) {
+        if (!matcher.matches()) {
             tietCnp.setError("CNP-ul este invalid!");
             tietCnp.requestFocus();
             return false;
         }
 
-        Pattern patternTel = Pattern.compile("^407[2-8][0-9]{7}$");
-        Matcher matcherTel = patternTel.matcher(tietNrTelefonPacient.getText().toString());
+        pattern = Pattern.compile("^407[2-8][0-9]{7}$");
+        matcher = pattern.matcher(tietNrTelefonPacient.getText().toString());
 
         if (tietNrTelefonPacient.getText().toString().isEmpty()) {
             tietNrTelefonPacient.setError("Introduceti numarul de telefon!");
@@ -446,7 +384,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             return false;
         }
 
-        if(!matcherTel.matches()){
+        if(!matcher.matches()){
             tietNrTelefonPacient.setError("Formatul acceptat este: 407xxxxxxxx!");
             tietNrTelefonPacient.requestFocus();
             return false;
@@ -479,6 +417,12 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         if (tietParolaPacient.getText().toString().length() < 6) {
             tietParolaPacient.setError("Parola trebuie sa contina cel putin 6 caractere!");
             tietParolaPacient.requestFocus();
+            return false;
+        }
+
+        if (tietConfirmareParolaPacient.getText().toString().isEmpty()) {
+            tietConfirmareParolaPacient.setError("Reintroduceti parola!");
+            tietConfirmareParolaPacient.requestFocus();
             return false;
         }
 

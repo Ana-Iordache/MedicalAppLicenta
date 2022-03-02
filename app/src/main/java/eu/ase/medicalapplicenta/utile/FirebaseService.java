@@ -24,41 +24,48 @@ public class FirebaseService {
     private static final String FIREBASE_TAG = "evenimentFirebase";
     private Context context;
 
-    public FirebaseService(){
+    public FirebaseService(String enitate){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(PACIENTI);
+        databaseReference = firebaseDatabase.getReference().child(enitate);
     }
 
-    public FirebaseService(Context context){
-        this.context = context;
-    }
-
-    public void adaugaPacient(Pacient pacient) {
-        if(pacient!=null){
-//            databaseReference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                    pacient.setIdPacient(databaseReference.push().getKey());
-////                    databaseReference.child(pacient.getIdPacient()).setValue(pacient);
-//                    databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                            .setValue(pacient);
-//                    Log.i(FIREBASE_TAG, "Pacientul a fost adaugat in baza de date!");
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Log.w(FIREBASE_TAG, "Pacientul NU a fost adaugat in baza de date!");
-//                }
-//            });
-            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .setValue(pacient).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(context, "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+    public void preiaSpecialitatiDinFirebase(ValueEventListener eventListener){
+        if(eventListener != null){
+            databaseReference.addValueEventListener(eventListener);
         }
     }
+
+//    public FirebaseService(Context context){
+//        this.context = context;
+//    }
+
+
+//    public void adaugaPacient(Pacient pacient) {
+//        if(pacient!=null){
+////            databaseReference.addValueEventListener(new ValueEventListener() {
+////                @Override
+////                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//////                    pacient.setIdPacient(databaseReference.push().getKey());
+//////                    databaseReference.child(pacient.getIdPacient()).setValue(pacient);
+////                    databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+////                            .setValue(pacient);
+////                    Log.i(FIREBASE_TAG, "Pacientul a fost adaugat in baza de date!");
+////                }
+////
+////                @Override
+////                public void onCancelled(@NonNull DatabaseError error) {
+////                    Log.w(FIREBASE_TAG, "Pacientul NU a fost adaugat in baza de date!");
+////                }
+////            });
+//            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                    .setValue(pacient).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    if(task.isSuccessful()){
+//                        Toast.makeText(context, "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//        }
+//    }
 }

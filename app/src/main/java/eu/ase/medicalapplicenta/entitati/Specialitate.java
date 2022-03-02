@@ -1,15 +1,16 @@
 package eu.ase.medicalapplicenta.entitati;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Specialitate {
     private String idSpecialitate;
     private String denumire;
-    private Investigatie[] investigatii;
+    private List<Investigatie> investigatii;
 
     public Specialitate(){}
 
-    public Specialitate(String idSpecialitate, String denumire, Investigatie[] investigatii) {
+    public Specialitate(String idSpecialitate, String denumire, List<Investigatie> investigatii) {
         this.idSpecialitate = idSpecialitate;
         this.denumire = denumire;
         this.investigatii = investigatii;
@@ -23,11 +24,11 @@ public class Specialitate {
         this.denumire = denumire;
     }
 
-    public Investigatie[] getInvestigatii() {
+    public List<Investigatie> getInvestigatii() {
         return investigatii;
     }
 
-    public void setInvestigatii(Investigatie[] investigatii) {
+    public void setInvestigatii(List<Investigatie> investigatii) {
         this.investigatii = investigatii;
     }
 
@@ -44,7 +45,7 @@ public class Specialitate {
         return "Specialitate{" +
                 "idSpecialitate='" + idSpecialitate + '\'' +
                 ", denumire='" + denumire + '\'' +
-                ", investigatii=" + Arrays.toString(investigatii) +
+                ", investigatii=" + investigatii +
                 '}';
     }
 }

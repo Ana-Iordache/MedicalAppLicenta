@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d2ecfc"
+    tools:context=".activitati.ProfilMedicActivity">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/toolbar"
+                android:background="#77cefc"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ciwPozaProfilMedic"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/ic_account"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#000"
+                android:theme="@style/TextInputLayoutStyle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietNota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nota"
+                    android:drawablePadding="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textColorHint="#000"
+                    android:drawableStart="@drawable/ic_nota"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#000"
+                android:textColorHint="#000"
+                android:theme="@style/TextInputLayoutStyle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietNumeMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nume*"
+                    android:drawablePadding="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textColorHint="#000"
+                    android:drawableStart="@drawable/ic_nume"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#000"
+                android:theme="@style/TextInputLayoutStyle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietPrenumeMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Prenume*"
+                    android:drawablePadding="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textColorHint="#000"
+                    android:drawableStart="@drawable/ic_nume"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#000"
+                android:theme="@style/TextInputLayoutStyle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietNrTelefonMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Numar de telefon"
+                    android:drawablePadding="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textColorHint="#000"
+                    android:drawableStart="@drawable/ic_telefon"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvGradProfesional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Grad profesional"
+                android:drawablePadding="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:enabled="false"
+                app:drawableStartCompat="@drawable/ic_grad_profesional" />
+
+            <Spinner
+                android:id="@+id/spnGradProfesional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/tvSpecialitate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Specialitate*"
+                android:drawablePadding="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/ic_specialitate"
+                android:enabled="false"/>
+
+            <Spinner
+                android:id="@+id/spnSpecialitate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="#000"
+                android:theme="@style/TextInputLayoutStyle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietEmailMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Adresa de email*"
+                    android:drawablePadding="10dp"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textColorHint="#000"
+                    android:drawableStart="@drawable/ic_email"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--TODO nu se afiseaza in intregime si nu i pune culoara pusa de mine-->
+            <Button
+                android:id="@+id/btnModificaDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:background="@drawable/background_butoane"
+                android:text="Modifica date personale"/>
+            <Button
+                android:id="@+id/btnSalveaza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:background="@drawable/background_butoane"
+                android:text="Salveaza modificari"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/btnRenunta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:background="@drawable/background_butoane"
+                android:text="Renunta"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/btnSchimbaParola"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:background="@drawable/background_butoane"
+                android:text="Schimba parola"/>
+            <Button
+                android:id="@+id/btnStergeCont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:background="@drawable/background_butoane"
+                android:text="Sterge contul"/>
+
+        </LinearLayout>
+
+
+</ScrollView>

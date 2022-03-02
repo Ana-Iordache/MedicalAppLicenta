@@ -25,8 +25,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,7 +49,7 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class ProfilPacientActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 200;
-    CircleImageView ciwPozaProfilPacient;
+    CircleImageView ciwPozaProfilPacient; //todo sa modific si in xml inapoi
 
     TextInputEditText tietNumePacient;
     TextInputEditText tietPrenumePacient;
@@ -76,7 +74,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
     Toolbar toolbar;
 
     FirebaseUser pacientConectat;
-    FirebaseService firebaseService = new FirebaseService();
+    FirebaseService firebaseService = new FirebaseService("Pacienti");
     String idUserConectat;
     DatabaseReference referintaUserConectat;
     Pacient pacient;
@@ -95,7 +93,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilPacient);
+        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilUser);
 //        ciwPozaProfilPacient.setOnClickListener(this);
 
         tietNumePacient = findViewById(R.id.tietNumePacient);
@@ -215,14 +213,14 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             case R.id.btnStergeCont: //TODO
                 Toast.makeText(getApplicationContext(), "sterge cont", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.btnSalveaza: //TODO
+            case R.id.btnSalveaza:
                 actualizeazaDate();
                 break;
             case R.id.btnRenunta:
                 seteazaAccesibilitatea(false);
                 seteazaVizibilitateButoane(View.VISIBLE, View.GONE);
                 break;
-            case R.id.ciwPozaProfilPacient:
+            case R.id.ciwPozaProfilUser:
                 alegePozaProfil();
                 break;
         }
@@ -264,7 +262,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             if (tietGreutate.getText().toString().isEmpty()) {
                 greutate = 0.0;
                 tietGreutate.setText(String.valueOf(greutate));
-            } else{
+            } else {
                 greutate = Double.parseDouble(tietGreutate.getText().toString());
             }
 
@@ -272,7 +270,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             if (tietInaltime.getText().toString().isEmpty()) {
                 inaltime = 0.0;
                 tietInaltime.setText(String.valueOf(inaltime));
-            } else{
+            } else {
                 inaltime = Double.parseDouble(tietInaltime.getText().toString());
             }
 
@@ -280,11 +278,10 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
             if (nume.equals(pacient.getNume()) && prenume.equals(pacient.getPrenume())
                     && adresa.equals(pacient.getAdresa()) && nrTelefon == pacient.getNrTelefon()
-                    && greutate == pacient.getGreutate() && inaltime == pacient.getInaltime()) {
+                    && greutate == pacient.getGreutate() && inaltime == pacient.getInaltime() && uri == null) {
                 Toast.makeText(getApplicationContext(), "Informatiile nu au fost modificate!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
 
 
             referintaUserConectat.child("nume").setValue(nume);
@@ -362,15 +359,6 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             return false;
         }
 
-//        try {
-//            Double.parseDouble(tietGreutate.getText().toString());
-//        } catch (NumberFormatException e) {
-//            tietGreutate.setError("Introduceti o greutate valida (de ex: 45.7)!");
-//            tietGreutate.requestFocus();
-//            return false;
-//        }
-
-
         if (!tietGreutate.getText().toString().isEmpty() && !tietGreutate.getText().toString().equals("0.0")) {
             pattern = Pattern.compile("^[1-9][0-9]\\.[0-9]$");
             matcher = pattern.matcher(tietGreutate.getText().toString());
@@ -383,13 +371,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         }
 
         if (!tietInaltime.getText().toString().isEmpty() && !tietInaltime.getText().toString().equals("0.0")) {
-//            try {
-//                Double.parseDouble(tietInaltime.getText().toString());
-//            } catch (NumberFormatException e) {
-//                tietInaltime.setError("Introduceti un o inaltime valida (de ex: 1.65)!");
-//                tietInaltime.requestFocus();
-//                return false;
-//            }
+
             pattern = Pattern.compile("^[1-2]\\.[0-9]{2}$");
             matcher = pattern.matcher(tietInaltime.getText().toString());
             if (!matcher.matches()) {

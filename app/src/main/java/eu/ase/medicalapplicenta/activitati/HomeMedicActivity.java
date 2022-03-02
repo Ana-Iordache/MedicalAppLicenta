@@ -3,6 +3,8 @@ package eu.ase.medicalapplicenta.activitati;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -24,13 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
-import eu.ase.medicalapplicenta.entitati.Pacient;
+import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
-//    Button btnDeconectare;
-
-//todo sa pun un progress bat sau ceva pana se incarca datele de la profil
+public class HomeMedicActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
     Toolbar toolbar; // ca sa atasez toolbarul in pagina
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
@@ -39,16 +35,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView tvNumeUserConectat;
     TextView tvEmailUserConectat;
 
-    FirebaseUser pacientConectat;
-    FirebaseService firebaseService = new FirebaseService("Pacienti");
-    String idPacient;
+    FirebaseUser medicConectat;
+    FirebaseService firebaseService = new FirebaseService("Medici");
+    String idMedic;
 
     CircleImageView ciwPozaProfilUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home_medic);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvEmailUserConectat = navigationView.getHeaderView(0).findViewById(R.id.tvEmailUserConectat);
         ciwPozaProfilUser = navigationView.getHeaderView(0).findViewById(R.id.ciwPozaProfilUser);
 
-        pacientConectat = FirebaseAuth.getInstance().getCurrentUser();
-        idPacient = pacientConectat.getUid();
+        medicConectat = FirebaseAuth.getInstance().getCurrentUser();
+        idMedic = medicConectat.getUid();
 
         incarcaInfoNavMenu();
     }
@@ -78,18 +73,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         incarcaInfoNavMenu();
     }
 
-    public void incarcaInfoNavMenu(){
-        firebaseService.databaseReference.child(idPacient).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void incarcaInfoNavMenu() {
+        firebaseService.databaseReference.child(idMedic).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Pacient pacient = snapshot.getValue(Pacient.class);
+                Medic medic = snapshot.getValue(Medic.class);
 
-                if (pacient != null) {
-                    String nume = pacient.getNume();
-                    String prenume = pacient.getPrenume();
+                if(medic!=null){
+                    String nume = medic.getNume();
+                    String prenume = medic.getPrenume();
                     String numeComplet = nume + " " + prenume;
-                    String email = pacient.getAdresaEmail();
-                    String urlPozaProfil = pacient.getUrlPozaProfil();
+                    String email = medic.getAdresaEmail();
+                    String urlPozaProfil = medic.getUrlPozaProfil();
 
                     tvNumeUserConectat.setText(numeComplet);
 
@@ -110,32 +105,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-//        switch (view.getId()){
-//            case R.id.btnDeconectare:
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
-//                break;
-//        }
+
     }
 
-    // gestionez ce se intampla atunci cand dau click pe fiecare optiune din meniu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_profil:
-                startActivity(new Intent(getApplicationContext(), ProfilPacientActivity.class));
-//                Toast.makeText(getApplicationContext(), "Profil", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), ProfilMedicActivity.class));
                 break;
             case R.id.item_log_out:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
+                startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class));
                 finish();
                 break;
-                //TODO
+            //TODO
             case R.id.item_feedback:
                 Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
                 break;
-                //TODO
+            //TODO
             case R.id.item_despre_noi:
                 Toast.makeText(getApplicationContext(), "Despre noi", Toast.LENGTH_SHORT).show();
                 break;

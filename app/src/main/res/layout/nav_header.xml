@@ -18,7 +18,7 @@
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        app:srcCompat="@drawable/ic_account" />-->
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ciwPozaProfilPacient"
+        android:id="@+id/ciwPozaProfilUser"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:src="@drawable/ic_account"
@@ -28,23 +28,23 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tvNumePacientConectat"
+        android:id="@+id/tvNumeUserConectat"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ciwPozaProfilPacient"
+        app:layout_constraintTop_toBottomOf="@+id/ciwPozaProfilUser"
         android:text="Nume complet"/>
 
     <TextView
-        android:id="@+id/tvEmailPacientConectat"
+        android:id="@+id/tvEmailUserConectat"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumePacientConectat"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumeUserConectat"
         android:text="email"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

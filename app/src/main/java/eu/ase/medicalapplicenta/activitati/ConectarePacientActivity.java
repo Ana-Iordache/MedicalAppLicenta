@@ -22,10 +22,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import eu.ase.medicalapplicenta.R;
 
 public class ConectarePacientActivity extends AppCompatActivity implements View.OnClickListener {
-//    TextView tv;
+    TextView tv;
+    TextView tvSuntMedic;
 
     TextInputEditText tietLoginEmailPacient;
     TextInputEditText tietLoginParolaPacient;
@@ -50,13 +54,13 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conectare_pacient);
 
-//        tv = findViewById(R.id.tv);
-//        tv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        tv = findViewById(R.id.tv);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+            }
+        });
 
         tietLoginEmailPacient = findViewById(R.id.tietLoginEmailPacient);
         tietLoginParolaPacient = findViewById(R.id.tietLoginParolaPacient);
@@ -85,6 +89,8 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
         ivMedic = findViewById(R.id.ivMedic);
         ivMedic.setOnClickListener(this);
+
+        tvSuntMedic = findViewById(R.id.tvSuntMedic);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -125,6 +131,16 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             return;
         }
 
+        //TODO poate am cum sa trimit emaulul si parola deja introduce aici atunci cand apasa pe sunt medic
+        Pattern pattern = Pattern.compile("^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$");
+        Matcher matcher = pattern.matcher(email);
+        if (matcher.matches()) {
+//            Toast.makeText(getApplicationContext(), "Va rugam sa va conectati din pagina medicului!", Toast.LENGTH_SHORT).show();
+            tvSuntMedic.setError("Va rugam sa va conectati din pagina medicului!");
+            tvSuntMedic.requestFocus();
+            return;
+        }
+
         if (parola.isEmpty()) {
             tietLoginParolaPacient.setError("Introduceti parola!");
             tietLoginParolaPacient.requestFocus();
@@ -132,7 +148,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         }
 
         if (parola.length() < 6) {
-            tietLoginParolaPacient.setError("Parola nu contine cel putin 6 caractere!");
+            tietLoginParolaPacient.setError("Parola trebuie sa contina cel putin 6 caractere!");
             tietLoginParolaPacient.requestFocus();
             return;
         }
@@ -155,7 +171,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // daca emailul a fost verificat prin link conectez utilizatorul in cont
-                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 //                    if(firebaseUser.isEmailVerified())
 //                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
 //                    else{
