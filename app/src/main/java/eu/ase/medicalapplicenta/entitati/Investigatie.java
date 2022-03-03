@@ -30,7 +30,7 @@ public class Investigatie {
     @Override
     public String toString() {
         return "Investigatie{" +
-                ", denumire='" + denumire + '\'' +
+                "denumire='" + denumire + '\'' +
                 ", pret=" + pret +
                 '}';
     }

@@ -11,6 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppLicenta">
         <activity
+            android:name=".activitati.ListaInvestigatiiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitati.ListaMediciActivity"
+            android:exported="false" />
+        <activity
             android:name=".activitati.ProfilMedicActivity"
             android:exported="false" />
         <activity

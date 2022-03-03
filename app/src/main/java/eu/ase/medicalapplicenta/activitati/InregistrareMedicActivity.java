@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -97,7 +98,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
 
         //TODO un progress bar sau ceva pana se incarca specialitatile in spinner
         specialitati = new ArrayList<>();
-        firebaseServiceSpecialitati.preiaSpecialitatiDinFirebase(preiaSpecialitati());
+        firebaseServiceSpecialitati.preiaDateDinFirebase(preiaSpecialitati());
 
         spnSpecialitate = findViewById(R.id.spnSpecialitate);
 
@@ -338,7 +339,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Nu s-a putut prelua specialitatea!", Toast.LENGTH_SHORT).show();
+                Log.e("preluareSpecialitati", error.getMessage());
             }
         };
     }

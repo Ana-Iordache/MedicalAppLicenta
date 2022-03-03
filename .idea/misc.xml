@@ -24,10 +24,15 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_home_medic.xml" value="0.1585144927536232" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_inregistrare_medic.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_inregistrare_pacient.xml" value="0.22" />
-        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_lista_investigatii.xml" value="0.22" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_lista_medici.xml" value="0.17527173913043478" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_profil_medic.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_profil_pacient.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_resetare_parola.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_investigatie_lista.xml" value="0.1716485507246377" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_investigatii.xml" value="0.22" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_medici.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/nav_header.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/menu/nav_drawer_menu.xml" value="0.22" />
       </map>

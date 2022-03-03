@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     CircleImageView ciwPozaProfilUser;
 
+    CardView cwMedici;
+    CardView cwInvestigatii;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("");
 
         drawerLayout = findViewById(R.id.drawerLayout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_toggle, R.string.close_toggle);
@@ -68,6 +72,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         pacientConectat = FirebaseAuth.getInstance().getCurrentUser();
         idPacient = pacientConectat.getUid();
+
+        cwMedici = findViewById(R.id.cwMedici);
+        cwMedici.setOnClickListener(this);
+
+        cwInvestigatii = findViewById(R.id.cwInvestigatii);
+        cwInvestigatii.setOnClickListener(this);
 
         incarcaInfoNavMenu();
     }
@@ -110,12 +120,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-//        switch (view.getId()){
-//            case R.id.btnDeconectare:
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
-//                break;
-//        }
+        switch (view.getId()){
+            case R.id.cwMedici:
+                startActivity(new Intent(getApplicationContext(), ListaMediciActivity.class));
+                break;
+            case R.id.cwInvestigatii:
+                startActivity(new Intent(getApplicationContext(), ListaInvestigatiiActivity.class));
+                break;
+        }
     }
 
     // gestionez ce se intampla atunci cand dau click pe fiecare optiune din meniu

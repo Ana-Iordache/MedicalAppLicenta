@@ -149,11 +149,12 @@
                 android:layout_marginStart="9dp"
                 android:focusable="true" />
 
+            <!--todo daca las 80 dp pe uncele ecrane se duce prea jos-->
             <ImageView
                 android:id="@+id/ivMedic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="40dp"
                 app:srcCompat="@drawable/ic_doctor"
                 android:layout_marginStart="20dp"
                 android:clickable="true"

@@ -172,7 +172,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                         }
                     }
 
-                    firebaseServiceSpecialitati.preiaSpecialitatiDinFirebase(preiaSpecialitati());
+                    firebaseServiceSpecialitati.preiaDateDinFirebase(preiaSpecialitati());
 
                     if (!urlPozaProfil.equals("")) {
                         Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilMedic);
@@ -286,7 +286,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
             String gradProfesional = spnGradProfesional.getSelectedItem().toString();
 
             String specialitate = spnSpecialitate.getSelectedItem().toString();
-            //todo something is fishy....
+            //todo something is fishy....cred ca am rezolvat
             String idSpecialitate = "";
             for (Specialitate s : specialitati) {
                 if (s.getDenumire().equals(specialitate)) {

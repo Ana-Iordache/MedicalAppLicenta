@@ -29,11 +29,13 @@ public class FirebaseService {
         databaseReference = firebaseDatabase.getReference().child(enitate);
     }
 
-    public void preiaSpecialitatiDinFirebase(ValueEventListener eventListener){
+    public void preiaDateDinFirebase(ValueEventListener eventListener){
         if(eventListener != null){
             databaseReference.addValueEventListener(eventListener);
         }
     }
+
+
 
 //    public FirebaseService(Context context){
 //        this.context = context;
