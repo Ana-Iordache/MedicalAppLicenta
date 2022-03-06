@@ -44,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Specialitate;
+import eu.ase.medicalapplicenta.entitati.ZiDeLucru;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class InregistrareMedicActivity extends AppCompatActivity implements View.OnClickListener {
@@ -170,16 +171,23 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Medic medic = new Medic(nume, prenume, nrTelefon, adresaEmail, finalIdSpecialitate, 0.0, gradProfesional, "");
-                                firebaseServiceMedici.databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                //aici
+                                String idMedic = mAuth.getCurrentUser().getUid();
+                                List<ZiDeLucru> program = new ArrayList<>();
+                                program.add(new ZiDeLucru("luni", "12:00", "15:20"));
+                                program.add(new ZiDeLucru("miercuri", "14:00", "18:20"));
+                                Medic medic = new Medic(idMedic, nume, prenume, nrTelefon, adresaEmail, finalIdSpecialitate, 0.0, gradProfesional, "",program);
+
+                                firebaseServiceMedici.databaseReference.child(idMedic)
                                         .setValue(medic).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
+//                                            medic.setIdMedic(FirebaseAuth.getInstance().getCurrentUser().getUid());//aici
                                             Toast.makeText(getApplicationContext(), "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
                                             finish();
                                         } else{
-                                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.e("adaugareMedic", task.getException().getMessage());
                                         }
                                     }
                                 });
@@ -187,7 +195,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                                 if (uri != null)
                                     incarcaPoza();
                             } else{
-                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e("creareContMedic", task.getException().getMessage());
                             }
                         }
                     });

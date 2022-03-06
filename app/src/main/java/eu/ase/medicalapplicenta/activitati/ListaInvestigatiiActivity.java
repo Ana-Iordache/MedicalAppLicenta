@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -38,6 +39,8 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
     private Spinner spnSpecialitati;
     private ProgressBar progressBar;
 
+    private LinearLayout llSelectatiSpecialitatea;
+
     private List<Investigatie> investigatii;
     private RecyclerView rwListaInvestigatii;
     private InvestigatieAdaptor investigatieAdaptor;
@@ -60,6 +63,8 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         spnSpecialitati = findViewById(R.id.spnSpecialitati);
+
+        llSelectatiSpecialitatea = findViewById(R.id.llSelectatiSpecialitatea);
 
         firebaseService.preiaDateDinFirebase(preiaSpecialitati());
 
@@ -91,7 +96,6 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
                         R.layout.support_simple_spinner_dropdown_item, denumiriSpecialitati);
                 spnSpecialitati.setAdapter(adapter);
-
                 loading(false);
 
                 spnSpecialitati.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -106,6 +110,9 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
                                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rwListaInvestigatii.getContext(),
                                         DividerItemDecoration.VERTICAL);
                                 rwListaInvestigatii.addItemDecoration(dividerItemDecoration);
+
+                                rwListaInvestigatii.setVisibility(View.VISIBLE);
+                                llSelectatiSpecialitatea.setVisibility(View.GONE);
 //                                arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, s.getInvestigatii());
 //                                lv.setAdapter(arrayAdapter);
 //                                arrayAdapter.notifyDataSetChanged(); nu trb

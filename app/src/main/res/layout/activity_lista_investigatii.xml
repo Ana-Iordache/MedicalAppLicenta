@@ -48,7 +48,8 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:padding="@dimen/_10sdp" />
+            android:padding="@dimen/_10sdp"
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -59,5 +60,35 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/llSelectatiSpecialitatea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_investigatii"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Selectati o specialitate"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Pentru a putea vizualiza informatii despre investigatii va rugam sa selectati o specialitate"
+        android:textSize="@dimen/_13sdp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

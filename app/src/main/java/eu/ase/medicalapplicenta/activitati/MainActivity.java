@@ -29,7 +29,8 @@ import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
-//    Button btnDeconectare;
+    public static final String VIZUALIZARE_MEDICI = "vizualizareMedici";
+    //    Button btnDeconectare;
 
 //todo sa pun un progress bat sau ceva pana se incarca datele de la profil
     Toolbar toolbar; // ca sa atasez toolbarul in pagina
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     CardView cwMedici;
     CardView cwInvestigatii;
+    CardView cwProgramari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         cwInvestigatii = findViewById(R.id.cwInvestigatii);
         cwInvestigatii.setOnClickListener(this);
+
+        cwProgramari = findViewById(R.id.cwProgramari);
+        cwProgramari.setOnClickListener(this);
 
         incarcaInfoNavMenu();
     }
@@ -122,10 +127,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.cwMedici:
-                startActivity(new Intent(getApplicationContext(), ListaMediciActivity.class));
+                startActivity(new Intent(getApplicationContext(), ListaMediciActivity.class).putExtra(VIZUALIZARE_MEDICI, ""));
                 break;
             case R.id.cwInvestigatii:
                 startActivity(new Intent(getApplicationContext(), ListaInvestigatiiActivity.class));
+                break;
+            case R.id.cwProgramari:
+                startActivity(new Intent(getApplicationContext(), ProgramariActivity.class));
                 break;
         }
     }

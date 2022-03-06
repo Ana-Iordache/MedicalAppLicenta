@@ -1,7 +1,11 @@
 package eu.ase.medicalapplicenta.entitati;
 
 
-public class Medic {
+import java.io.Serializable;
+import java.util.List;
+
+public class Medic implements Serializable {
+    private String idMedic; //aici
     private String nume;
     private String prenume;
     private long nrTelefon;
@@ -10,10 +14,23 @@ public class Medic {
     private double notaFeedback; // initial o sa fie 0
     private String gradProfesional;
     private String urlPozaProfil;
+    private List<ZiDeLucru> program; //aici
 
     public Medic(){}
 
-    public Medic(String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, double notaFeedback, String gradProfesional, String urlPozaProfil) {
+//    public Medic(String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, double notaFeedback, String gradProfesional, String urlPozaProfil) {
+//        this.nume = nume;
+//        this.prenume = prenume;
+//        this.nrTelefon = nrTelefon;
+//        this.adresaEmail = adresaEmail;
+//        this.idSpecialitate = idSpecialitate;
+//        this.notaFeedback = notaFeedback;
+//        this.gradProfesional = gradProfesional;
+//        this.urlPozaProfil = urlPozaProfil;
+//    }
+
+    public Medic(String idMedic, String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, double notaFeedback, String gradProfesional, String urlPozaProfil, List<ZiDeLucru> program) {
+        this.idMedic = idMedic;
         this.nume = nume;
         this.prenume = prenume;
         this.nrTelefon = nrTelefon;
@@ -22,6 +39,7 @@ public class Medic {
         this.notaFeedback = notaFeedback;
         this.gradProfesional = gradProfesional;
         this.urlPozaProfil = urlPozaProfil;
+        this.program = program;
     }
 
     public String getNume() {
@@ -88,10 +106,43 @@ public class Medic {
         this.urlPozaProfil = urlPozaProfil;
     }
 
+    //aici am adaugat
+    public String getIdMedic() {
+        return idMedic;
+    }
+
+    public void setIdMedic(String idMedic) {
+        this.idMedic = idMedic;
+    }
+
+    public List<ZiDeLucru> getProgram() {
+        return program;
+    }
+
+    public void setProgram(List<ZiDeLucru> program) {
+        this.program = program;
+    }
+
+//    @Override
+//    public String toString() {
+//        return "Medic{" +
+//                "nume='" + nume + '\'' +
+//                ", prenume='" + prenume + '\'' +
+//                ", nrTelefon=" + nrTelefon +
+//                ", adresaEmail='" + adresaEmail + '\'' +
+//                ", idSpecialitate='" + idSpecialitate + '\'' +
+//                ", notaFeedback=" + notaFeedback +
+//                ", gradProfesional='" + gradProfesional + '\'' +
+//                ", urlPozaProfil='" + urlPozaProfil + '\'' +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "Medic{" +
-                "nume='" + nume + '\'' +
+                "idMedic='" + idMedic + '\'' +
+                ", nume='" + nume + '\'' +
                 ", prenume='" + prenume + '\'' +
                 ", nrTelefon=" + nrTelefon +
                 ", adresaEmail='" + adresaEmail + '\'' +
@@ -99,6 +150,7 @@ public class Medic {
                 ", notaFeedback=" + notaFeedback +
                 ", gradProfesional='" + gradProfesional + '\'' +
                 ", urlPozaProfil='" + urlPozaProfil + '\'' +
+                ", program=" + program +
                 '}';
     }
 }

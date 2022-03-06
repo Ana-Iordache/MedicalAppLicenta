@@ -27,18 +27,20 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
     private final List<Medic> medici;
     private final Context context;
     private final FirebaseService firebaseService;
+    private final OnDoctorClickListener onDoctorClickListener;
 
-    public MedicAdaptor(List<Medic> medici, Context context) {
+    public MedicAdaptor(List<Medic> medici, Context context, OnDoctorClickListener onDoctorClickListener) {
         this.medici = medici;
         this.context = context;
         firebaseService = new FirebaseService(SPECIALITATI);
+        this.onDoctorClickListener = onDoctorClickListener;
     }
 
     @NonNull
     @Override
     public MedicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_lista_medici, parent, false);
-        return new MedicViewHolder(view);
+        return new MedicViewHolder(view, onDoctorClickListener);
     }
 
     @Override
@@ -51,7 +53,12 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         return medici.size();
     }
 
-    public class MedicViewHolder extends RecyclerView.ViewHolder {
+    // trimit informatia de click activitatii
+    public interface OnDoctorClickListener {
+        void onDoctorClick(int position);
+    }
+
+    public class MedicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView ciwPozaProfilMedic;
         TextView tvNumeMedic;
         TextView tvGradProfesional;
@@ -59,7 +66,9 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         TextView tvNota;
         TextView tvNrFeedbackuri;
 
-        public MedicViewHolder(@NonNull View itemView) {
+        OnDoctorClickListener onDoctorClickListener;
+
+        public MedicViewHolder(@NonNull View itemView, OnDoctorClickListener onDoctorClickListener) {
             super(itemView);
             ciwPozaProfilMedic = itemView.findViewById(R.id.ciwPozaProfilMedic);
             tvNumeMedic = itemView.findViewById(R.id.tvNumeMedic);
@@ -67,6 +76,9 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
             tvSpecialitate = itemView.findViewById(R.id.tvSpecialitate);
             tvNota = itemView.findViewById(R.id.tvNota);
             tvNrFeedbackuri = itemView.findViewById(R.id.tvNrFeedbackuri);
+
+            this.onDoctorClickListener = onDoctorClickListener;
+            itemView.setOnClickListener(this);
         }
 
         void seteazaDateMedic(Medic m, MedicViewHolder holder) {
@@ -100,6 +112,12 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
                 holder.tvNota.setText(String.valueOf(m.getNotaFeedback()));
 //                tvNrFeedbackuri.setText(..); todo
             }
+        }
+
+        // cand dau click pe item se apeleaza asta
+        @Override
+        public void onClick(View view) {
+            onDoctorClickListener.onDoctorClick(getAdapterPosition());
         }
     }
 }

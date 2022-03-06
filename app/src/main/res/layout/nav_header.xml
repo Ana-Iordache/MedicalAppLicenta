@@ -7,7 +7,6 @@
     android:background="#77cefc">
 
 
-
 <!--    <ImageView-->
 <!--        android:id="@+id/ivAccount"-->
 <!--        android:layout_width="wrap_content"-->
@@ -17,6 +16,7 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        app:srcCompat="@drawable/ic_account" />-->
+    <!--todo de ce taie din poza pe unele ecrane..-->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciwPozaProfilUser"
         android:layout_width="96dp"
