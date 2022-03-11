@@ -3,24 +3,29 @@ package eu.ase.medicalapplicenta.activitati;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,38 +34,51 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.adaptori.OraDisponibilaAdaptor;
+import eu.ase.medicalapplicenta.entitati.Factura;
+import eu.ase.medicalapplicenta.entitati.Investigatie;
 import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Programare;
+import eu.ase.medicalapplicenta.entitati.Specialitate;
 import eu.ase.medicalapplicenta.entitati.ZiDeLucru;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-//todo
-public class OreDisponibileActivity extends AppCompatActivity implements View.OnClickListener, OraDisponibilaAdaptor.OnButtonClickListener {
+public class OreDisponibileActivity extends AppCompatActivity implements View.OnClickListener, OraDisponibilaAdaptor.OnOraClickListener {
     public static final String PROGRAMARI = "Programari";
-    private final FirebaseService firebaseService = new FirebaseService(PROGRAMARI);
+    public static final String SPECIALITATI = "Specialitati";
+    private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
+    private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
     private final String idPacient = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private final DateFormat format = new SimpleDateFormat("HH:mm", Locale.US); //parsare ora din string
+
     private List<Programare> programari = new ArrayList<>();
     private TextView tvMedic;
-    private TextView tvDataProgramarii;
-    //    private ListView lvOre;
+    private TextInputEditText tietDataProgramarii;
     private List<String> oreDisponibile;
     private List<String> oreIndisponibile;
-    private Medic m;
+
+    private Medic medic;
 
     private OraDisponibilaAdaptor adaptor;
     private RecyclerView rwOreDisponibile;
-    private RecyclerView.LayoutManager layoutManager;
+
+    private RelativeLayout rySelectareData;
+
+    private AutoCompleteTextView actvInvestigatii;
+    private List<Investigatie> investigatii;
+    private List<String> denumiriInvestigatii = new ArrayList<>();
+
+    private Toolbar toolbar;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -68,52 +86,114 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ore_disponibile);
 
+        initializeazaAtribute();
+
+        seteazaToolbar();
+
         Intent intent = getIntent();
-        m = (Medic) intent.getSerializableExtra(ListaMediciActivity.ORE_DISPONIBILE);
+        medic = (Medic) intent.getSerializableExtra(ListaMediciActivity.ORE_DISPONIBILE);
 
-        tvMedic = findViewById(R.id.tvMedic);
-        tvDataProgramarii = findViewById(R.id.tvDataProgramarii);
-//        lvOre = findViewById(R.id.lvOre);
+        actvInvestigatii.setOnClickListener(this);
 
-        String nume = "Dr. " + m.getNume() + " " + m.getPrenume();
+        String nume = "Dr. " + medic.getNume() + " " + medic.getPrenume();
         tvMedic.setText(nume);
-//
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//        dataDefault = LocalDateTime.now().plusDays(1); // pun automat data de ziua urm, pt ca programarile se fac cu cel putin o zi inainte
-//
-//        tvDataProgramarii.setText(formatter.format(dataDefault));
-        tvDataProgramarii.setOnClickListener(this);
 
+        tietDataProgramarii.setOnClickListener(this);
 
-//        lvOre.setOnItemClickListener(this);
+        firebaseServiceSpecialitati.preiaObiectDinFirebase(preiaInvestigatii(), medic.getIdSpecialitate());
+
+        seteazaRecyclerView();
+    }
+
+    private void seteazaRecyclerView() {
+        rwOreDisponibile.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+        rwOreDisponibile.setLayoutManager(gridLayoutManager);
+        seteazaAdaptor();
+    }
+
+    private void seteazaAdaptor() {
+        adaptor = new OraDisponibilaAdaptor(oreDisponibile, OreDisponibileActivity.this);
+        rwOreDisponibile.setAdapter(adaptor);
+    }
+
+    private void seteazaToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void initializeazaAtribute() {
+        toolbar = findViewById(R.id.toolbar);
+        rySelectareData = findViewById(R.id.rySelectareData);
+        tvMedic = findViewById(R.id.tvMedic);
+        tietDataProgramarii = findViewById(R.id.tietDataProgramarii);
+
+        actvInvestigatii = findViewById(R.id.actvInvestigatii);
+
         oreDisponibile = new ArrayList<>();
         rwOreDisponibile = findViewById(R.id.rwOreDisponibile);
-        rwOreDisponibile.setHasFixedSize(true);
+    }
 
-        layoutManager = new LinearLayoutManager(this);
-        rwOreDisponibile.setLayoutManager(layoutManager);
-        adaptor = new OraDisponibilaAdaptor(oreDisponibile, this);
-        rwOreDisponibile.setAdapter(adaptor);
+    private ValueEventListener preiaInvestigatii() {
+        return new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                investigatii = new ArrayList<>();
+                Specialitate specialitate = snapshot.getValue(Specialitate.class);
+                investigatii.addAll(specialitate.getInvestigatii());
+                denumiriInvestigatii = investigatii.stream()
+                        .map(Investigatie::getDenumire)
+                        .collect(Collectors.toList());
 
-//        Date ora = null;
-//        try {
-//             ora = format.parse("10:40");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
+                ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_investigatie, denumiriInvestigatii);
+                actvInvestigatii.setAdapter(adapter);
+            }
 
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(ora);
-//        Toast.makeText(getApplicationContext(), format.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
-//        calendar.add(Calendar.MINUTE, 20); //adaugare minute
-//        Toast.makeText(getApplicationContext(), format.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
-
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("preluareInvestigatii", error.getMessage());
+            }
+        };
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tietDataProgramarii:
+                afiseazaCalendar();
+                break;
+            case R.id.actvInvestigatii:
+                actvInvestigatii.setError(null);
+                break;
+        }
+
+    }
+
+    private void afiseazaCalendar() {
         final Calendar calendar = Calendar.getInstance();
+
+        if (!tietDataProgramarii.getText().toString().equals("Selectati data")) {
+            try {
+                Date dataSelectata = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(tietDataProgramarii.getText().toString());
+                calendar.setTime(dataSelectata);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         int zi = calendar.get(Calendar.DATE);
         int luna = calendar.get(Calendar.MONTH);
         int an = calendar.get(Calendar.YEAR);
@@ -124,16 +204,27 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                     public void onDateSet(DatePicker datePicker, int an, int luna, int zi) {
                         luna += 1;
                         String dataString = zi + "/" + luna + "/" + an;
-                        tvDataProgramarii.setText(dataString);
+                        tietDataProgramarii.setText(dataString);
 
                         afiseazaOreDisponibile(dataString);
                     }
                 }, an, luna, zi);
-//                datePickerDialog.getDatePicker().setMinDate(calendar.setTime();
+
+        //setare data minima
+        Calendar dataMinima = Calendar.getInstance();
+        dataMinima.add(Calendar.DAY_OF_MONTH, 1); //adaug o zi la data curenta
+        datePickerDialog.getDatePicker().setMinDate(dataMinima.getTimeInMillis()); //si o setez ca valoare minima
+
+        //setare data maxima
+        Calendar dataMaxima = Calendar.getInstance();
+        dataMaxima.add(Calendar.DAY_OF_MONTH, 90);
+        datePickerDialog.getDatePicker().setMaxDate(dataMaxima.getTimeInMillis());
+
         datePickerDialog.show();
     }
 
     private void afiseazaOreDisponibile(String dataString) {
+        rySelectareData.setVisibility(View.GONE);
         Date data = null;
         try {
             data = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataString);
@@ -142,7 +233,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         }
         String ziProgramare = new SimpleDateFormat("EEEE", new Locale("ro", "RO")).format(data);
 
-        for (ZiDeLucru z : m.getProgram()) {
+        for (ZiDeLucru z : medic.getProgram()) {
             if (z.getZi().equals(ziProgramare)) {
                 oreDisponibile = new ArrayList<>();
                 try {
@@ -170,18 +261,15 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         }
 
         if (oreDisponibile == null) {
-//            lvOre.setVisibility(View.GONE);
             rwOreDisponibile.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), "Medicul nu are program in zilele de " + ziProgramare + "!", Toast.LENGTH_SHORT).show();
         } else {
-            //todo sa iau toate programarile si sa verific la care corespunde idMedic, data si ora
-            //pun ora intr-o lista si apoi scot din oreDisponibile orele gasite adineauri
-            firebaseService.preiaDateDinFirebase(preiaProgramari());
+            firebaseServiceProgramari.preiaDateDinFirebase(preiaOreDisponibile());
 
         }
     }
 
-    private ValueEventListener preiaProgramari() {
+    private ValueEventListener preiaOreDisponibile() {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -189,29 +277,15 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                 oreIndisponibile = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Programare p = dataSnapshot.getValue(Programare.class);
-                    if (p.getIdMedic().equals(m.getIdMedic()) && p.getData().equals(tvDataProgramarii.getText().toString())) {
+                    if (p.getIdMedic().equals(medic.getIdMedic()) && p.getData().equals(tietDataProgramarii.getText().toString())) {
                         oreIndisponibile.add(p.getOra());
                     }
                 }
 
-//                List<String> oreDisp = new ArrayList<>();
-
-//                for (int i = 0; i < oreIndisponibile.size(); i++) {
                 oreDisponibile.removeAll(oreIndisponibile);
-//                    for (int j = 0; j < oreDisponibile.size(); j++) {
-//                        if (oreIndisponibile.get(i).equals(oreDisponibile.get(j))) {
-//                            oreDisponibile.remove(i);
-//                        }
-//                    }
-//                }
 
                 rwOreDisponibile.setVisibility(View.VISIBLE);
-                adaptor = new OraDisponibilaAdaptor(oreDisponibile, OreDisponibileActivity.this);
-                rwOreDisponibile.setAdapter(adaptor);
-
-////                lvOre.setVisibility(View.VISIBLE);
-//                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, oreDisponibile);
-//                lvOre.setAdapter(adapter);
+                seteazaAdaptor();
             }
 
             @Override
@@ -222,56 +296,46 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void onButtonClick(int position) {
-        AlertDialog dialog = new AlertDialog.Builder(OreDisponibileActivity.this)
-                .setTitle("Confirmare programare")
-                .setMessage("Trimiteti programarea pentru data " + tvDataProgramarii.getText().toString() + " la ora " + oreDisponibile.get(position) + "?")
-                .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "Programarea nu a fost trimisa!", Toast.LENGTH_SHORT).show();
-                        dialogInterface.cancel();
-                    }
-                })
-                .setPositiveButton("Da", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Programare programare = new Programare(m.getIdMedic(), idPacient, tvDataProgramarii.getText().toString(), oreDisponibile.get(position));
-                        String idProgramare = firebaseService.databaseReference.push().getKey();
-                        firebaseService.databaseReference.child(idProgramare).setValue(programare);
-                        Toast.makeText(getApplicationContext(), "Programarea a fost trimisa!", Toast.LENGTH_SHORT).show();
-                        dialogInterface.cancel();
+    public void onOraClick(int position) {
+        if (!actvInvestigatii.getText().toString().equals("Selectati tipul investigatiei")) {
+            AlertDialog dialog = new AlertDialog.Builder(OreDisponibileActivity.this)
+                    .setTitle("Confirmare programare")
+                    .setMessage("Trimiteti programarea pentru data " + tietDataProgramarii.getText().toString() + " la ora " + oreDisponibile.get(position) + "?")
+                    .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(getApplicationContext(), "Programarea nu a fost trimisa!", Toast.LENGTH_SHORT).show();
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Investigatie investigatie = investigatii.stream()
+                                    .filter(inv -> inv.getDenumire().equals(actvInvestigatii.getText().toString()))
+                                    .findFirst()
+                                    .orElseThrow(Resources.NotFoundException::new);
+                            double valoare = investigatie.getPret();
 
-                        finish();
-                    }
-                }).create();
-        dialog.show();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                            Factura factura = new Factura(valoare, formatter.format(LocalDate.now()), formatter.format(LocalDate.now().plusDays(30)), "Neachitată");
+
+                            Programare programare = new Programare(medic.getIdMedic(), idPacient, tietDataProgramarii.getText().toString(), oreDisponibile.get(position), factura);
+                            String idProgramare = firebaseServiceProgramari.databaseReference.push().getKey();
+                            firebaseServiceProgramari.databaseReference.child(idProgramare).setValue(programare);
+                            Toast.makeText(getApplicationContext(), "Programarea a fost trimisa!", Toast.LENGTH_SHORT).show();
+                            dialogInterface.cancel();
+
+                            finish();
+
+                        }
+                    }).create();
+            dialog.show();
+
+        } else {
+            actvInvestigatii.setError("Selectati investigatia dorita!");
+            actvInvestigatii.requestFocus();
+        }
     }
-
-//    @Override
-//    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//        AlertDialog dialog = new AlertDialog.Builder(OreDisponibileActivity.this)
-//                .setTitle("Confirmare programare")
-//                .setMessage("Trimiteti programarea pentru data " + tvDataProgramarii.getText().toString() + " la ora " + oreDisponibile.get(position) + "?")
-//                .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Toast.makeText(getApplicationContext(), "Programarea nu a fost trimisa!", Toast.LENGTH_SHORT).show();
-//                        dialogInterface.cancel();
-//                    }
-//                })
-//                .setPositiveButton("Da", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Programare programare = new Programare(m.getIdMedic(), idPacient, tvDataProgramarii.getText().toString(), oreDisponibile.get(position));
-//                        String idProgramare = firebaseService.databaseReference.push().getKey();
-//                        firebaseService.databaseReference.child(idProgramare).setValue(programare);
-//                        Toast.makeText(getApplicationContext(), "Programarea a fost trimisa!", Toast.LENGTH_SHORT).show();
-//                        dialogInterface.cancel();
-//
-//                        finish();
-//                    }
-//                }).create();
-//        dialog.show();
-//    }
 }

@@ -19,23 +19,27 @@ import eu.ase.medicalapplicenta.activitati.InregistrarePacientActivity;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 
 public class FirebaseService {
-    public DatabaseReference databaseReference;
     private static final String PACIENTI = "Pacienti";
     private static final String FIREBASE_TAG = "evenimentFirebase";
+    public DatabaseReference databaseReference;
     private Context context;
 
-    public FirebaseService(String enitate){
+    public FirebaseService(String enitate) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child(enitate);
     }
 
-    public void preiaDateDinFirebase(ValueEventListener eventListener){
-        if(eventListener != null){
+    public void preiaDateDinFirebase(ValueEventListener eventListener) {
+        if (eventListener != null) {
             databaseReference.addValueEventListener(eventListener);
         }
     }
 
-
+    public void preiaObiectDinFirebase(ValueEventListener eventListener, String uid) {
+        if (eventListener != null && uid != null) {
+            databaseReference.child(uid).addListenerForSingleValueEvent(eventListener);
+        }
+    }
 
 //    public FirebaseService(Context context){
 //        this.context = context;

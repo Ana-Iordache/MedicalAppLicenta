@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,9 +14,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -52,56 +54,58 @@ import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
+//todo sa testez inca o data ca merge
 public class InregistrarePacientActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 200;
-    CircleImageView ciwPozaProfilPacient;
+    public static final String PACIENTI = "Pacienti";
+    public static final String MASCULIN = "Masculin";
+    public static final String FEMININ = "Feminin";
+    private CircleImageView ciwPozaProfilPacient;
 
-    TextInputEditText tietDataNasterii;
-//    ImageView imgCalendar;
-//    Icon icCalendar;
+    private TextInputEditText tietDataNasterii;
 
-    TextInputEditText tietNumePacient;
-    TextInputEditText tietPrenumePacient;
-    TextInputEditText tietCnp;
-    TextInputEditText tietNrTelefonPacient;
-    TextInputEditText tietAdresa;
-    TextInputEditText tietGreutate;
-    TextInputEditText tietInaltime;
+    private TextInputEditText tietNumePacient;
+    private TextInputEditText tietPrenumePacient;
+    private TextInputEditText tietCnp;
+    private TextInputEditText tietNrTelefonPacient;
+    private TextInputEditText tietAdresa;
+    private TextInputEditText tietGreutate;
+    private TextInputEditText tietInaltime;
 
-//    RadioGroup rgSex;
-//    RadioButton radioButton;
+    private Spinner spGrupaSange;
 
-    Spinner spGrupaSange;
+    private TextInputEditText tietEmailPacient;
+    private TextInputEditText tietParolaPacient;
+    private TextInputEditText tietConfirmareParolaPacient;
 
-    TextInputEditText tietEmailPacient;
-    TextInputEditText tietParolaPacient;
-    TextInputEditText tietConfirmareParolaPacient;
+    private AppCompatButton btnInregistrarePacient;
 
-    Button btnInregistrarePacient;
-
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
 //    ProgressDialog progressDialog;
 
-    Uri uri;
-    //    String urlPoza = "";
+    private Uri uri;
+
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private FirebaseService firebaseService = new FirebaseService("Pacienti");
+    private FirebaseService firebaseService = new FirebaseService(PACIENTI);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inregistrare_pacient);
 
-        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilUser);
+        initializeazaAtribute();
+
         ciwPozaProfilPacient.setOnClickListener(this);
-
-        tietDataNasterii = findViewById(R.id.tietDataNasterii);
-//        tietDataNasterii.setEnabled(false); TODO daca il setez enabled nu ma lasa sa dau click
-//        imgCalendar = findViewById(R.id.imgCalendar);
-//        imgCalendar.setOnClickListener(this);
         tietDataNasterii.setOnClickListener(this);
+        btnInregistrarePacient.setOnClickListener(this);
 
+//        progressDialog = new ProgressDialog(this);//todo hmmmm nu merge parca
+    }
+
+    private void initializeazaAtribute() {
+        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilUser);
+        tietDataNasterii = findViewById(R.id.tietDataNasterii);
         tietNumePacient = findViewById(R.id.tietNumePacient);
         tietPrenumePacient = findViewById(R.id.tietPrenumePacient);
         tietCnp = findViewById(R.id.tietCnp);
@@ -110,25 +114,19 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         tietGreutate = findViewById(R.id.tietGreutate);
         tietInaltime = findViewById(R.id.tietInaltime);
 
-//        rgSex = findViewById(R.id.rgSex);
-
-        spGrupaSange = findViewById(R.id.spGrupaSange);
+        spGrupaSange = findViewById(R.id.spGrupaSange); //todo sa fac drop down menu
 
         tietEmailPacient = findViewById(R.id.tietEmailPacient);
         tietParolaPacient = findViewById(R.id.tietParolaPacient);
         tietConfirmareParolaPacient = findViewById(R.id.tietConfirmareParolaPacient);
 
         btnInregistrarePacient = findViewById(R.id.btnInregistrarePacient);
-        btnInregistrarePacient.setOnClickListener(this);
-
 
         progressBar = findViewById(R.id.progressBar);
-//        progressDialog = new ProgressDialog(this);
-
         mAuth = FirebaseAuth.getInstance();
-
     }
 
+    @SuppressLint("NonConstantResourceId")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view) {
@@ -137,7 +135,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                 afiseazaCalendar();
                 break;
             case R.id.btnInregistrarePacient:
-                inregistrarePacient();
+                inregistreazaPacient();
                 break;
             case R.id.ciwPozaProfilUser:
                 alegePozaProfil();
@@ -162,7 +160,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void inregistrarePacient() {
+    private void inregistreazaPacient() {
         if (inputValid()) {
 
             String nume = tietNumePacient.getText().toString();
@@ -176,9 +174,9 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             String sex = "";
             int primaCifraCnp = Integer.parseInt(String.valueOf(String.valueOf(cnp).charAt(0)));
             if (primaCifraCnp == 1 || primaCifraCnp == 5) {
-                sex = "Masculin";
+                sex = MASCULIN;
             } else if (primaCifraCnp == 6 || primaCifraCnp == 2) {
-                sex = "Feminin";
+                sex = FEMININ;
             }
 
 //        String adresa = tietAdresa.getText().toString();
@@ -187,7 +185,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             int varsta = 0;
             try {
                 DateFormat formatInitial = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-                DateFormat formatSchimbat = new SimpleDateFormat("yyyy/MM/dd");
+                DateFormat formatSchimbat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
                 Date data = formatInitial.parse(dataNasterii);
                 String dataFormatata = formatSchimbat.format(data);
 
@@ -253,7 +251,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 //                                        progressBar.setVisibility(View.GONE);
                                             finish();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Log.e("adaugarePacient", task.getException().getMessage());
 //                                        progressBar.setVisibility(View.GONE);
                                         }
 
@@ -265,7 +263,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                                     incarcaPoza();
 
                             } else {
-                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e("inregistrarePacient", task.getException().getMessage());
 //                            progressBar.setVisibility(View.GONE);
                             }
                         }
@@ -341,9 +339,8 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
     }
 
-    // TODO
-    // data nasterii sa corespunda cu cnp-ul
-    // validare greutatea si inaltimea
+    // TODO data nasterii sa corespunda cu cnp-ul
+    // TODO validare greutatea si inaltimea
     private boolean inputValid() {
         Pattern pattern;
         Matcher matcher;
@@ -360,7 +357,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             return false;
         }
 
-        pattern = Pattern.compile("^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$");
+        pattern = Pattern.compile(getString(R.string.pattern_cnp));
         matcher = pattern.matcher(tietCnp.getText().toString());
 
         if (tietCnp.getText().toString().isEmpty()) {
@@ -375,7 +372,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             return false;
         }
 
-        pattern = Pattern.compile("^407[2-8][0-9]{7}$");
+        pattern = Pattern.compile(getString(R.string.pattern_numar_telefon));
         matcher = pattern.matcher(tietNrTelefonPacient.getText().toString());
 
         if (tietNrTelefonPacient.getText().toString().isEmpty()) {
@@ -384,7 +381,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             return false;
         }
 
-        if(!matcher.matches()){
+        if (!matcher.matches()) {
             tietNrTelefonPacient.setError("Formatul acceptat este: 407xxxxxxxx!");
             tietNrTelefonPacient.requestFocus();
             return false;
@@ -436,8 +433,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     }
 
 
-    //TODO
-    //sa pun o data maxima
+    //TODO sa pun o data maxima
     private void afiseazaCalendar() {
         tietDataNasterii.setError(null);
         final Calendar calendar = Calendar.getInstance();

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.entitati.Medic;
+import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.entitati.Specialitate;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
@@ -24,14 +26,20 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.ProgramareAdaptorViewHolder> {
     public static final String SPECIALITATI = "Specialitati";
     public static final String MEDICI = "Medici";
+    public static final String PACIENTI = "Pacienti";
     private final FirebaseService firebaseServiceSpecialitati;
     private final FirebaseService firebaseServiceMedici;
+    private final FirebaseService firebaseServicePacienti;
     private final List<Programare> programari;
 
-    public ProgramareAdaptor(List<Programare> programari) {
+    private final String tipUser;
+
+    public ProgramareAdaptor(List<Programare> programari, String tipUser) {
         this.programari = programari;
+        this.tipUser = tipUser;
         firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
         firebaseServiceMedici = new FirebaseService(MEDICI);
+        firebaseServicePacienti = new FirebaseService(PACIENTI);
     }
 
     @NonNull
@@ -43,40 +51,78 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
 
     @Override
     public void onBindViewHolder(@NonNull ProgramareAdaptorViewHolder holder, int position) {
+
         Programare p = programari.get(position);
         if (p != null) {
             holder.tvDataProgramarii.setText(p.getData());
             holder.tvOraProgramarii.setText(p.getOra());
 
-            firebaseServiceMedici.databaseReference.child(p.getIdMedic()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Medic m = snapshot.getValue(Medic.class);
-                    String numeComplet = "Dr. " + m.getNume() + " " + m.getPrenume();
-                    holder.tvNumeMedic.setText(numeComplet);
-
-
-                    firebaseServiceSpecialitati.databaseReference.child(m.getIdSpecialitate()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Specialitate s = snapshot.getValue(Specialitate.class);
-                            holder.tvSpecialitate.setText(s.getDenumire());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("preluareSpecProg", error.getMessage());
-                        }
-                    });
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("preluareMedicProg", error.getMessage());
-                }
-            });
+            if (tipUser.equals("pacient")) {
+                seteazaDateMedic(p, holder);
+            } else {
+                holder.tvSpecialitate.setVisibility(View.GONE);
+                seteazaNumePacient(p, holder);
+            }
 
         }
+
+    }
+
+    private void seteazaNumePacient(Programare p, ProgramareAdaptorViewHolder holder) {
+        holder.progressBar.setVisibility(View.VISIBLE);
+        firebaseServicePacienti.preiaObiectDinFirebase(preiaPacient(holder), p.getIdPacient());
+    }
+
+    private ValueEventListener preiaPacient(ProgramareAdaptorViewHolder holder) {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Pacient pacient = snapshot.getValue(Pacient.class);
+                String numeComplet = pacient.getNume() + " " + pacient.getPrenume();
+                holder.tvNume.setText(numeComplet);
+                holder.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("preluarePacientProg", error.getMessage());
+            }
+        };
+    }
+
+    private void seteazaDateMedic(Programare p, ProgramareAdaptorViewHolder holder) {
+        holder.progressBar.setVisibility(View.VISIBLE);
+        firebaseServiceMedici.databaseReference.child(p.getIdMedic()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Medic m = snapshot.getValue(Medic.class);
+                String numeComplet = "Dr. " + m.getNume() + " " + m.getPrenume();
+                holder.tvNume.setText(numeComplet);
+
+                firebaseServiceSpecialitati.preiaObiectDinFirebase(preiaSpecialitate(holder), m.getIdSpecialitate());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("preluareMedicProg", error.getMessage());
+            }
+        });
+    }
+
+    private ValueEventListener preiaSpecialitate(ProgramareAdaptorViewHolder holder) {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Specialitate s = snapshot.getValue(Specialitate.class);
+                holder.tvSpecialitate.setText(s.getDenumire());
+                holder.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("preluareSpecProg", error.getMessage());
+            }
+        };
     }
 
     @Override
@@ -85,17 +131,19 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
     }
 
     public class ProgramareAdaptorViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNumeMedic;
+        TextView tvNume;
         TextView tvSpecialitate;
         TextView tvDataProgramarii;
         TextView tvOraProgramarii;
+        ProgressBar progressBar;
 
         public ProgramareAdaptorViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNumeMedic = itemView.findViewById(R.id.tvNumeMedic);
+            tvNume = itemView.findViewById(R.id.tvNume);
             tvSpecialitate = itemView.findViewById(R.id.tvSpecialitate);
             tvDataProgramarii = itemView.findViewById(R.id.tvDataProgramarii);
             tvOraProgramarii = itemView.findViewById(R.id.tvOraProgramarii);
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
     }
 }

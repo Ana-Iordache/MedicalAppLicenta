@@ -24,4 +24,9 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pattern_email_medic">^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$</string>
+    <string name="pattern_numar_telefon">^407[2-8][0-9]{7}$</string>
+    <string name="pattern_cnp">^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$</string>
+    <string name="pattern_greutate">^[1-9][0-9]\\.[0-9]$</string>
+    <string name="pattern_inaltime">^[1-2]\\.[0-9]{2}$</string>
 </resources>

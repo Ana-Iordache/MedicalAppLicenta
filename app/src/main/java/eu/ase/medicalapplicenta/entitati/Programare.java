@@ -5,14 +5,16 @@ public class Programare {
     private String idPacient;
     private String data;
     private String ora;
+    private Factura factura;
 
     public Programare(){}
 
-    public Programare(String idMedic, String idPacient, String data, String ora) {
+    public Programare(String idMedic, String idPacient, String data, String ora, Factura factura) {
         this.idMedic = idMedic;
         this.idPacient = idPacient;
         this.data = data;
         this.ora = ora;
+        this.factura = factura;
     }
 
     public String getIdMedic() {
@@ -47,6 +49,14 @@ public class Programare {
         this.ora = ora;
     }
 
+    public Factura getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
+
     @Override
     public String toString() {
         return "Programare{" +
@@ -54,6 +64,7 @@ public class Programare {
                 ", idPacient='" + idPacient + '\'' +
                 ", data='" + data + '\'' +
                 ", ora='" + ora + '\'' +
+                ", factura=" + factura +
                 '}';
     }
 }

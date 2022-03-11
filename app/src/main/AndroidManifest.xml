@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eu.ase.medicalapplicenta">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".utile.VerificaUserConectat"
         android:allowBackup="true"
@@ -11,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppLicenta">
         <activity
+            android:name=".activitati.FacturiActivity"
+            android:exported="false" />
+        <activity
             android:name=".activitati.InformatiiMedicActivity"
             android:exported="false" />
         <activity
             android:name=".activitati.OreDisponibileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activitati.AdaugaProgramareActivity"
             android:exported="false" />
         <activity
             android:name=".activitati.ProgramariActivity"

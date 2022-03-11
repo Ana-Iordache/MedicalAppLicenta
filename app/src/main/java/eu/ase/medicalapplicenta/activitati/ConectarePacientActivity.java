@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,24 +27,24 @@ import java.util.regex.Pattern;
 import eu.ase.medicalapplicenta.R;
 
 public class ConectarePacientActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView tv;
-    TextView tvSuntMedic;
+    private TextView tv;
+    private TextView tvSuntMedic;
 
-    TextInputEditText tietLoginEmailPacient;
-    TextInputEditText tietLoginParolaPacient;
-    Button btnLoginPacient;
+    private TextInputEditText tietLoginEmailPacient;
+    private TextInputEditText tietLoginParolaPacient;
+    private Button btnLoginPacient;
 
-    TextView tvCreareCont;
-    TextView tvResetareParola;
+    private TextView tvCreareCont;
+    private TextView tvResetareParola;
 
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
 
-    CheckBox cbRamaiAutentificat;
-    SharedPreferences preferinteConectare;
-    SharedPreferences.Editor preferinteConectareEditor;
-    Boolean salveazaDateConectare;
+    private CheckBox cbRamaiAutentificat;
+    private SharedPreferences preferinteConectare;
+    private SharedPreferences.Editor preferinteConectareEditor;
+    private Boolean salveazaDateConectare;
 
-    ImageView ivMedic;
+    private ImageView ivMedic;
 
     private FirebaseAuth mAuth;
 
@@ -54,6 +53,9 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conectare_pacient);
 
+        initializeazaAtribute();
+
+        //todo
         tv = findViewById(R.id.tv);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,38 +64,45 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             }
         });
 
+
+        btnLoginPacient.setOnClickListener(this);
+        tvCreareCont.setOnClickListener(this);
+        tvResetareParola.setOnClickListener(this);
+        ivMedic.setOnClickListener(this);
+
+        preiaPreferinte();
+
+    }
+
+    private void preiaPreferinte() {
+        preferinteConectare = getSharedPreferences("salveazaDateConectare", MODE_PRIVATE);
+        preferinteConectareEditor = preferinteConectare.edit();
+
+        salveazaDateConectare = preferinteConectare.getBoolean("salveazaDateConectare", false);
+        if (salveazaDateConectare) {
+            tietLoginEmailPacient.setText(preferinteConectare.getString("email", ""));
+            tietLoginParolaPacient.setText(preferinteConectare.getString("parola", ""));
+        }
+    }
+
+    private void initializeazaAtribute() {
         tietLoginEmailPacient = findViewById(R.id.tietLoginEmailPacient);
         tietLoginParolaPacient = findViewById(R.id.tietLoginParolaPacient);
 
         btnLoginPacient = findViewById(R.id.btnLoginPacient);
-        btnLoginPacient.setOnClickListener(this);
 
         tvCreareCont = findViewById(R.id.tvCreareCont);
-        tvCreareCont.setOnClickListener(this);
-
         tvResetareParola = findViewById(R.id.tvResetareParola);
-        tvResetareParola.setOnClickListener(this);
 
         progressBar = findViewById(R.id.progressBar);
 
         cbRamaiAutentificat = findViewById(R.id.cbRamaiAutentificat);
 
-        preferinteConectare = getSharedPreferences("salveazaDateConectare",MODE_PRIVATE);
-        preferinteConectareEditor = preferinteConectare.edit();
-
-        salveazaDateConectare = preferinteConectare.getBoolean("salveazaDateConectare", false);
-        if(salveazaDateConectare){
-            tietLoginEmailPacient.setText(preferinteConectare.getString("email", ""));
-            tietLoginParolaPacient.setText(preferinteConectare.getString("parola",""));
-        }
-
         ivMedic = findViewById(R.id.ivMedic);
-        ivMedic.setOnClickListener(this);
 
         tvSuntMedic = findViewById(R.id.tvSuntMedic);
 
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override
@@ -103,7 +112,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                 startActivity(new Intent(getApplicationContext(), InregistrarePacientActivity.class));
                 break;
             case R.id.btnLoginPacient:
-                conectarePacient();
+                conecteazaPacient();
                 break;
             case R.id.tvResetareParola:
                 startActivity(new Intent(getApplicationContext(), ResetareParolaActivity.class));
@@ -115,7 +124,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         }
     }
 
-    private void conectarePacient() {
+    private void conecteazaPacient() {
         String email = tietLoginEmailPacient.getText().toString().trim(); //trim in cazul in care pune space
         String parola = tietLoginParolaPacient.getText().toString().trim();
 
@@ -131,11 +140,10 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             return;
         }
 
-        //TODO poate am cum sa trimit emaulul si parola deja introduce aici atunci cand apasa pe sunt medic
-        Pattern pattern = Pattern.compile("^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$");
+        //TODO poate am cum sa trimit emailul si parola deja introduse aici atunci cand apasa pe sunt medic
+        Pattern pattern = Pattern.compile(getString(R.string.pattern_email_medic));
         Matcher matcher = pattern.matcher(email);
         if (matcher.matches()) {
-//            Toast.makeText(getApplicationContext(), "Va rugam sa va conectati din pagina medicului!", Toast.LENGTH_SHORT).show();
             tvSuntMedic.setError("Va rugam sa va conectati din pagina medicului!");
             tvSuntMedic.requestFocus();
             return;
@@ -153,18 +161,9 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
+        loading(true);
 
-        // verific daca user-ul doreste sa ramana autentificat
-        // prin urmare daca i se pastreaza datele de autentificare atunci cand se deconecteaza
-        if (cbRamaiAutentificat.isChecked()) {
-            preferinteConectareEditor.putBoolean("salveazaDateConectare", true);
-            preferinteConectareEditor.putString("email", email);
-            preferinteConectareEditor.putString("parola", parola);
-        } else {
-            preferinteConectareEditor.clear();
-        }
-        preferinteConectareEditor.commit();
+        seteazaPreferinte(email, parola);
 
         mAuth.signInWithEmailAndPassword(email, parola).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -183,6 +182,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                     // dar daca pun asa cand dau back ma scoate din ap, e ok
                     // dar daca vreau sa revin in ap imi deschide pagina de log in in loc de main
                 } else {
+                    loading(false);
                     Toast.makeText(getApplicationContext(), "Credentiale invalide!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -190,5 +190,23 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
     }
 
+    // verific daca user-ul doreste sa ramana autentificat
+    // prin urmare daca i se pastreaza datele de autentificare atunci cand se deconecteaza
+    private void seteazaPreferinte(String email, String parola) {
+        if (cbRamaiAutentificat.isChecked()) {
+            preferinteConectareEditor.putBoolean("salveazaDateConectare", true);
+            preferinteConectareEditor.putString("email", email);
+            preferinteConectareEditor.putString("parola", parola);
+        } else {
+            preferinteConectareEditor.clear();
+        }
+        preferinteConectareEditor.commit();
+    }
+
+    private void loading(Boolean seIncarca) {
+        if (seIncarca) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
+    }
 
 }

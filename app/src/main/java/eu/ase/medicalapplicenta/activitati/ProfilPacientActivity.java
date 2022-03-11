@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -49,88 +50,60 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class ProfilPacientActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 200;
-    CircleImageView ciwPozaProfilPacient; //todo sa modific si in xml inapoi
+    private CircleImageView ciwPozaProfilPacient; //todo sa modific si in xml inapoi
 
-    TextInputEditText tietNumePacient;
-    TextInputEditText tietPrenumePacient;
-    TextInputEditText tietCnp;
-    TextInputEditText tietDataNasterii;
-    TextInputEditText tietNrTelefonPacient;
-    TextInputEditText tietAdresa;
-    TextInputEditText tietEmailPacient;
-    TextInputEditText tietGreutate;
-    TextInputEditText tietInaltime;
-    TextInputEditText tietVarsta;
-    TextInputEditText tietSex;
+    private TextInputEditText tietNumePacient;
+    private TextInputEditText tietPrenumePacient;
+    private TextInputEditText tietCnp;
+    private TextInputEditText tietDataNasterii;
+    private TextInputEditText tietNrTelefonPacient;
+    private TextInputEditText tietAdresa;
+    private TextInputEditText tietEmailPacient;
+    private TextInputEditText tietGreutate;
+    private TextInputEditText tietInaltime;
+    private TextInputEditText tietVarsta;
+    private TextInputEditText tietSex;
 
-    Spinner spGrupaSange;
+    private Spinner spGrupaSange;
 
-    Button btnModificaDate;
-    Button btnSalveaza;
-    Button btnRenunta;
-    Button btnSchimbaParola;
-    Button btnStergeCont;
+    private Button btnModificaDate;
+    private Button btnSalveaza;
+    private Button btnRenunta;
+    private Button btnSchimbaParola;
+    private Button btnStergeCont;
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
-    FirebaseUser pacientConectat;
-    FirebaseService firebaseService = new FirebaseService("Pacienti");
-    String idUserConectat;
-    DatabaseReference referintaUserConectat;
-    Pacient pacient;
+    private FirebaseUser pacientConectat;
+    private FirebaseService firebaseService = new FirebaseService("Pacienti");
+    private String idUserConectat;
+    private DatabaseReference referintaUserConectat;
+    private Pacient pacient;
 
-    Uri uri;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil_pacient);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Profil");
-        // setez un button de back ca sa ma pot intoarce in pagina principala
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        initializeazaAtribute();
 
-        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilUser);
-//        ciwPozaProfilPacient.setOnClickListener(this);
+        seteazaToolbar();
 
-        tietNumePacient = findViewById(R.id.tietNumePacient);
-        tietPrenumePacient = findViewById(R.id.tietPrenumePacient);
-        tietCnp = findViewById(R.id.tietCnp);
-        tietDataNasterii = findViewById(R.id.tietDataNasterii);
-        tietNrTelefonPacient = findViewById(R.id.tietNrTelefonPacient);
-        tietAdresa = findViewById(R.id.tietAdresa);
-        tietEmailPacient = findViewById(R.id.tietEmailPacient);
-        tietGreutate = findViewById(R.id.tietGreutate);
-        tietInaltime = findViewById(R.id.tietInaltime);
-        tietVarsta = findViewById(R.id.tietVarsta);
-        tietSex = findViewById(R.id.tietSex);
-
-        spGrupaSange = findViewById(R.id.spGrupaSange);
         spGrupaSange.setEnabled(false); // din xml nu merge
 
-        btnModificaDate = findViewById(R.id.btnModificaDate);
         btnModificaDate.setOnClickListener(this);
-
-        btnSalveaza = findViewById(R.id.btnSalveaza);
         btnSalveaza.setOnClickListener(this);
-
-        btnRenunta = findViewById(R.id.btnRenunta);
         btnRenunta.setOnClickListener(this);
-
-        btnSchimbaParola = findViewById(R.id.btnSchimbaParola);
         btnSchimbaParola.setOnClickListener(this);
-
-        btnStergeCont = findViewById(R.id.btnStergeCont);
         btnStergeCont.setOnClickListener(this);
 
-        pacientConectat = FirebaseAuth.getInstance().getCurrentUser();
-        idUserConectat = pacientConectat.getUid();
-        referintaUserConectat = firebaseService.databaseReference.child(idUserConectat);
+        firebaseService.preiaObiectDinFirebase(preiaPacient(), idUserConectat);
+    }
 
-        referintaUserConectat.addListenerForSingleValueEvent(new ValueEventListener() {
+    private ValueEventListener preiaPacient() {
+        return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 pacient = snapshot.getValue(Pacient.class);
@@ -183,11 +156,44 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Nu s-au putut prelua datele!", Toast.LENGTH_SHORT).show();
+                Log.e("preluarePacient", error.getMessage());
             }
-        });
+        };
+    }
 
+    private void seteazaToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Profil");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
 
+    private void initializeazaAtribute() {
+        toolbar = findViewById(R.id.toolbar);
+        ciwPozaProfilPacient = findViewById(R.id.ciwPozaProfilUser);
+        tietNumePacient = findViewById(R.id.tietNumePacient);
+        tietPrenumePacient = findViewById(R.id.tietPrenumePacient);
+        tietCnp = findViewById(R.id.tietCnp);
+        tietDataNasterii = findViewById(R.id.tietDataNasterii);
+        tietNrTelefonPacient = findViewById(R.id.tietNrTelefonPacient);
+        tietAdresa = findViewById(R.id.tietAdresa);
+        tietEmailPacient = findViewById(R.id.tietEmailPacient);
+        tietGreutate = findViewById(R.id.tietGreutate);
+        tietInaltime = findViewById(R.id.tietInaltime);
+        tietVarsta = findViewById(R.id.tietVarsta);
+        tietSex = findViewById(R.id.tietSex);
+
+        spGrupaSange = findViewById(R.id.spGrupaSange);
+
+        btnModificaDate = findViewById(R.id.btnModificaDate);
+        btnSalveaza = findViewById(R.id.btnSalveaza);
+        btnRenunta = findViewById(R.id.btnRenunta);
+        btnSchimbaParola = findViewById(R.id.btnSchimbaParola);
+        btnStergeCont = findViewById(R.id.btnStergeCont);
+
+        pacientConectat = FirebaseAuth.getInstance().getCurrentUser();
+        idUserConectat = pacientConectat.getUid();
+        referintaUserConectat = firebaseService.databaseReference.child(idUserConectat);
     }
 
     @Override
@@ -200,6 +206,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -243,17 +250,18 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
     }
 
     private void actualizeazaDate() {
+        //todo sa poata modifica si grupa de sange
         if (inputValid()) {
 
-            String nume = tietNumePacient.getText().toString();
-            String prenume = tietPrenumePacient.getText().toString();
+            String nume = tietNumePacient.getText().toString().trim();
+            String prenume = tietPrenumePacient.getText().toString().trim();
 
             String adresa;
             if (tietAdresa.getText().toString().isEmpty()) {
                 adresa = "Necunoscuta";
                 tietAdresa.setText(adresa);
             } else {
-                adresa = tietAdresa.getText().toString();
+                adresa = tietAdresa.getText().toString().trim();
             }
 
             long nrTelefon = Long.parseLong(tietNrTelefonPacient.getText().toString());
@@ -263,7 +271,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 greutate = 0.0;
                 tietGreutate.setText(String.valueOf(greutate));
             } else {
-                greutate = Double.parseDouble(tietGreutate.getText().toString());
+                greutate = Double.parseDouble(tietGreutate.getText().toString().trim());
             }
 
             double inaltime;
@@ -271,10 +279,10 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 inaltime = 0.0;
                 tietInaltime.setText(String.valueOf(inaltime));
             } else {
-                inaltime = Double.parseDouble(tietInaltime.getText().toString());
+                inaltime = Double.parseDouble(tietInaltime.getText().toString().trim());
             }
 
-            String email = tietEmailPacient.getText().toString();
+            String email = tietEmailPacient.getText().toString().trim();
 
             if (nume.equals(pacient.getNume()) && prenume.equals(pacient.getPrenume())
                     && adresa.equals(pacient.getAdresa()) && nrTelefon == pacient.getNrTelefon()
@@ -282,7 +290,6 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(), "Informatiile nu au fost modificate!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
 
             referintaUserConectat.child("nume").setValue(nume);
             referintaUserConectat.child("prenume").setValue(prenume);
@@ -351,7 +358,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             return false;
         }
 
-        pattern = Pattern.compile("^407[2-8][0-9]{7}$");
+        pattern = Pattern.compile(getString(R.string.pattern_numar_telefon));
         matcher = pattern.matcher(tietNrTelefonPacient.getText().toString());
         if (!matcher.matches()) {
             tietNrTelefonPacient.setError("Formatul acceptat este: 407xxxxxxxx!");
@@ -360,7 +367,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         }
 
         if (!tietGreutate.getText().toString().isEmpty() && !tietGreutate.getText().toString().equals("0.0")) {
-            pattern = Pattern.compile("^[1-9][0-9]\\.[0-9]$");
+            pattern = Pattern.compile(getString(R.string.pattern_greutate));
             matcher = pattern.matcher(tietGreutate.getText().toString());
             if (!matcher.matches()) {
                 tietGreutate.setError("Introduceti o greutate valida (de ex: 45.7)!");
@@ -372,7 +379,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
         if (!tietInaltime.getText().toString().isEmpty() && !tietInaltime.getText().toString().equals("0.0")) {
 
-            pattern = Pattern.compile("^[1-2]\\.[0-9]{2}$");
+            pattern = Pattern.compile(getString(R.string.pattern_inaltime));
             matcher = pattern.matcher(tietInaltime.getText().toString());
             if (!matcher.matches()) {
                 tietInaltime.setError("Introduceti un o inaltime valida (de ex: 1.65)!");

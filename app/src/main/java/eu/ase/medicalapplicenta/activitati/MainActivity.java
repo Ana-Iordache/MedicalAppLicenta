@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,44 +34,69 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     public static final String VIZUALIZARE_MEDICI = "vizualizareMedici";
-    //    Button btnDeconectare;
+    public static final String PACIENT = "pacient";
+    private static final String NUMAR_CALL_CENTER = "0219268";
+    public static final String PACIENTI = "Pacienti";
 
-//todo sa pun un progress bat sau ceva pana se incarca datele de la profil
-    Toolbar toolbar; // ca sa atasez toolbarul in pagina
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
-    NavigationView navigationView; // ca sa gestionez optiunile din meniu
+    //todo sa pun un progress bar sau ceva pana se incarca datele de la profil
+    private Toolbar toolbar; // ca sa atasez toolbarul in pagina
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
+    private NavigationView navigationView; // ca sa gestionez optiunile din meniu
 
-    TextView tvNumeUserConectat;
-    TextView tvEmailUserConectat;
+    private TextView tvNumeUserConectat;
+    private TextView tvEmailUserConectat;
 
-    FirebaseUser pacientConectat;
-    FirebaseService firebaseService = new FirebaseService("Pacienti");
-    String idPacient;
+    private FirebaseUser pacientConectat;
+    private FirebaseService firebaseService = new FirebaseService(PACIENTI);
+    private String idPacient;
 
-    CircleImageView ciwPozaProfilUser;
+    private CircleImageView ciwPozaProfilUser;
 
-    CardView cwMedici;
-    CardView cwInvestigatii;
-    CardView cwProgramari;
+    private CardView cwMedici;
+    private CardView cwInvestigatii;
+    private CardView cwProgramari;
+    private CardView cwFacturi;
+
+    private FloatingActionButton fabCallCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        initializeazaAtribute();
 
-        drawerLayout = findViewById(R.id.drawerLayout);
+        seteazaToolbar();
+
+        seteazaToggle();
+
+        navigationView.setNavigationItemSelectedListener(this);
+        cwMedici.setOnClickListener(this);
+        cwInvestigatii.setOnClickListener(this);
+        cwProgramari.setOnClickListener(this);
+        cwFacturi.setOnClickListener(this);
+        fabCallCenter.setOnClickListener(this);
+
+        incarcaInfoNavMenu();
+    }
+
+    private void seteazaToggle() {
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_toggle, R.string.close_toggle);
         drawerLayout.addDrawerListener(toggle); // atasam toggle-ul la drawerLayout
         toggle.syncState(); // sa se roteasca atunci cand inchid/deschid meniul
+    }
+
+    private void seteazaToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+    }
+
+    private void initializeazaAtribute() {
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawerLayout);
 
         navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
-
         tvNumeUserConectat = navigationView.getHeaderView(0).findViewById(R.id.tvNumeUserConectat);
         tvEmailUserConectat = navigationView.getHeaderView(0).findViewById(R.id.tvEmailUserConectat);
         ciwPozaProfilUser = navigationView.getHeaderView(0).findViewById(R.id.ciwPozaProfilUser);
@@ -76,15 +105,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         idPacient = pacientConectat.getUid();
 
         cwMedici = findViewById(R.id.cwMedici);
-        cwMedici.setOnClickListener(this);
-
         cwInvestigatii = findViewById(R.id.cwInvestigatii);
-        cwInvestigatii.setOnClickListener(this);
-
         cwProgramari = findViewById(R.id.cwProgramari);
-        cwProgramari.setOnClickListener(this);
-
-        incarcaInfoNavMenu();
+        cwFacturi = findViewById(R.id.cwFacturi);
+        fabCallCenter = findViewById(R.id.fabCallCenter);
     }
 
     @Override
@@ -93,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         incarcaInfoNavMenu();
     }
 
-    public void incarcaInfoNavMenu(){
+    public void incarcaInfoNavMenu() {
         firebaseService.databaseReference.child(idPacient).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -110,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     tvEmailUserConectat.setText(email);
 
-                    if(!urlPozaProfil.equals("")){
+                    if (!urlPozaProfil.equals("")) {
                         Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilUser);
                     }
                 }
@@ -118,27 +142,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Nu s-au putut prelua datele!", Toast.LENGTH_SHORT).show();
+                Log.e("preluarePacient", error.getMessage());
             }
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.cwMedici:
                 startActivity(new Intent(getApplicationContext(), ListaMediciActivity.class).putExtra(VIZUALIZARE_MEDICI, ""));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.cwInvestigatii:
                 startActivity(new Intent(getApplicationContext(), ListaInvestigatiiActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.cwProgramari:
-                startActivity(new Intent(getApplicationContext(), ProgramariActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProgramariActivity.class).putExtra(PACIENT, "pacient"));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            case R.id.cwFacturi:
+                startActivity(new Intent(getApplicationContext(), FacturiActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            case R.id.fabCallCenter:
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", NUMAR_CALL_CENTER, null)));
                 break;
         }
     }
 
     // gestionez ce se intampla atunci cand dau click pe fiecare optiune din meniu
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -151,11 +187,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
                 finish();
                 break;
-                //TODO
+            //TODO
             case R.id.item_feedback:
                 Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
                 break;
-                //TODO
+            //TODO
             case R.id.item_despre_noi:
                 Toast.makeText(getApplicationContext(), "Despre noi", Toast.LENGTH_SHORT).show();
                 break;

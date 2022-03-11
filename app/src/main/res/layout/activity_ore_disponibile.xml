@@ -7,23 +7,167 @@
     android:orientation="vertical"
     tools:context=".activitati.OreDisponibileActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#77cefc"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Programare nouă"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/tvMedic"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"/>
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        android:text="doctor"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        app:boxCornerRadiusBottomEnd="0dp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="0dp"
+        app:boxStrokeColor="@color/custom_blue">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietDataProgramarii"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="10dp"
+            android:focusable="false"
+            android:hint="Data programarii"
+            android:inputType="none"
+            android:text="Selectati data"
+            android:textColor="#000"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:theme="@style/TextInputLayoutStyle"
+        app:boxCornerRadiusBottomEnd="0dp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="0dp"
+        app:boxStrokeColor="@color/custom_blue">
+
+        <AutoCompleteTextView
+            android:id="@+id/actvInvestigatii"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_specialitate"
+            android:drawablePadding="@dimen/_10sdp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="none"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingTop="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            android:text="Selectati tipul investigatiei"
+            android:hint="Investigatie"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/tvDataProgramarii"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Selectati data"
-        app:drawableStartCompat="@drawable/ic_calendar" />
+        android:layout_marginStart="@dimen/_5sdp"
+        android:text="Ore disponibile"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp" />
 
-<!--    <ListView-->
-<!--        android:id="@+id/lvOre"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"/>-->
+    <RelativeLayout
+        android:id="@+id/rySelectareData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_programari" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Selectati data"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Pentru a vizualiza orele disponibile va rugam sa selectati data dorita pentru programare"
+                android:textSize="@dimen/_13sdp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--    todo-->
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/ryNicioProgramare"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+    <!--        -->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/imageView"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:src="@drawable/ic_unavailable"-->
+    <!--            android:layout_centerInParent="true"/>-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/tvNuAreProgram"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="Medicul nu are programari"-->
+    <!--            android:layout_below="@+id/imageView"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:textSize="@dimen/_15sdp"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:layout_marginTop="@dimen/_10sdp"/>-->
+    <!--    </RelativeLayout>-->
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rwOreDisponibile"
@@ -32,6 +176,6 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="@dimen/_10sdp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </LinearLayout>

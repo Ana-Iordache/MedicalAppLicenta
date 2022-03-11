@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -26,36 +29,59 @@ import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-public class HomeMedicActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
-    Toolbar toolbar; // ca sa atasez toolbarul in pagina
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
-    NavigationView navigationView; // ca sa gestionez optiunile din meniu
+public class HomeMedicActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+    public static final String MEDIC = "medic";
 
-    TextView tvNumeUserConectat;
-    TextView tvEmailUserConectat;
+    private Toolbar toolbar; // ca sa atasez toolbarul in pagina
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
+    private NavigationView navigationView; // ca sa gestionez optiunile din meniu
 
-    FirebaseUser medicConectat;
-    FirebaseService firebaseService = new FirebaseService("Medici");
-    String idMedic;
+    private TextView tvNumeUserConectat;
+    private TextView tvEmailUserConectat;
 
-    CircleImageView ciwPozaProfilUser;
+    private FirebaseUser medicConectat;
+    private FirebaseService firebaseService = new FirebaseService("Medici");
+    private String idMedic;
+
+    private CircleImageView ciwPozaProfilUser;
+
+    private CardView cwProgramari;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_medic);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Home");
+        initializeazaAtribute();
 
-        drawerLayout = findViewById(R.id.drawerLayout);
+        seteazaToolbar();
+
+        seteazaToggle();
+
+        navigationView.setNavigationItemSelectedListener(this);
+        cwProgramari.setOnClickListener(this);
+
+        incarcaInfoNavMenu();
+    }
+
+    private void seteazaToggle() {
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_toggle, R.string.close_toggle);
         drawerLayout.addDrawerListener(toggle); // atasam toggle-ul la drawerLayout
         toggle.syncState(); // sa se roteasca atunci cand inchid/deschid meniul
+    }
+
+    private void seteazaToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Home");
+    }
+
+    private void initializeazaAtribute() {
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawerLayout);
 
         navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
 
         tvNumeUserConectat = navigationView.getHeaderView(0).findViewById(R.id.tvNumeUserConectat);
         tvEmailUserConectat = navigationView.getHeaderView(0).findViewById(R.id.tvEmailUserConectat);
@@ -64,7 +90,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         medicConectat = FirebaseAuth.getInstance().getCurrentUser();
         idMedic = medicConectat.getUid();
 
-        incarcaInfoNavMenu();
+        cwProgramari = findViewById(R.id.cwProgramari);
     }
 
     @Override
@@ -79,7 +105,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Medic medic = snapshot.getValue(Medic.class);
 
-                if(medic!=null){
+                if (medic != null) {
                     String nume = medic.getNume();
                     String prenume = medic.getPrenume();
                     String numeComplet = nume + " " + prenume;
@@ -90,7 +116,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
 
                     tvEmailUserConectat.setText(email);
 
-                    if(!urlPozaProfil.equals("")){
+                    if (!urlPozaProfil.equals("")) {
                         Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilUser);
                     }
                 }
@@ -98,16 +124,23 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Nu s-au putut prelua datele!", Toast.LENGTH_SHORT).show();
+                Log.e("preluareMedic", error.getMessage());
             }
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.cwProgramari:
+                startActivity(new Intent(getApplicationContext(), ProgramariActivity.class).putExtra(MEDIC, "medic"));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+        }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

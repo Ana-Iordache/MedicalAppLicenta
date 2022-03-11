@@ -34,10 +34,11 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 public class ListaInvestigatiiActivity extends AppCompatActivity {
     public static final String SPECIALITATI = "Specialitati";
     private final FirebaseService firebaseService = new FirebaseService(SPECIALITATI);
-    //    ListView lv;
-//    ArrayAdapter<Investigatie> arrayAdapter;
+
     private Spinner spnSpecialitati;
     private ProgressBar progressBar;
+
+    private Toolbar toolbar;
 
     private LinearLayout llSelectatiSpecialitatea;
 
@@ -53,31 +54,37 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_investigatii);
 
-        progressBar = findViewById(R.id.progressBar);
+        initializeazaAtribute();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        // setez un button de back ca sa ma pot intoarce in pagina principala
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        spnSpecialitati = findViewById(R.id.spnSpecialitati);
-
-        llSelectatiSpecialitatea = findViewById(R.id.llSelectatiSpecialitatea);
+        seteazaToolbar();
 
         firebaseService.preiaDateDinFirebase(preiaSpecialitati());
 
-        rwListaInvestigatii = findViewById(R.id.rwListaInvestigatii);
+        seteazaRecyclerView();
 
+    }
+
+    private void seteazaRecyclerView() {
         layoutManager = new LinearLayoutManager(this);
         rwListaInvestigatii.setLayoutManager(layoutManager);
-
-        investigatii = new ArrayList<>();
         investigatieAdaptor = new InvestigatieAdaptor(investigatii, this);
         rwListaInvestigatii.setAdapter(investigatieAdaptor);
-//        lv = findViewById(R.id.lv);
+    }
 
+    private void seteazaToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void initializeazaAtribute() {
+        progressBar = findViewById(R.id.progressBar);
+        toolbar = findViewById(R.id.toolbar);
+        spnSpecialitati = findViewById(R.id.spnSpecialitati);
+        llSelectatiSpecialitatea = findViewById(R.id.llSelectatiSpecialitatea);
+        rwListaInvestigatii = findViewById(R.id.rwListaInvestigatii);
+        investigatii = new ArrayList<>();
     }
 
     private ValueEventListener preiaSpecialitati() {
@@ -93,6 +100,8 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
                     specialitati.add(s);
                     denumiriSpecialitati.add(s.getDenumire());
                 }
+
+                //TODO sa pun drop down menu
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
                         R.layout.support_simple_spinner_dropdown_item, denumiriSpecialitati);
                 spnSpecialitati.setAdapter(adapter);
@@ -113,16 +122,12 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
 
                                 rwListaInvestigatii.setVisibility(View.VISIBLE);
                                 llSelectatiSpecialitatea.setVisibility(View.GONE);
-//                                arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, s.getInvestigatii());
-//                                lv.setAdapter(arrayAdapter);
-//                                arrayAdapter.notifyDataSetChanged(); nu trb
                                 break;
                             }
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
-
                     }
                 });
             }
@@ -141,6 +146,12 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void loading(Boolean seIncarca) {

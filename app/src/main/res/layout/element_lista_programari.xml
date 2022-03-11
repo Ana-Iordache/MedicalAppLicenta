@@ -19,7 +19,7 @@
             android:layout_gravity="center">
 
             <TextView
-                android:id="@+id/tvNumeMedic"
+                android:id="@+id/tvNume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -31,10 +31,18 @@
                 android:id="@+id/tvSpecialitate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvNumeMedic"
+                android:layout_below="@+id/tvNume"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"/>
 
 
             <LinearLayout

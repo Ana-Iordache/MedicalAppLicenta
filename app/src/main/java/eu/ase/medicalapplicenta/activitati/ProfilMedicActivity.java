@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -91,56 +92,37 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil_medic);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Profil");
-        // setez un button de back ca sa ma pot intoarce in pagina principala
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        initializeazaAtribute();
 
-        //todo poate grupez in functii initializarea si setarea even de click
+        seteazaToolbar();
 
-        ciwPozaProfilMedic = findViewById(R.id.ciwPozaProfilMedic);
-
-        tietNota = findViewById(R.id.tietNota);
-        tietNumeMedic = findViewById(R.id.tietNumeMedic);
-        tietPrenumeMedic = findViewById(R.id.tietPrenumeMedic);
-        tietNrTelefonMedic = findViewById(R.id.tietNrTelefonMedic);
-        tietEmailMedic = findViewById(R.id.tietEmailMedic);
-
-        tvSpecialitate = findViewById(R.id.tvSpecialitate);
-
-        spnGradProfesional = findViewById(R.id.spnGradProfesional);
+        // todo sa fac drop down menu
         spnGradProfesional.setEnabled(false);
         ArrayAdapter<CharSequence> adapterGrad = ArrayAdapter.createFromResource(this, R.array.grade_profesionale,
                 R.layout.support_simple_spinner_dropdown_item);
         spnGradProfesional.setAdapter(adapterGrad);
 
-        spnSpecialitate = findViewById(R.id.spnSpecialitate);
+
         spnSpecialitate.setEnabled(false);
-        specialitati = new ArrayList<>();
+
 //        firebaseServiceSpecialitati.preiaSpecialitatiDinFirebase(preiaSpecialitati());
 
-        btnModificaDate = findViewById(R.id.btnModificaDate);
+
         btnModificaDate.setOnClickListener(this);
-
-        btnSalveaza = findViewById(R.id.btnSalveaza);
         btnSalveaza.setOnClickListener(this);
-
-        btnRenunta = findViewById(R.id.btnRenunta);
         btnRenunta.setOnClickListener(this);
-
-        btnSchimbaParola = findViewById(R.id.btnSchimbaParola);
         btnSchimbaParola.setOnClickListener(this);
-
-        btnStergeCont = findViewById(R.id.btnStergeCont);
         btnStergeCont.setOnClickListener(this);
 
-        medicConectat = FirebaseAuth.getInstance().getCurrentUser();
-        idUserConectat = medicConectat.getUid();
-        referintaUserConectat = firebaseServiceMedic.databaseReference.child(idUserConectat);
+        firebaseServiceMedic.preiaObiectDinFirebase(preiaMedic(), idUserConectat);
 
-        referintaUserConectat.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+//        referintaUserConectat.addListenerForSingleValueEvent();
+    }
+
+    private ValueEventListener preiaMedic() {
+        return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 medic = snapshot.getValue(Medic.class);
@@ -182,10 +164,43 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Nu s-au putut prelua datele!", Toast.LENGTH_SHORT).show();
-
+                Log.e("preluareMedic", error.getMessage());
             }
-        });
+        };
+    }
+
+    private void seteazaToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Profil");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void initializeazaAtribute() {
+        toolbar = findViewById(R.id.toolbar);
+        ciwPozaProfilMedic = findViewById(R.id.ciwPozaProfilMedic);
+
+        tietNota = findViewById(R.id.tietNota);
+        tietNumeMedic = findViewById(R.id.tietNumeMedic);
+        tietPrenumeMedic = findViewById(R.id.tietPrenumeMedic);
+        tietNrTelefonMedic = findViewById(R.id.tietNrTelefonMedic);
+        tietEmailMedic = findViewById(R.id.tietEmailMedic);
+
+        tvSpecialitate = findViewById(R.id.tvSpecialitate);
+
+        spnGradProfesional = findViewById(R.id.spnGradProfesional);
+        spnSpecialitate = findViewById(R.id.spnSpecialitate);
+        specialitati = new ArrayList<>();
+
+        btnModificaDate = findViewById(R.id.btnModificaDate);
+        btnSalveaza = findViewById(R.id.btnSalveaza);
+        btnRenunta = findViewById(R.id.btnRenunta);
+        btnSchimbaParola = findViewById(R.id.btnSchimbaParola);
+        btnStergeCont = findViewById(R.id.btnStergeCont);
+
+        medicConectat = FirebaseAuth.getInstance().getCurrentUser();
+        idUserConectat = medicConectat.getUid();
+        referintaUserConectat = firebaseServiceMedic.databaseReference.child(idUserConectat);
     }
 
     @Override
@@ -226,11 +241,12 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Nu s-a putut prelua specialitatea!", Toast.LENGTH_SHORT).show();
+                Log.e("preluareSpecialitati", error.getMessage());
             }
         };
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -275,12 +291,12 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
     private void actualizeazaDate() {
         if (inputValid()) {
-            String nume = tietNumeMedic.getText().toString();
-            String prenume = tietPrenumeMedic.getText().toString();
+            String nume = tietNumeMedic.getText().toString().trim();
+            String prenume = tietPrenumeMedic.getText().toString().trim();
 
             long nrTelefon;
             if (!tietNrTelefonMedic.getText().toString().isEmpty())
-                nrTelefon = Long.parseLong(tietNrTelefonMedic.getText().toString());
+                nrTelefon = Long.parseLong(tietNrTelefonMedic.getText().toString().trim());
             else nrTelefon = 0;
 
             String gradProfesional = spnGradProfesional.getSelectedItem().toString();
@@ -295,7 +311,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                 }
             }
 
-            String adresaEmail = tietEmailMedic.getText().toString();
+            String adresaEmail = tietEmailMedic.getText().toString().trim();
 
             //todo un progress bar pana cand se actualizeaza si in bd datele
             if (nume.equals(medic.getNume()) && prenume.equals(medic.getPrenume())
@@ -421,7 +437,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
             return false;
         }
 
-        Pattern pattern = Pattern.compile("^407[2-8][0-9]{7}$");
+        Pattern pattern = Pattern.compile(getString(R.string.pattern_numar_telefon));
         Matcher matcher = pattern.matcher(tietNrTelefonMedic.getText().toString());
         if (!tietNrTelefonMedic.getText().toString().isEmpty() && !matcher.matches()) {
             tietNrTelefonMedic.setError("Formatul acceptat este: 407xxxxxxxx!");
@@ -444,7 +460,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
             return false;
         }
 
-        pattern = Pattern.compile("^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$");
+        pattern = Pattern.compile(getString(R.string.pattern_email_medic));
         matcher = pattern.matcher(tietEmailMedic.getText().toString());
         if (!matcher.matches()) {
             tietEmailMedic.setError("Introduceti emailul oficial (de forma adresa@clinica-medicala.ro)!");

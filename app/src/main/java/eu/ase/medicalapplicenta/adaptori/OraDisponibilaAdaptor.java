@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -15,18 +15,18 @@ import eu.ase.medicalapplicenta.R;
 
 public class OraDisponibilaAdaptor extends RecyclerView.Adapter<OraDisponibilaAdaptor.OraDisponibilaViewHolder> {
     private final List<String> oreDisponibile;
-    private final OnButtonClickListener onButtonClickListener;
+    private final OnOraClickListener onOraClickListener;
 
-    public OraDisponibilaAdaptor(List<String> oreDisponibile, OnButtonClickListener onButtonClickListener) {
+    public OraDisponibilaAdaptor(List<String> oreDisponibile, OnOraClickListener onOraClickListener) {
         this.oreDisponibile = oreDisponibile;
-        this.onButtonClickListener = onButtonClickListener;
+        this.onOraClickListener = onOraClickListener;
     }
 
     @NonNull
     @Override
     public OraDisponibilaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_ore_disponibile, parent, false);
-        return new OraDisponibilaViewHolder(view, onButtonClickListener);
+        return new OraDisponibilaViewHolder(view, onOraClickListener);
     }
 
     @Override
@@ -42,29 +42,29 @@ public class OraDisponibilaAdaptor extends RecyclerView.Adapter<OraDisponibilaAd
         return oreDisponibile.size();
     }
 
-    public interface OnButtonClickListener{
-        void onButtonClick(int position);
+    public interface OnOraClickListener {
+        void onOraClick(int position);
     }
 
     public class OraDisponibilaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvOra;
-        AppCompatButton btnProgrameaza;
+        CardView cwOra;
 
-        OnButtonClickListener onButtonClickListener;
+        OnOraClickListener onOraClickListener;
 
-        public OraDisponibilaViewHolder(@NonNull View itemView, OnButtonClickListener onButtonClickListener) {
+        public OraDisponibilaViewHolder(@NonNull View itemView, OnOraClickListener onOraClickListener) {
             super(itemView);
             tvOra = itemView.findViewById(R.id.tvOra);
-            btnProgrameaza = itemView.findViewById(R.id.btnProgrameaza);
+            cwOra = itemView.findViewById(R.id.cwOra);
 
-            this.onButtonClickListener = onButtonClickListener;
-            btnProgrameaza.setOnClickListener(this);
+            this.onOraClickListener = onOraClickListener;
+            cwOra.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            onButtonClickListener.onButtonClick(getAdapterPosition());
+            onOraClickListener.onOraClick(getAdapterPosition());
         }
     }
 }

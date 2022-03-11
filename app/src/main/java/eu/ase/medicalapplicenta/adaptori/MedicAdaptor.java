@@ -1,6 +1,7 @@
 package eu.ase.medicalapplicenta.adaptori;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,21 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         return medici.size();
     }
 
+    private ValueEventListener preiaSpecialitate(MedicViewHolder holder) {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Specialitate s = snapshot.getValue(Specialitate.class);
+                holder.tvSpecialitate.setText(s.getDenumire());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("preluareSpecialitate", error.getMessage());
+            }
+        };
+    }
+
     // trimit informatia de click activitatii
     public interface OnDoctorClickListener {
         void onDoctorClick(int position);
@@ -92,18 +108,7 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
                 holder.tvGradProfesional.setText("");
             } else holder.tvGradProfesional.setText(m.getGradProfesional());
 
-            firebaseService.databaseReference.child(m.getIdSpecialitate()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Specialitate s = snapshot.getValue(Specialitate.class);
-                    holder.tvSpecialitate.setText(s.getDenumire());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            firebaseService.preiaObiectDinFirebase(preiaSpecialitate(holder), m.getIdSpecialitate());
 
             if (m.getNotaFeedback() == 0.0) {
                 holder.tvNota.setText("");
@@ -121,74 +126,3 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         }
     }
 }
-
-// pt listView
-//public class MedicAdaptor extends ArrayAdapter<Medic> {
-//    public static final String SPECIALITATI = "Specialitati";
-//    private Context context;
-//    private int resource;
-//    private List<Medic> medici;
-//    private LayoutInflater inflater;
-//    private FirebaseService firebaseService;
-//
-//    public MedicAdaptor(@NonNull Context context, int resource, @NonNull List<Medic> medici, LayoutInflater inflater) {
-//        super(context, resource, medici);
-//        this.context = context;
-//        this.resource = resource;
-//        this.medici = medici;
-//        this.inflater = inflater;
-//        firebaseService = new FirebaseService(SPECIALITATI);
-//    }
-//
-//    @NonNull
-//    @Override
-//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        View view = inflater.inflate(resource, parent, false);
-//
-//        Medic m = medici.get(position);
-//
-//        if (m != null) {
-//            CircleImageView ciwPozaProfilMedic = view.findViewById(R.id.ciwPozaProfilMedic);
-//            if (!m.getUrlPozaProfil().equals("")) {
-//                Glide.with(view).load(m.getUrlPozaProfil()).into(ciwPozaProfilMedic);
-//            }
-//
-//            TextView tvNumeMedic = view.findViewById(R.id.tvNumeMedic);
-//            String numeComplet = "Dr. " + m.getNume() + " " + m.getPrenume();
-//            tvNumeMedic.setText(numeComplet);
-//
-//            TextView tvGradProfesional = view.findViewById(R.id.tvGradProfesional);
-//            if (m.getGradProfesional().equals("Nespecificat")) {
-//                tvGradProfesional.setText("");
-//            } else {
-//                tvGradProfesional.setText(m.getGradProfesional());
-//            }
-//
-//            TextView tvSpecialitate = view.findViewById(R.id.tvSpecialitate);
-//            firebaseService.databaseReference.child(m.getIdSpecialitate()).addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    Specialitate s = snapshot.getValue(Specialitate.class);
-//                    tvSpecialitate.setText(s.getDenumire());
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//
-//            TextView tvNota = view.findViewById(R.id.tvNota);
-//            TextView tvNrFeedbackuri = view.findViewById(R.id.tvNrFeedbackuri);
-//            if (m.getNotaFeedback() == 0.0) {
-//                tvNota.setText("");
-//                tvNrFeedbackuri.setText("");
-//            } else {
-//                tvNota.setText(String.valueOf(m.getNotaFeedback()));
-////                tvNrFeedbackuri.setText();
-//            }
-//        }
-//
-//        return view;
-//    }
-//}

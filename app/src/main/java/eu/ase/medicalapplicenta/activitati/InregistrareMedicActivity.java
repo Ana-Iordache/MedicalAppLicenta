@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -47,10 +48,12 @@ import eu.ase.medicalapplicenta.entitati.Specialitate;
 import eu.ase.medicalapplicenta.entitati.ZiDeLucru;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
+//todo sa testez iar ca merge
 public class InregistrareMedicActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String SPECIALITATI = "Specialitati";
     public static final String MEDICI = "Medici";
     public static final int REQUEST_CODE = 200;
+
     private CircleImageView ciwPozaProfilMedic;
 
     private TextInputEditText tietNumeMedic;
@@ -80,9 +83,22 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inregistrare_medic);
 
-        ciwPozaProfilMedic = findViewById(R.id.ciwPozaProfilMedic);
+        initializeazaAtribute();
+
         ciwPozaProfilMedic.setOnClickListener(this);
 
+        //todo sa fac dropdown menu in loc de spinner si un progress bar pana se incarca specialitatile maybe
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.grade_profesionale,
+                R.layout.support_simple_spinner_dropdown_item);
+        spnGradProfesional.setAdapter(adapter);
+
+        firebaseServiceSpecialitati.preiaDateDinFirebase(preiaSpecialitati());
+
+        btnInregistrareMedic.setOnClickListener(this);
+    }
+
+    private void initializeazaAtribute() {
+        ciwPozaProfilMedic = findViewById(R.id.ciwPozaProfilMedic);
         tietNumeMedic = findViewById(R.id.tietNumeMedic);
         tietPrenumeMedic = findViewById(R.id.tietPrenumeMedic);
         tietNrTelefonMedic = findViewById(R.id.tietNrTelefonMedic);
@@ -93,22 +109,17 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         tvSpecialitate = findViewById(R.id.tvSpecialitate);
 
         spnGradProfesional = findViewById(R.id.spnGradProfesional);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.grade_profesionale,
-                R.layout.support_simple_spinner_dropdown_item);
-        spnGradProfesional.setAdapter(adapter);
 
-        //TODO un progress bar sau ceva pana se incarca specialitatile in spinner
         specialitati = new ArrayList<>();
-        firebaseServiceSpecialitati.preiaDateDinFirebase(preiaSpecialitati());
 
         spnSpecialitate = findViewById(R.id.spnSpecialitate);
 
         btnInregistrareMedic = findViewById(R.id.btnInregistrareMedic);
-        btnInregistrareMedic.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -116,7 +127,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                 alegePozaProfil();
                 break;
             case R.id.btnInregistrareMedic:
-                inregistrareMedic();
+                inregistreazaMedic();
                 break;
         }
     }
@@ -137,7 +148,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         }
     }
 
-    private void inregistrareMedic() {
+    private void inregistreazaMedic() {
         tvSpecialitate.setError(null);
         if (inputValid()) {
             String nume = tietNumeMedic.getText().toString();
@@ -171,22 +182,23 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                //aici
+                                //todo sa iti aleaga el programul
                                 String idMedic = mAuth.getCurrentUser().getUid();
                                 List<ZiDeLucru> program = new ArrayList<>();
                                 program.add(new ZiDeLucru("luni", "12:00", "15:20"));
                                 program.add(new ZiDeLucru("miercuri", "14:00", "18:20"));
-                                Medic medic = new Medic(idMedic, nume, prenume, nrTelefon, adresaEmail, finalIdSpecialitate, 0.0, gradProfesional, "",program);
+
+                                Medic medic = new Medic(idMedic, nume, prenume, nrTelefon, adresaEmail, finalIdSpecialitate, 0.0, gradProfesional, "", program);
 
                                 firebaseServiceMedici.databaseReference.child(idMedic)
                                         .setValue(medic).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
+                                        if (task.isSuccessful()) {
 //                                            medic.setIdMedic(FirebaseAuth.getInstance().getCurrentUser().getUid());//aici
                                             Toast.makeText(getApplicationContext(), "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
                                             finish();
-                                        } else{
+                                        } else {
                                             Log.e("adaugareMedic", task.getException().getMessage());
                                         }
                                     }
@@ -194,7 +206,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
 
                                 if (uri != null)
                                     incarcaPoza();
-                            } else{
+                            } else {
                                 Log.e("creareContMedic", task.getException().getMessage());
                             }
                         }
@@ -203,6 +215,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         }
     }
 
+    //todo poate fac o clasa ca sa apelez funtia asta cand am nevoie
     private void incarcaPoza() {
         StorageReference caleFisier = FirebaseStorage.getInstance().getReference()
                 .child("poze de profil").child(mAuth.getCurrentUser().getUid());
@@ -269,7 +282,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
             return false;
         }
 
-        Pattern pattern = Pattern.compile("^407[2-8][0-9]{7}$");
+        Pattern pattern = Pattern.compile(getString(R.string.pattern_numar_telefon));
         Matcher matcher = pattern.matcher(tietNrTelefonMedic.getText().toString());
         if (!tietNrTelefonMedic.getText().toString().isEmpty() && !matcher.matches()) {
             tietNrTelefonMedic.setError("Formatul acceptat este: 407xxxxxxxx!");
@@ -292,7 +305,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
             return false;
         }
 
-        pattern = Pattern.compile("^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$");
+        pattern = Pattern.compile(getString(R.string.pattern_email_medic));
         matcher = pattern.matcher(tietEmailMedic.getText().toString());
         if (!matcher.matches()) {
             tietEmailMedic.setError("Introduceti emailul oficial (de forma adresa@clinica-medicala.ro)!");
@@ -336,12 +349,14 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                     Specialitate s = dataSnapshot.getValue(Specialitate.class);
                     specialitati.add(s);
                 }
+
                 List<String> denumiriSpecialitati = new ArrayList<>();
                 denumiriSpecialitati.add("Selectati specialitatea");
                 for (Specialitate s : specialitati) {
                     denumiriSpecialitati.add(s.getDenumire());
                 }
-                ArrayAdapter<String> adapterSpec = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, denumiriSpecialitati);
+                ArrayAdapter<String> adapterSpec = new ArrayAdapter<>(getApplicationContext(),
+                        android.R.layout.simple_spinner_dropdown_item, denumiriSpecialitati);
                 spnSpecialitate.setAdapter(adapterSpec);
             }
 

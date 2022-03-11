@@ -12,10 +12,10 @@
     <!--ii pun start ca sa stie cum sa se deschida
     si ca sa nu se faca overlapping intre elemente pun fitsSystemWindows="true" -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d2ecfc"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <!--punem dimensiunea default cu actionBarSize
@@ -24,9 +24,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#77cefc"
+            android:background="@color/custom_blue"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,147 +37,219 @@
                 android:textSize="25sp" />
         </androidx.appcompat.widget.Toolbar>
 
-        <ScrollView
+        <!--        <ScrollView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent">-->
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cwMedici"
+                android:layout_width="390dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/custom_light_blue"
+                app:cardCornerRadius="20dp">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cwMedici"
-                    android:layout_width="390dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="20dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:text="Medici"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="90dp"
-                            android:layout_marginTop="25dp"
-                            android:fontFamily="sans-serif-condensed-medium"
-                            android:text="Medici"
-                            android:textColor="@color/black"
-                            android:textSize="23sp" />
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_doctor" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/ic_doctor" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_sageata_dreapta" />
+                </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_sageata_dreapta" />
-                    </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cwInvestigatii"
+                android:layout_width="390dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/custom_light_blue"
+                app:cardCornerRadius="20dp">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cwInvestigatii"
-                    android:layout_width="390dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="20dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:text="Investigatii si preturi"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="90dp"
-                            android:layout_marginTop="25dp"
-                            android:fontFamily="sans-serif-condensed-medium"
-                            android:text="Investigatii si preturi"
-                            android:textColor="@color/black"
-                            android:textSize="23sp" />
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_investigatii" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/ic_investigatii" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_sageata_dreapta" />
+                </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_sageata_dreapta" />
-                    </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cwProgramari"
+                android:layout_width="390dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/custom_light_blue"
+                app:cardCornerRadius="20dp">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cwProgramari"
-                    android:layout_width="390dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    app:cardBackgroundColor="#fff"
-                    app:cardCornerRadius="20dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:text="Programari"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="90dp"
-                            android:layout_marginTop="25dp"
-                            android:fontFamily="sans-serif-condensed-medium"
-                            android:text="Programari"
-                            android:textColor="@color/black"
-                            android:textSize="23sp" />
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_programari" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/ic_programari" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_sageata_dreapta" />
+                </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_sageata_dreapta" />
-                    </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cwFacturi"
+                android:layout_width="390dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/custom_light_blue"
+                app:cardCornerRadius="20dp">
 
-            </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        </ScrollView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:text="Facturi"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp" />
 
-    </LinearLayout>
+                    <ImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/ic_facturi" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_sageata_dreapta" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCallCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="#77cefc"
+            android:clickable="true"
+            android:focusable="true"
+            app:srcCompat="@android:drawable/stat_sys_phone_call"
+            android:contentDescription="Call Center" />
+
+
+    </RelativeLayout>
 
     <!--atasam nav view la care atasam headerul si meniul create-->
     <!--ii pun start ca sa se pozitioneze in stanga de tot-->
         <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/navigationView"
             android:layout_gravity="start"
+            android:background="@color/white"
             app:headerLayout="@layout/nav_header"
-            app:menu="@menu/nav_drawer_menu"
-            android:background="#d2ecfc"/>
+            app:menu="@menu/nav_drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

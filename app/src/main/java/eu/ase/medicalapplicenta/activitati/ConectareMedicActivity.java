@@ -3,6 +3,7 @@ package eu.ase.medicalapplicenta.activitati;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,39 +27,41 @@ import java.util.regex.Pattern;
 import eu.ase.medicalapplicenta.R;
 
 public class ConectareMedicActivity extends AppCompatActivity implements View.OnClickListener{
-    TextInputEditText tietLoginEmailMedic;
-    TextInputEditText tietLoginParolaMedic;
+    private TextInputEditText tietLoginEmailMedic;
+    private TextInputEditText tietLoginParolaMedic;
 
-    TextView tvResetareParola;
-    TextView tvCreareCont;
+    private TextView tvResetareParola;
+    private TextView tvCreareCont;
 
-    CheckBox cbRamaiAutentificat;
-    SharedPreferences preferinteConectare;
-    SharedPreferences.Editor preferinteConectareEditor;
-    Boolean salveazaDateConectare;
+    private CheckBox cbRamaiAutentificat;
+    private SharedPreferences preferinteConectare;
+    private SharedPreferences.Editor preferinteConectareEditor;
+    private Boolean salveazaDateConectare;
 
-    Button btnLoginMedic;
+    private Button btnLoginMedic;
 
-    ImageView ivPacient;
+    private ImageView ivPacient;
 
     private FirebaseAuth mAuth;
+
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conectare_medic);
 
-        tietLoginEmailMedic = findViewById(R.id.tietLoginEmailMedic);
-        tietLoginParolaMedic = findViewById(R.id.tietLoginParolaMedic);
+        initializeazaAtribute();
 
-        tvResetareParola = findViewById(R.id.tvResetareParola);
         tvResetareParola.setOnClickListener(this);
-
-        tvCreareCont = findViewById(R.id.tvCreareCont);
         tvCreareCont.setOnClickListener(this);
+        btnLoginMedic.setOnClickListener(this);
+        ivPacient.setOnClickListener(this);
 
-        cbRamaiAutentificat = findViewById(R.id.cbRamaiAutentificat);
+        preiaPreferinte();
+    }
 
+    private void preiaPreferinte() {
         preferinteConectare = getSharedPreferences("salveazaDateConectare",MODE_PRIVATE);
         preferinteConectareEditor = preferinteConectare.edit();
 
@@ -66,16 +70,27 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
             tietLoginEmailMedic.setText(preferinteConectare.getString("email", ""));
             tietLoginParolaMedic.setText(preferinteConectare.getString("parola",""));
         }
+    }
+
+    private void initializeazaAtribute() {
+        tietLoginEmailMedic = findViewById(R.id.tietLoginEmailMedic);
+        tietLoginParolaMedic = findViewById(R.id.tietLoginParolaMedic);
+
+        tvResetareParola = findViewById(R.id.tvResetareParola);
+        tvCreareCont = findViewById(R.id.tvCreareCont);
+
+        cbRamaiAutentificat = findViewById(R.id.cbRamaiAutentificat);
 
         btnLoginMedic = findViewById(R.id.btnLoginMedic);
-        btnLoginMedic.setOnClickListener(this);
 
         ivPacient = findViewById(R.id.ivPacient);
-        ivPacient.setOnClickListener(this);
+
+        progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -83,7 +98,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
                 startActivity(new Intent(getApplicationContext(), InregistrareMedicActivity.class));
                 break;
             case R.id.btnLoginMedic:
-                conectareMedic();
+                conecteazaMedic();
                 break;
             case R.id.tvResetareParola:
                 //TODO poate incerc cu un fragment
@@ -97,7 +112,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void conectareMedic() {
+    private void conecteazaMedic() {
         String email = tietLoginEmailMedic.getText().toString().trim(); //trim in cazul in care pune space
         String parola = tietLoginParolaMedic.getText().toString().trim();
 
@@ -107,7 +122,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
             return;
         }
 
-        Pattern pattern = Pattern.compile("^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$");
+        Pattern pattern = Pattern.compile(getString(R.string.pattern_email_medic));
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
             tietLoginEmailMedic.setError("Introduceti emailul oficial (de forma adresa@clinica-medicala.ro)!");
@@ -136,6 +151,8 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         }
         preferinteConectareEditor.commit();
 
+        loading(true);
+
         mAuth.signInWithEmailAndPassword(email, parola).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -152,10 +169,17 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
 
 //                    finish();
                 } else {
+                    loading(false);
                     Toast.makeText(getApplicationContext(), "Credentiale invalide!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void loading(Boolean seIncarca) {
+        if (seIncarca) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
     }
 }
 //todo

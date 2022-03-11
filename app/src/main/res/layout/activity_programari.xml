@@ -116,15 +116,15 @@
         android:id="@+id/fabAdaugaProgramare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#77cefc"
-        android:tint="@color/white"
-        android:clickable="true"
-        android:focusable="true"
-        app:srcCompat="@drawable/ic_adauga"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
-        android:contentDescription="Adauga programare" />
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:backgroundTint="#77cefc"
+        android:clickable="true"
+        android:contentDescription="Adauga programare"
+        android:focusable="true"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_adauga" />
 
 </RelativeLayout>

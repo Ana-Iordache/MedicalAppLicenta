@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/_10sdp">
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:paddingTop="@dimen/_10sdp">-->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cwOra"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/custom_blue"
+        app:cardCornerRadius="30dp">
 
         <TextView
             android:id="@+id/tvOra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_gravity="center"
             android:text="11:30"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_15sdp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnProgrameaza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_butoane"
-            android:paddingHorizontal="@dimen/_20sdp"
-            android:text="Programează"
-            android:textAllCaps="false"
-            android:textColor="#fff" />
+    </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
+        <!--        <androidx.appcompat.widget.AppCompatButton-->
+        <!--            android:id="@+id/btnProgrameaza"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/background_butoane"-->
+        <!--            android:paddingHorizontal="@dimen/_20sdp"-->
+        <!--            android:text="Programează"-->
+        <!--            android:textAllCaps="false"-->
+        <!--            android:textColor="#fff" />-->
+
+<!--    </LinearLayout>-->
 
 </RelativeLayout>
