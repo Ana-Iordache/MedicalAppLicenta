@@ -2,7 +2,9 @@ package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,10 +31,11 @@ import eu.ase.medicalapplicenta.R;
 public class ConectarePacientActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tv;
     private TextView tvSuntMedic;
+    private ImageView ivMedic;
 
     private TextInputEditText tietLoginEmailPacient;
     private TextInputEditText tietLoginParolaPacient;
-    private Button btnLoginPacient;
+    private AppCompatButton btnLoginPacient;
 
     private TextView tvCreareCont;
     private TextView tvResetareParola;
@@ -43,8 +46,6 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
     private SharedPreferences preferinteConectare;
     private SharedPreferences.Editor preferinteConectareEditor;
     private Boolean salveazaDateConectare;
-
-    private ImageView ivMedic;
 
     private FirebaseAuth mAuth;
 
@@ -98,13 +99,13 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
         cbRamaiAutentificat = findViewById(R.id.cbRamaiAutentificat);
 
-        ivMedic = findViewById(R.id.ivMedic);
-
         tvSuntMedic = findViewById(R.id.tvSuntMedic);
+        ivMedic = findViewById(R.id.ivMedic);
 
         mAuth = FirebaseAuth.getInstance();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -207,6 +208,16 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         if (seIncarca) {
             progressBar.setVisibility(View.VISIBLE);
         } else progressBar.setVisibility(View.GONE);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(FirebaseAuth.getInstance().getCurrentUser()==null){
+            moveTaskToBack(true);
+        }
     }
 
 }

@@ -5,25 +5,21 @@
 
     <item
         android:id="@+id/item_profil"
-        android:title="Profil"
         android:icon="@drawable/ic_profil"
-        />
+        android:title="@string/profil" />
 
     <item
         android:id="@+id/item_log_out"
-        android:title="Iesi din cont"
         android:icon="@drawable/ic_log_out"
-        />
+        android:title="@string/logout" />
 
     <item
         android:id="@+id/item_feedback"
-        android:title="Feedback"
         android:icon="@drawable/ic_email"
-        />
+        android:title="@string/feedback" />
 
     <item
         android:id="@+id/item_despre_noi"
-        android:title="Despre noi"
         android:icon="@drawable/ic_despre"
-        />
+        android:title="@string/despre_noi" />
 </menu>

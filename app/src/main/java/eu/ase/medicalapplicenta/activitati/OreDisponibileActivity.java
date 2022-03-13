@@ -148,7 +148,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                         .map(Investigatie::getDenumire)
                         .collect(Collectors.toList());
 
-                ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_investigatie, denumiriInvestigatii);
+                ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item, denumiriInvestigatii);
                 actvInvestigatii.setAdapter(adapter);
             }
 

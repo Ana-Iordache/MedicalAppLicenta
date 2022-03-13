@@ -2,13 +2,18 @@ package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -16,8 +21,10 @@ import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +33,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -64,12 +73,16 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
     private TextInputEditText tietVarsta;
     private TextInputEditText tietSex;
 
-    private Spinner spGrupaSange;
+    //    private Spinner spGrupaSange;
+    private AutoCompleteTextView actvGrupeSange;
 
     private Button btnModificaDate;
     private Button btnSalveaza;
     private Button btnRenunta;
+    private LinearLayout llButoane;
+
     private Button btnSchimbaParola;
+    private Button btnSchimbaEmail;
     private Button btnStergeCont;
 
     private Toolbar toolbar;
@@ -82,6 +95,12 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
     private Uri uri;
 
+    private AlertDialog dialogParola;
+    private AlertDialog dialogEmail;
+    private AlertDialog dialogStergereCont;
+
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,15 +110,30 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
         seteazaToolbar();
 
-        spGrupaSange.setEnabled(false); // din xml nu merge
+        seteazaAdaptorGrupeSange();
+
+        seteazaDialogSchimbaParola();
+        seteazaDialogSchimbaEmail();
+        seteazaDialogStereCont();
+
+//        spGrupaSange.setEnabled(false); // din xml nu merge
+//        actvGrupeSange.setDropDownHeight(0); todo hmmmmm
 
         btnModificaDate.setOnClickListener(this);
         btnSalveaza.setOnClickListener(this);
         btnRenunta.setOnClickListener(this);
         btnSchimbaParola.setOnClickListener(this);
+        btnSchimbaEmail.setOnClickListener(this);
         btnStergeCont.setOnClickListener(this);
 
         firebaseService.preiaObiectDinFirebase(preiaPacient(), idUserConectat);
+    }
+
+
+    private void seteazaAdaptorGrupeSange() {
+        ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item,
+                getResources().getStringArray(R.array.grupe_sange));
+        actvGrupeSange.setAdapter(adapter);
     }
 
     private ValueEventListener preiaPacient() {
@@ -127,7 +161,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                     tietPrenumePacient.setText(prenume);
                     tietCnp.setText(String.valueOf(cnp));
                     tietDataNasterii.setText(dataNasterii);
-                    tietNrTelefonPacient.setText(String.valueOf(telefon));
+                    tietNrTelefonPacient.setText(String.valueOf(telefon).substring(1));
                     tietAdresa.setText(adresa);
                     tietEmailPacient.setText(email);
                     tietVarsta.setText(String.valueOf(varsta));
@@ -144,10 +178,10 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                         Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilPacient);
                     }
 
-                    ArrayAdapter<String> adapter = (ArrayAdapter<String>) spGrupaSange.getAdapter();
+                    ArrayAdapter<String> adapter = (ArrayAdapter<String>) actvGrupeSange.getAdapter();
                     for (int i = 0; i < adapter.getCount(); i++) {
                         if (adapter.getItem(i).equals(grupaSange)) {
-                            spGrupaSange.setSelection(i);
+                            actvGrupeSange.setText(adapter.getItem(i));
                             break;
                         }
                     }
@@ -183,12 +217,15 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         tietVarsta = findViewById(R.id.tietVarsta);
         tietSex = findViewById(R.id.tietSex);
 
-        spGrupaSange = findViewById(R.id.spGrupaSange);
+        actvGrupeSange = findViewById(R.id.actvGrupeSange);
 
         btnModificaDate = findViewById(R.id.btnModificaDate);
         btnSalveaza = findViewById(R.id.btnSalveaza);
         btnRenunta = findViewById(R.id.btnRenunta);
+        llButoane = findViewById(R.id.llButoane);
+
         btnSchimbaParola = findViewById(R.id.btnSchimbaParola);
+        btnSchimbaEmail = findViewById(R.id.btnSchimbaEmail);
         btnStergeCont = findViewById(R.id.btnStergeCont);
 
         pacientConectat = FirebaseAuth.getInstance().getCurrentUser();
@@ -206,19 +243,25 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnModificaDate:
                 ciwPozaProfilPacient.setOnClickListener(this);
+                seteazaAdaptorGrupeSange();
                 seteazaAccesibilitatea(true);
                 seteazaVizibilitateButoane(View.GONE, View.VISIBLE);
                 break;
-            case R.id.btnSchimbaParola: //TODO
-                Toast.makeText(getApplicationContext(), "schimba parola", Toast.LENGTH_SHORT).show();
+            case R.id.btnSchimbaParola:
+                dialogParola.show();
+                break;
+            case R.id.btnSchimbaEmail:
+                dialogEmail.show();
+                break;
             case R.id.btnStergeCont: //TODO
-                Toast.makeText(getApplicationContext(), "sterge cont", Toast.LENGTH_SHORT).show();
+                dialogStergereCont.show();
                 break;
             case R.id.btnSalveaza:
                 actualizeazaDate();
@@ -226,11 +269,293 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             case R.id.btnRenunta:
                 seteazaAccesibilitatea(false);
                 seteazaVizibilitateButoane(View.VISIBLE, View.GONE);
+                ciwPozaProfilPacient.setOnClickListener(null);
                 break;
             case R.id.ciwPozaProfilUser:
                 alegePozaProfil();
                 break;
         }
+    }
+
+    private void seteazaDialogSchimbaParola() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.schimba_parola));
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_schimba_parola, null);
+        TextInputEditText tietParolaActuala = view.findViewById(R.id.tietParolaActuala);
+        TextInputEditText tietParolaNoua = view.findViewById(R.id.tietParolaNoua);
+        TextInputEditText tietConfirmareParolaNoua = view.findViewById(R.id.tietConfirmareParolaNoua);
+        AppCompatButton btnSalveaza = view.findViewById(R.id.btnSalveaza);
+        AppCompatButton btnRenunta = view.findViewById(R.id.btnRenunta);
+
+        progressBar = view.findViewById(R.id.progressBar);
+
+        btnRenunta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogParola.dismiss();
+            }
+        });
+
+        btnSalveaza.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String parolaActuala = tietParolaActuala.getText().toString().trim();
+                String parolaNoua = tietParolaNoua.getText().toString().trim();
+                String confirmareParolaNoua = tietConfirmareParolaNoua.getText().toString().trim();
+
+                if (parolaActuala.isEmpty()) {
+                    tietParolaActuala.setError(getString(R.string.err_empty_parola));
+                    tietParolaActuala.requestFocus();
+                    return;
+                }
+                if (parolaActuala.length() < 6) {
+                    tietParolaActuala.setError(getString(R.string.err_not_valid_parola));
+                    tietParolaActuala.requestFocus();
+                    return;
+                }
+
+                if (parolaNoua.isEmpty()) {
+                    tietParolaNoua.setError(getString(R.string.err_empty_parola));
+                    tietParolaNoua.requestFocus();
+                    return;
+                }
+                if (parolaNoua.length() < 6) {
+                    tietParolaNoua.setError(getString(R.string.err_not_valid_parola));
+                    tietParolaNoua.requestFocus();
+                    return;
+                }
+
+                if (confirmareParolaNoua.isEmpty()) {
+                    tietConfirmareParolaNoua.setError(getString(R.string.err_empty_confirmare_parola));
+                    tietConfirmareParolaNoua.requestFocus();
+                    return;
+                }
+                if (!confirmareParolaNoua.equals(parolaNoua)) {
+                    tietConfirmareParolaNoua.setError(getString(R.string.err_not_valid_confirmare_parola));
+                    tietConfirmareParolaNoua.requestFocus();
+                    return;
+                }
+
+                AuthCredential credential = EmailAuthProvider.getCredential(pacientConectat.getEmail(), parolaActuala);
+                loading(true);
+                pacientConectat.reauthenticate(credential)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("reautentificareUser", "User re-authenticated.");
+                                    pacientConectat.updatePassword(parolaNoua).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            loading(false);
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getApplicationContext(), "Parola a fost actualizată!", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Log.e("schimbareParola", task.getException().getMessage());
+                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Parola nu a fost schimbată!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+
+                                    tietParolaActuala.setText("");
+                                    tietParolaNoua.setText("");
+                                    tietConfirmareParolaNoua.setText("");
+
+                                    dialogParola.dismiss();
+                                } else {
+                                    loading(false);
+                                    Log.e("reautentificareUser", task.getException().getMessage());
+                                    tietParolaActuala.setError("Parola nu este corectă!");
+                                    tietParolaActuala.requestFocus();
+                                }
+                            }
+                        });
+            }
+        });
+
+        builder.setView(view);
+        dialogParola = builder.create();
+    }
+
+    private void seteazaDialogSchimbaEmail() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.schimba_email));
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_schimba_email, null);
+        TextInputEditText tietParola = view.findViewById(R.id.tietParola);
+        TextInputEditText tietEmail = view.findViewById(R.id.tietEmail);
+
+        AppCompatButton btnSalveaza = view.findViewById(R.id.btnSalveaza);
+        AppCompatButton btnRenunta = view.findViewById(R.id.btnRenunta);
+
+        progressBar = view.findViewById(R.id.progressBar);
+
+        btnRenunta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogEmail.dismiss();
+            }
+        });
+
+        btnSalveaza.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = tietEmail.getText().toString().trim();
+                String parola = tietParola.getText().toString().trim();
+                if (email.isEmpty()) {
+                    tietEmail.setError(getString(R.string.err_empty_email));
+                    tietEmail.requestFocus();
+                    return;
+                }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    tietEmail.setError(getString(R.string.err_not_valid_email));
+                    tietEmail.requestFocus();
+                    return;
+                }
+
+                if (parola.isEmpty()) {
+                    tietParola.setError(getString(R.string.err_empty_parola));
+                    tietParola.requestFocus();
+                    return;
+                }
+                if (parola.length() < 6) {
+                    tietParola.setError(getString(R.string.err_not_valid_parola));
+                    tietParola.requestFocus();
+                    return;
+                }
+
+                AuthCredential credential = EmailAuthProvider.getCredential(pacientConectat.getEmail(), parola);
+                loading(true);
+                pacientConectat.reauthenticate(credential)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("reautentificareUser", "User re-authenticated.");
+                                    pacientConectat.updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            loading(false);
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getApplicationContext(), "Emailul a fost actualizat!", Toast.LENGTH_SHORT).show();
+                                                tietEmailPacient.setText(email);
+                                                referintaUserConectat.child("adresaEmail").setValue(email);
+                                            } else {
+                                                Log.e("schimbareEmail", task.getException().getMessage());
+                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Emailul nu a fost schimbat!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                                    tietEmail.setText("");
+                                    tietParola.setText("");
+
+                                    dialogEmail.dismiss();
+                                } else {
+                                    loading(false);
+                                    Log.e("reautentificareUser", task.getException().getMessage());
+                                    tietParola.setError("Parola nu este corectă!");
+                                    tietParola.requestFocus();
+                                }
+                            }
+                        });
+            }
+        });
+
+        builder.setView(view);
+        dialogEmail = builder.create();
+    }
+
+    private void seteazaDialogStereCont() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.sterge_contul));
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_sterge_cont, null);
+        TextInputEditText tietParola = view.findViewById(R.id.tietParola);
+
+        AppCompatButton btnDa = view.findViewById(R.id.btnDa);
+        AppCompatButton btnNu = view.findViewById(R.id.btnNu);
+
+        progressBar = view.findViewById(R.id.progressBar);
+
+        btnNu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogStergereCont.dismiss();
+            }
+        });
+
+        btnDa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String parola = tietParola.getText().toString().trim();
+                if (parola.isEmpty()) {
+                    tietParola.setError(getString(R.string.err_empty_parola));
+                    tietParola.requestFocus();
+                    return;
+                }
+                if (parola.length() < 6) {
+                    tietParola.setError(getString(R.string.err_not_valid_parola));
+                    tietParola.requestFocus();
+                    return;
+                }
+
+                AuthCredential credential = EmailAuthProvider.getCredential(pacientConectat.getEmail(), parola);
+                loading(true);
+                pacientConectat.reauthenticate(credential)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("reautentificareUser", "User re-authenticated.");
+                                    pacientConectat.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            loading(false);
+                                            if (task.isSuccessful()) {
+                                                //todo nush cum sa fac cand dau start sa nu mai apara credentialele si cand ies din ap si intru iar sa nu ma mai duca la profil...
+                                                SharedPreferences preferinteConectare = getSharedPreferences("salveazaDateConectare", MODE_PRIVATE);
+                                                SharedPreferences.Editor preferinteConectareEditor = preferinteConectare.edit();
+                                                preferinteConectareEditor.clear();
+                                                preferinteConectareEditor.commit();
+
+                                                Toast.makeText(getApplicationContext(), "Contul a fost șters cu succes!", Toast.LENGTH_SHORT).show();
+                                                Log.d("stergereCont", "Contul a fost sters.");
+                                                referintaUserConectat.child("contSters").setValue(true);
+//                                                Toast.makeText(getApplicationContext(), "Emailul a fost actualizat!", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Log.e("stergereCont", task.getException().getMessage());
+                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Contul nu a putut fi sters!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                                    tietParola.setText("");
+                                    dialogStergereCont.dismiss();
+                                    startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
+                                    finish();
+                                } else {
+                                    loading(false);
+                                    Log.e("reautentificareUser", task.getException().getMessage());
+                                    tietParola.setError("Parola nu este corectă!");
+                                    tietParola.requestFocus();
+                                }
+                            }
+                        });
+            }
+        });
+
+        builder.setView(view);
+        dialogStergereCont = builder.create();
+    }
+
+    private void loading(@NonNull Boolean seIncarca) {
+        if (seIncarca) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
     }
 
     private void alegePozaProfil() {
@@ -249,22 +574,13 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void actualizeazaDate() {
-        //todo sa poata modifica si grupa de sange
         if (inputValid()) {
-
             String nume = tietNumePacient.getText().toString().trim();
             String prenume = tietPrenumePacient.getText().toString().trim();
-
-            String adresa;
-            if (tietAdresa.getText().toString().isEmpty()) {
-                adresa = "Necunoscuta";
-                tietAdresa.setText(adresa);
-            } else {
-                adresa = tietAdresa.getText().toString().trim();
-            }
-
-            long nrTelefon = Long.parseLong(tietNrTelefonPacient.getText().toString());
+            String grupaSange = actvGrupeSange.getText().toString();
+            long nrTelefon = Long.parseLong("4" + tietNrTelefonPacient.getText().toString().trim());
 
             double greutate;
             if (tietGreutate.getText().toString().isEmpty()) {
@@ -282,18 +598,20 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 inaltime = Double.parseDouble(tietInaltime.getText().toString().trim());
             }
 
-            String email = tietEmailPacient.getText().toString().trim();
+            if (nume.equals(pacient.getNume()) && prenume.equals(pacient.getPrenume()) && grupaSange.equals(pacient.getGrupaSange())
+                    && nrTelefon == pacient.getNrTelefon() && greutate == pacient.getGreutate()
+                    && inaltime == pacient.getInaltime() && uri == null) {
 
-            if (nume.equals(pacient.getNume()) && prenume.equals(pacient.getPrenume())
-                    && adresa.equals(pacient.getAdresa()) && nrTelefon == pacient.getNrTelefon()
-                    && greutate == pacient.getGreutate() && inaltime == pacient.getInaltime() && uri == null) {
+                seteazaAccesibilitatea(false);
+                seteazaVizibilitateButoane(View.VISIBLE, View.GONE);
+                ciwPozaProfilPacient.setOnClickListener(null);
                 Toast.makeText(getApplicationContext(), "Informatiile nu au fost modificate!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             referintaUserConectat.child("nume").setValue(nume);
             referintaUserConectat.child("prenume").setValue(prenume);
-            referintaUserConectat.child("adresa").setValue(adresa);
+            referintaUserConectat.child("grupaSange").setValue(grupaSange);
             referintaUserConectat.child("nrTelefon").setValue(nrTelefon);
             referintaUserConectat.child("greutate").setValue(greutate);
             referintaUserConectat.child("inaltime").setValue(inaltime);
@@ -302,36 +620,11 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 incarcaPoza();
             }
 
-            if (!email.equals(pacientConectat.getEmail())) {
-                // TODO
-                // trb sa reautentific utilizatorul daca nu a fost recent logat
-                // deci cred ca ar trb sa l pun sa introduca parola ca sa si poata schimba emailul,
-                // ca sa o iau si sa-l reautentific eu gen
-                // sau as putea sa pun in loc de btnSchimbaParola sa pun un buton de Schimba date de autentificare
-                // si sa se deschida un fragment sau o activitate
-//            AuthCredential credential = EmailAuthProvider.getCredential(pacientConectat.getEmail(), "123456");
-//            pacientConectat.reauthenticate(credential)
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            Log.d("reautentificareUser", "User re-authenticated.");
-//                        }
-//                    });
-                pacientConectat.updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        referintaUserConectat.child("adresaEmail").setValue(email);
-                        Log.i("actualizareEmail", "Emailul a fost actualizat!");
-                    }
-                });
-
-                // TODO sa fac si schimbare parola
-            }
-
-            Toast.makeText(getApplicationContext(), "Datele au fost actualizate!", Toast.LENGTH_SHORT).show();
-
             seteazaAccesibilitatea(false);
             seteazaVizibilitateButoane(View.VISIBLE, View.GONE);
+            ciwPozaProfilPacient.setOnClickListener(null);
+            Toast.makeText(getApplicationContext(), "Datele au fost actualizate!", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -340,20 +633,20 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         Matcher matcher;
 
         if (tietNumePacient.getText().toString().isEmpty()) {
-            tietNumePacient.setError("Introduceti numele!");
+            tietNumePacient.setError(getString(R.string.err_empty_nume));
             tietNumePacient.requestFocus();
             return false;
         }
 
         if (tietPrenumePacient.getText().toString().isEmpty()) {
-            tietPrenumePacient.setError("Introduceti prenumele!");
+            tietPrenumePacient.setError(getString(R.string.err_empty_prenume));
             tietPrenumePacient.requestFocus();
             return false;
         }
 
 
         if (tietNrTelefonPacient.getText().toString().isEmpty()) {
-            tietNrTelefonPacient.setError("Introduceti numarul de telefon!");
+            tietNrTelefonPacient.setError(getString(R.string.err_empty_telefon));
             tietNrTelefonPacient.requestFocus();
             return false;
         }
@@ -361,44 +654,33 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         pattern = Pattern.compile(getString(R.string.pattern_numar_telefon));
         matcher = pattern.matcher(tietNrTelefonPacient.getText().toString());
         if (!matcher.matches()) {
-            tietNrTelefonPacient.setError("Formatul acceptat este: 407xxxxxxxx!");
+            tietNrTelefonPacient.setError(getString(R.string.err_not_valid_telefon));
             tietNrTelefonPacient.requestFocus();
             return false;
         }
 
-        if (!tietGreutate.getText().toString().isEmpty() && !tietGreutate.getText().toString().equals("0.0")) {
+        if (!tietGreutate.getText().toString().isEmpty() && !tietGreutate.getText().toString().equals(getString(R.string.default_empty_double))) {
             pattern = Pattern.compile(getString(R.string.pattern_greutate));
             matcher = pattern.matcher(tietGreutate.getText().toString());
             if (!matcher.matches()) {
-                tietGreutate.setError("Introduceti o greutate valida (de ex: 45.7)!");
+                tietGreutate.setError(getString(R.string.err_not_valid_greutate));
                 tietGreutate.requestFocus();
                 return false;
             }
 
         }
 
-        if (!tietInaltime.getText().toString().isEmpty() && !tietInaltime.getText().toString().equals("0.0")) {
+        if (!tietInaltime.getText().toString().isEmpty() && !tietInaltime.getText().toString().equals(getString(R.string.default_empty_double))) {
 
             pattern = Pattern.compile(getString(R.string.pattern_inaltime));
             matcher = pattern.matcher(tietInaltime.getText().toString());
             if (!matcher.matches()) {
-                tietInaltime.setError("Introduceti un o inaltime valida (de ex: 1.65)!");
+                tietInaltime.setError(getString(R.string.err_not_valid_inaltime));
                 tietInaltime.requestFocus();
                 return false;
             }
         }
 
-        if (tietEmailPacient.getText().toString().isEmpty()) {
-            tietEmailPacient.setError("Introduceti emailul!");
-            tietEmailPacient.requestFocus();
-            return false;
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(tietEmailPacient.getText().toString()).matches()) {
-            tietEmailPacient.setError("Introduceti un email valid!");
-            tietEmailPacient.requestFocus();
-            return false;
-        }
 
         return true;
     }
@@ -458,17 +740,23 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
     private void seteazaVizibilitateButoane(int v1, int v2) {
         btnModificaDate.setVisibility(v1);
-        btnSalveaza.setVisibility(v2);
-        btnRenunta.setVisibility(v2);
+        llButoane.setVisibility(v2);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void seteazaAccesibilitatea(boolean b) {
         tietNumePacient.setEnabled(b);
         tietPrenumePacient.setEnabled(b);
         tietAdresa.setEnabled(b);
+////        actvGrupeSange.setEnabled(b);  todo hmmmm
+//        actvGrupeSange.setDropDownHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         tietNrTelefonPacient.setEnabled(b);
         tietGreutate.setEnabled(b);
         tietInaltime.setEnabled(b);
-        tietEmailPacient.setEnabled(b);
+//        tietEmailPacient.setEnabled(b);
+
+        btnSchimbaParola.setEnabled(!b);
+        btnSchimbaEmail.setEnabled(!b);
+        btnStergeCont.setEnabled(!b);
     }
 }

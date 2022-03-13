@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#77cefc"
-    android:padding="20dp"
+    android:background="@color/custom_blue"
+    android:padding="@dimen/_10sdp"
     tools:context=".activitati.InregistrarePacientActivity">
 
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="vertical"-->
-    <!--        android:background="#77cefc"-->
-    <!--        tools:context=".activitati.InregistrarePacientActivity">-->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:translationZ="@dimen/_90sdp"
+        android:visibility="gone" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:elevation="10dp"
-        app:cardBackgroundColor="#d2ecfc"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/custom_light_blue"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#d2ecfc"
+                android:background="@color/custom_light_blue"
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ciwPozaProfilUser"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
+                    android:layout_width="@dimen/_86sdp"
+                    android:layout_height="@dimen/_86sdp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_account" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="@string/atentionare"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="italic" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -49,21 +60,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietNumePacient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_nume"
-                        android:drawablePadding="10dp"
-                        android:hint="Nume*"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/nume"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -73,21 +85,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietPrenumePacient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_nume"
-                        android:drawablePadding="10dp"
-                        android:hint="Prenume*"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/prenume"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -97,21 +110,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietCnp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_cnp"
-                        android:drawablePadding="10dp"
-                        android:hint="CNP*"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/cnp"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -121,21 +135,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietNrTelefonPacient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_telefon"
-                        android:drawablePadding="10dp"
-                        android:hint="Numar de telefon*"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/numar_de_telefon"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -145,21 +160,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietAdresa"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_adresa"
-                        android:drawablePadding="10dp"
-                        android:hint="Adresa"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/adresa"
+                        android:inputType="textCapSentences"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -169,11 +185,11 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietDataNasterii"
@@ -181,63 +197,73 @@
                         android:layout_height="wrap_content"
                         android:cursorVisible="false"
                         android:drawableStart="@drawable/ic_calendar"
-                        android:drawablePadding="10dp"
-                        android:focusable="false"
-                        android:hint="Data nasterii*"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/data_nasterii"
+                        android:inputType="none"
+                        android:text="@string/selectati_data"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/imgCalendar"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    app:srcCompat="@drawable/calendar_icon" />-->
 
-                <TextView
-                    android:id="@+id/tvGrupaSange"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:drawablePadding="10dp"
-                    android:text="Grupa de sange"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    app:drawableStartCompat="@drawable/ic_grupa_sange" />
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
 
-                <Spinner
-                    android:id="@+id/spGrupaSange"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:entries="@array/grupe_sange"
-                    android:gravity="center" />
+                    <AutoCompleteTextView
+                        android:id="@+id/actvGrupeSange"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_grupa_sange"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/grupa_de_sange"
+                        android:inputType="none"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:text="@string/necunoscut"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietGreutate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_greutate"
-                        android:drawablePadding="10dp"
-                        android:hint="Greutate"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/greutate"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -247,21 +273,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietInaltime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_inaltime"
-                        android:drawablePadding="10dp"
-                        android:hint="Inaltime"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/inaltime"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -271,21 +298,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietEmailPacient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_email"
-                        android:drawablePadding="10dp"
-                        android:hint="Adresa de email*"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -295,22 +323,24 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
                     app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:passwordToggleDrawable="@drawable/ic_visibility_selector"
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietParolaPacient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_parola"
-                        android:drawablePadding="10dp"
-                        android:hint="Parola*"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/parola"
                         android:inputType="textPassword"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -320,22 +350,22 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
                     app:boxCornerRadiusBottomEnd="0dp"
                     app:boxCornerRadiusBottomStart="@dimen/_10sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                    app:boxCornerRadiusTopStart="0dp"
-                    app:boxStrokeColor="@color/custom_blue">
+                    app:boxCornerRadiusTopStart="0dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tietConfirmareParolaPacient"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_parola"
-                        android:drawablePadding="10dp"
-                        android:hint="Confirmati parola*"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/confirmati_parola"
                         android:inputType="textPassword"
-                        android:textColor="#000"
-                        android:textSize="18sp" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!--TODO sa fac outline cu custom_blue si cand da click poate il umplu gen-->
@@ -345,26 +375,18 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:background="@drawable/background_butoane"
-                    android:text="Creeaza cont"
+                    android:text="@string/register"
                     android:textAllCaps="false"
-                    android:textSize="20sp" />
-
-                <!--                <ProgressBar-->
-                <!--                    android:id="@+id/progressBar"-->
-                <!--                    style="?android:attr/progressBarStyleLarge"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:visibility="gone" />-->
+                    android:textColor="@color/custom_light_blue"
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </ScrollView>
 
     </androidx.cardview.widget.CardView>
 
-
-    <!--    </LinearLayout>-->
-</LinearLayout>
+</RelativeLayout>

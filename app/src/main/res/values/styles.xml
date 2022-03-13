@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">#77cefc</item>
-        <item name="boxStrokeWidth">@dimen/_2sdp</item>
+        <item name="boxStrokeColor">@color/custom_blue</item>
+        <item name="boxStrokeWidth">@dimen/_1sdp</item>
+        <item name="colorPrimary">@color/custom_blue</item>
     </style>
 </resources>

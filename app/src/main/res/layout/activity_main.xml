@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:context=".activitati.MainActivity"
     tools:openDrawer="start">
 
@@ -15,8 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:background="@color/white">
 
         <!--punem dimensiunea default cu actionBarSize
         Toolbar simplu e din alt pachet, trb sa-l folosesc pe asta!!-->
@@ -32,29 +31,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Home"
+                android:text="@string/title_home"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textSize="@dimen/_20sdp" />
         </androidx.appcompat.widget.Toolbar>
-
-        <!--        <ScrollView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent">-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwMedici"
-                android:layout_width="390dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/_300sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="@dimen/_15sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -64,21 +61,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="90dp"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginStart="@dimen/_65sdp"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Medici"
+                        android:text="@string/medici"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_20sdp" />
+                        android:textSize="@dimen/_18sdp" />
 
                     <ImageView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_doctor" />
 
                     <ImageView
@@ -93,12 +86,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwInvestigatii"
-                android:layout_width="390dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/_300sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="@dimen/_15sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -108,21 +101,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="90dp"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginStart="@dimen/_65sdp"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Investigatii si preturi"
+                        android:text="@string/investigatii_si_preturi"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_20sdp" />
+                        android:textSize="@dimen/_18sdp" />
 
                     <ImageView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_investigatii" />
 
                     <ImageView
@@ -137,12 +126,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwProgramari"
-                android:layout_width="390dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/_300sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="@dimen/_15sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -152,21 +141,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="90dp"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginStart="@dimen/_65sdp"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Programari"
+                        android:text="@string/programari"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_20sdp" />
+                        android:textSize="@dimen/_18sdp" />
 
                     <ImageView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_programari" />
 
                     <ImageView
@@ -181,12 +166,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwFacturi"
-                android:layout_width="390dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/_300sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="20dp">
+                app:cardCornerRadius="@dimen/_15sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -196,20 +181,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="90dp"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginStart="@dimen/_65sdp"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Facturi"
+                        android:text="@string/facturi"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_20sdp" />
+                        android:textSize="@dimen/_18sdp" />
 
                     <ImageView
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_facturi" />
 
                     <ImageView
@@ -234,22 +216,22 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:backgroundTint="#77cefc"
             android:clickable="true"
+            android:contentDescription="Call Center"
             android:focusable="true"
-            app:srcCompat="@android:drawable/stat_sys_phone_call"
-            android:contentDescription="Call Center" />
+            app:srcCompat="@android:drawable/stat_sys_phone_call" />
 
 
     </RelativeLayout>
 
     <!--atasam nav view la care atasam headerul si meniul create-->
     <!--ii pun start ca sa se pozitioneze in stanga de tot-->
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigationView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/white"
-            app:headerLayout="@layout/nav_header"
-            app:menu="@menu/nav_drawer_menu" />
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

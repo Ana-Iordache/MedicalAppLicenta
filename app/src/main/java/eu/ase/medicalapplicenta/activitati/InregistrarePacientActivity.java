@@ -17,9 +17,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,7 +73,8 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     private TextInputEditText tietGreutate;
     private TextInputEditText tietInaltime;
 
-    private Spinner spGrupaSange;
+    //    private Spinner spGrupaSange;
+    private AutoCompleteTextView actvGrupeSange;
 
     private TextInputEditText tietEmailPacient;
     private TextInputEditText tietParolaPacient;
@@ -96,11 +98,19 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
         initializeazaAtribute();
 
+        seteazaAdaptorGrupeSange();
+
         ciwPozaProfilPacient.setOnClickListener(this);
         tietDataNasterii.setOnClickListener(this);
         btnInregistrarePacient.setOnClickListener(this);
 
 //        progressDialog = new ProgressDialog(this);//todo hmmmm nu merge parca
+    }
+
+    private void seteazaAdaptorGrupeSange() {
+        ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item,
+                getResources().getStringArray(R.array.grupe_sange));
+        actvGrupeSange.setAdapter(adapter);
     }
 
     private void initializeazaAtribute() {
@@ -114,7 +124,8 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         tietGreutate = findViewById(R.id.tietGreutate);
         tietInaltime = findViewById(R.id.tietInaltime);
 
-        spGrupaSange = findViewById(R.id.spGrupaSange); //todo sa fac drop down menu
+//        spGrupaSange = findViewById(R.id.spGrupaSange); //todo sa fac drop down menu
+        actvGrupeSange = findViewById(R.id.actvGrupeSange);
 
         tietEmailPacient = findViewById(R.id.tietEmailPacient);
         tietParolaPacient = findViewById(R.id.tietParolaPacient);
@@ -163,10 +174,10 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     private void inregistreazaPacient() {
         if (inputValid()) {
 
-            String nume = tietNumePacient.getText().toString();
-            String prenume = tietPrenumePacient.getText().toString();
-            Long cnp = Long.parseLong(tietCnp.getText().toString());
-            Long nrTelefon = Long.parseLong(tietNrTelefonPacient.getText().toString());
+            String nume = tietNumePacient.getText().toString().trim();
+            String prenume = tietPrenumePacient.getText().toString().trim();
+            Long cnp = Long.parseLong(tietCnp.getText().toString().trim());
+            Long nrTelefon = Long.parseLong("4" + tietNrTelefonPacient.getText().toString().trim());
 
 //        radioButton = findViewById(rgSex.getCheckedRadioButtonId());
 //        String sex = String.valueOf(radioButton.getText().toString().charAt(0));
@@ -194,38 +205,37 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                 e.printStackTrace();
             }
 
-            String grupaSange = spGrupaSange.getSelectedItem().toString();
+            String grupaSange = actvGrupeSange.getText().toString();
 
 //        Double greutate = Double.valueOf(tietGreutate.getText().toString());
 //        Double inaltime = Double.valueOf(tietInaltime.getText().toString());
 
 
-            String adresaEmail = tietEmailPacient.getText().toString();
-            String parola = tietParolaPacient.getText().toString();
+            String adresaEmail = tietEmailPacient.getText().toString().trim();
+            String parola = tietParolaPacient.getText().toString().trim();
 
             String adresa;
             if (tietAdresa.getText().toString().isEmpty()) {
-                adresa = "Necunoscuta";
+                adresa = getString(R.string.necunoscut);
             } else {
-                adresa = tietAdresa.getText().toString();
+                adresa = tietAdresa.getText().toString().trim();
             }
 
             double greutate;
             if (tietGreutate.getText().toString().isEmpty()) {
                 greutate = 0.0;
             } else {
-                greutate = Double.parseDouble(tietGreutate.getText().toString());
+                greutate = Double.parseDouble(tietGreutate.getText().toString().trim());
             }
 
             double inaltime;
             if (tietInaltime.getText().toString().isEmpty()) {
                 inaltime = 0.0;
             } else {
-                inaltime = Double.parseDouble(tietInaltime.getText().toString());
+                inaltime = Double.parseDouble(tietInaltime.getText().toString().trim());
             }
 
-
-//        progressBar.setVisibility(View.VISIBLE);
+            loading(true);
 //        progressDialog.setMessage("Se creeaza contul...");
 //        progressDialog.setCanceledOnTouchOutside(false);
 //        progressDialog.show();
@@ -239,8 +249,19 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             // daca userul a fost inregistrat
                             if (task.isSuccessful()) {
-//                            Pacient pacient = new Pacient(nume, prenume, cnp, nrTelefon, "", finalAdresa, dataNasterii, adresaEmail, urlPozaProfil);
-                                Pacient pacient = new Pacient(nume, prenume, cnp, nrTelefon, finalSex, adresa, dataNasterii, adresaEmail, grupaSange, greutate, inaltime, finalVarsta, "");
+                                Pacient pacient = new Pacient(nume,
+                                        prenume,
+                                        cnp,
+                                        nrTelefon,
+                                        finalSex,
+                                        adresa,
+                                        dataNasterii,
+                                        adresaEmail,
+                                        grupaSange,
+                                        greutate,
+                                        inaltime,
+                                        finalVarsta,
+                                        "");
 
                                 firebaseService.databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(pacient).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -248,12 +269,11 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(getApplicationContext(), "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
-//                                        progressBar.setVisibility(View.GONE);
                                             finish();
                                         } else {
                                             Log.e("adaugarePacient", task.getException().getMessage());
-//                                        progressBar.setVisibility(View.GONE);
                                         }
+                                        loading(false);
 
                                     }
                                 });
@@ -264,7 +284,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
                             } else {
                                 Log.e("inregistrarePacient", task.getException().getMessage());
-//                            progressBar.setVisibility(View.GONE);
+                                loading(false);
                             }
                         }
                     });
@@ -339,20 +359,18 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
     }
 
-    // TODO data nasterii sa corespunda cu cnp-ul
-    // TODO validare greutatea si inaltimea
     private boolean inputValid() {
         Pattern pattern;
         Matcher matcher;
 
         if (tietNumePacient.getText().toString().isEmpty()) {
-            tietNumePacient.setError("Introduceti numele!");
+            tietNumePacient.setError(getString(R.string.err_empty_nume));
             tietNumePacient.requestFocus();
             return false;
         }
 
         if (tietPrenumePacient.getText().toString().isEmpty()) {
-            tietPrenumePacient.setError("Introduceti prenumele!");
+            tietPrenumePacient.setError(getString(R.string.err_empty_prenume));
             tietPrenumePacient.requestFocus();
             return false;
         }
@@ -361,13 +379,13 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         matcher = pattern.matcher(tietCnp.getText().toString());
 
         if (tietCnp.getText().toString().isEmpty()) {
-            tietCnp.setError("Introduceti CNP-ul!");
+            tietCnp.setError(getString(R.string.err_empty_cnp));
             tietCnp.requestFocus();
             return false;
         }
 
         if (!matcher.matches()) {
-            tietCnp.setError("CNP-ul este invalid!");
+            tietCnp.setError(getString(R.string.err_not_valid_cnp));
             tietCnp.requestFocus();
             return false;
         }
@@ -376,55 +394,93 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         matcher = pattern.matcher(tietNrTelefonPacient.getText().toString());
 
         if (tietNrTelefonPacient.getText().toString().isEmpty()) {
-            tietNrTelefonPacient.setError("Introduceti numarul de telefon!");
+            tietNrTelefonPacient.setError(getString(R.string.err_empty_telefon));
             tietNrTelefonPacient.requestFocus();
             return false;
         }
 
         if (!matcher.matches()) {
-            tietNrTelefonPacient.setError("Formatul acceptat este: 407xxxxxxxx!");
+            tietNrTelefonPacient.setError(getString(R.string.err_not_valid_telefon));
             tietNrTelefonPacient.requestFocus();
             return false;
         }
 
-        if (tietDataNasterii.getText().toString().equals("dd/MM/yyyy")) {
-            tietDataNasterii.setError("Alegeti data nasterii!");
+        if (tietDataNasterii.getText().toString().equals(getString(R.string.selectati_data))) {
+            tietDataNasterii.setError(getString(R.string.err_empty_data_nasterii));
             tietDataNasterii.requestFocus();
             return false;
         }
 
+        String anCnp = tietCnp.getText().toString().substring(1, 3);
+        String lunaCnp = tietCnp.getText().toString().substring(3, 5);
+        String ziCnp = tietCnp.getText().toString().substring(5, 7);
+        try {
+            Date dataNasteriiCnp = new SimpleDateFormat("dd/MM/yy", Locale.US).parse(ziCnp + "/" + lunaCnp + "/" + anCnp);
+            Date dataNasterii = new SimpleDateFormat("dd/MM/yy", Locale.US).parse(tietDataNasterii.getText().toString());
+            if (!dataNasterii.equals(dataNasteriiCnp)) {
+                tietDataNasterii.setError(getString(R.string.err_not_valid_data_nasterii));
+                tietDataNasterii.requestFocus();
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        if (!tietGreutate.getText().toString().isEmpty() && !tietGreutate.getText().toString().equals(getString(R.string.default_empty_double))) {
+            pattern = Pattern.compile(getString(R.string.pattern_greutate));
+            matcher = pattern.matcher(tietGreutate.getText().toString());
+            if (!matcher.matches()) {
+                tietGreutate.setError(getString(R.string.err_not_valid_greutate));
+                tietGreutate.requestFocus();
+                return false;
+            }
+
+        }
+
+        if (!tietInaltime.getText().toString().isEmpty() && !tietInaltime.getText().toString().equals(getString(R.string.default_empty_double))) {
+
+            pattern = Pattern.compile(getString(R.string.pattern_inaltime));
+            matcher = pattern.matcher(tietInaltime.getText().toString());
+            if (!matcher.matches()) {
+                tietInaltime.setError(getString(R.string.err_not_valid_inaltime));
+                tietInaltime.requestFocus();
+                return false;
+            }
+        }
+
         if (tietEmailPacient.getText().toString().isEmpty()) {
-            tietEmailPacient.setError("Introduceti emailul!");
+            tietEmailPacient.setError(getString(R.string.err_empty_email));
             tietEmailPacient.requestFocus();
             return false;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(tietEmailPacient.getText().toString()).matches()) {
-            tietEmailPacient.setError("Introduceti un email valid!");
+            tietEmailPacient.setError(getString(R.string.err_not_valid_email));
             tietEmailPacient.requestFocus();
             return false;
         }
 
         if (tietParolaPacient.getText().toString().isEmpty()) {
-            tietParolaPacient.setError("Introduceti parola!");
+            tietParolaPacient.setError(getString(R.string.err_empty_parola));
             tietParolaPacient.requestFocus();
             return false;
         }
 
         if (tietParolaPacient.getText().toString().length() < 6) {
-            tietParolaPacient.setError("Parola trebuie sa contina cel putin 6 caractere!");
+            tietParolaPacient.setError(getString(R.string.err_not_valid_parola));
             tietParolaPacient.requestFocus();
             return false;
         }
 
         if (tietConfirmareParolaPacient.getText().toString().isEmpty()) {
-            tietConfirmareParolaPacient.setError("Reintroduceti parola!");
+            tietConfirmareParolaPacient.setError(getString(R.string.err_empty_confirmare_parola));
             tietConfirmareParolaPacient.requestFocus();
             return false;
         }
 
         if (!tietParolaPacient.getText().toString().equals(tietConfirmareParolaPacient.getText().toString())) {
-            tietConfirmareParolaPacient.setError("Parola nu corespunde!");
+            tietConfirmareParolaPacient.setError(getString(R.string.err_not_valid_confirmare_parola));
             tietConfirmareParolaPacient.requestFocus();
             return false;
         }
@@ -433,10 +489,19 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     }
 
 
-    //TODO sa pun o data maxima
     private void afiseazaCalendar() {
         tietDataNasterii.setError(null);
         final Calendar calendar = Calendar.getInstance();
+
+        if (!tietDataNasterii.getText().toString().equals(getString(R.string.selectati_data))) {
+            try {
+                Date dataSelectata = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(tietDataNasterii.getText().toString());
+                calendar.setTime(dataSelectata);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         int zi = calendar.get(Calendar.DATE);
         int luna = calendar.get(Calendar.MONTH);
         int an = calendar.get(Calendar.YEAR);
@@ -450,7 +515,18 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                         tietDataNasterii.setText(data);
                     }
                 }, an, luna, zi);
-//                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLUE));
+
+        //setare data maxima
+        Calendar dataMaxima = Calendar.getInstance();
+        dataMaxima.add(Calendar.YEAR, -14);
+        datePickerDialog.getDatePicker().setMaxDate(dataMaxima.getTimeInMillis());
+
         datePickerDialog.show();
+    }
+
+    private void loading(Boolean seIncarca) {
+        if (seIncarca) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
     }
 }

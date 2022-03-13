@@ -4,9 +4,9 @@
     <string name="close_toggle">Close</string>
     <string name="entitate_specialitati">Specialitati</string>
     <string-array name="grupe_sange">
-        <item>Necunoscuta</item>
-        <item>0+</item>
-        <item>0-</item>
+        <item>Necunoscută</item>
+        <item>O+</item>
+        <item>O-</item>
         <item>A+</item>
         <item>A-</item>
         <item>B+</item>
@@ -25,8 +25,74 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pattern_email_medic">^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$</string>
-    <string name="pattern_numar_telefon">^407[2-8][0-9]{7}$</string>
+    <string name="pattern_numar_telefon">^07[2-8][0-9]{7}$</string>
     <string name="pattern_cnp">^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$</string>
     <string name="pattern_greutate">^[1-9][0-9]\\.[0-9]$</string>
-    <string name="pattern_inaltime">^[1-2]\\.[0-9]{2}$</string>
+    <string name="pattern_inaltime">^([1-2]\\.([0-9]{2}|[0-9]{1}))$</string>
+    <string name="email">Email <font color="#FF0000">*</font> </string>
+    <string name="parola">Parola <font color="#FF0000">*</font> </string>
+    <string name="greeting_message">Bine ai (re)venit!</string>
+    <string name="conectare_pacient">Conectare pacient</string>
+    <string name="forgot_password">Am uitat parola</string>
+    <string name="remember_me">Rămâi autentificat(ă)</string>
+    <string name="login">Intră în cont</string>
+    <string name="create_account">Nu ai cont? Înregistrează-te</string>
+    <string name="sunt_medic">Sunt medic</string>
+    <string name="icon_pacient">Icon pacient</string>
+    <string name="icon_medic">Icon medic</string>
+    <string name="necunoscut">Necunoscută</string>
+    <string name="nume">Nume <font color="#FF0000">*</font></string>
+    <string name="prenume">Prenume <font color="#FF0000">*</font></string>
+    <string name="cnp">CNP <font color="#FF0000">*</font></string>
+    <string name="numar_de_telefon">Număr de telefon <font color="#FF0000">*</font></string>
+    <string name="adresa">Adresa</string>
+    <string name="data_nasterii">Data nașterii <font color="#FF0000">*</font></string>
+    <string name="selectati_data">Selectați data</string>
+    <string name="greutate">Greutate</string>
+    <string name="inaltime">Înălțime</string>
+    <string name="confirmati_parola">Confirmați parola <font color="#FF0000">*</font></string>
+    <string name="register">Creează cont</string>
+    <string name="grupa_de_sange">Grupa de sânge</string>
+    <string name="atentionare">Câmpurile marcate cu <font color="#FF0000">*</font> sunt obligatorii!</string>
+    <string name="err_empty_nume">Introduceți numele!</string>
+    <string name="err_empty_prenume">Introduceți prenumele!</string>
+    <string name="err_empty_cnp">Introduceți CNP-ul!</string>
+    <string name="err_not_valid_cnp">CNP-ul nu este valid!</string>
+    <string name="err_empty_telefon">Introduceți numărul de telefon!</string>
+    <string name="err_not_valid_telefon">Formatul acceptat este: 07xxxxxxxx!</string>
+    <string name="err_empty_data_nasterii">Alegeți data nașterii!</string>
+    <string name="err_not_valid_data_nasterii">Data nașterii nu corespunde cu CNP-ul!</string>
+    <string name="default_empty_double">0.0</string>
+    <string name="err_not_valid_greutate">Introduceți o greutate validă! (de ex: 45.7)</string>
+    <string name="err_not_valid_inaltime">Introduceți un o înălțime validă! (de ex: 1.65)</string>
+    <string name="err_empty_email">Introduceți emailul!</string>
+    <string name="err_not_valid_email">Introduceți un email valid!</string>
+    <string name="err_empty_parola">Introduceți parola!</string>
+    <string name="err_not_valid_parola">Parola trebuie să conțină cel puțin 6 caractere!</string>
+    <string name="err_empty_confirmare_parola">Reintroduceți parola!</string>
+    <string name="err_not_valid_confirmare_parola">Cele 2 parole nu corespund!</string>
+    <string name="varsta">Vârsta</string>
+    <string name="sex">Sex</string>
+    <string name="modifica_date_personale">Modifică date personale</string>
+    <string name="salveaza">Salvează</string>
+    <string name="renunta">Renunță</string>
+    <string name="schimba_parola">Schimbă parola</string>
+    <string name="sterge_contul">Șterge contul</string>
+    <string name="parola_actuala">Parola actuală</string>
+    <string name="parola_noua">Parola nouă</string>
+    <string name="confirmati_noua_parola">Confirmați noua parolă</string>
+    <string name="schimba_email">Schimbă email</string>
+    <string name="email_nou">Email nou <font color="#FF0000">*</font></string>
+    <string name="mesaj_stergere_cont">Sigur doriți să vă ștergeți <b>definitiv</b> contul?</string>
+    <string name="da">Da</string>
+    <string name="nu">Nu</string>
+    <string name="title_home">Home</string>
+    <string name="medici">Medici</string>
+    <string name="investigatii_si_preturi">Investigații și prețuri</string>
+    <string name="programari">Programări</string>
+    <string name="facturi">Facturi</string>
+    <string name="profil">Profil</string>
+    <string name="logout">Ieși din cont</string>
+    <string name="feedback">Feedback</string>
+    <string name="despre_noi">Despre noi</string>
 </resources>

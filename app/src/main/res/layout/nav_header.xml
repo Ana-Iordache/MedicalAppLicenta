@@ -1,50 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="176dp"
-    android:background="#77cefc">
-
-
-<!--    <ImageView-->
-<!--        android:id="@+id/ivAccount"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="25dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:srcCompat="@drawable/ic_account" />-->
-    <!--todo de ce taie din poza pe unele ecrane..-->
+    android:layout_height="wrap_content"
+    android:background="@color/custom_blue">
+    <!--ca sa nu mai taie pe unele ecarne am pus android:fitsSystemWindows="false"
+    in activity main-->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciwPozaProfilUser"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@drawable/ic_account"
-        android:layout_marginTop="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/ic_account" />
 
     <TextView
         android:id="@+id/tvNumeUserConectat"
         android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ciwPozaProfilUser"
-        android:text="Nume complet"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ciwPozaProfilUser"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_3sdp"/>
 
     <TextView
         android:id="@+id/tvEmailUserConectat"
         android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumeUserConectat"
-        android:text="email"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNumeUserConectat"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginBottom="@dimen/_5sdp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
