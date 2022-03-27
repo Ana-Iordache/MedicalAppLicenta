@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_bottom_sheet_medic">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ciwPozaProfilMedic"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:src="@drawable/ic_account" />
+
+    <TextView
+        android:id="@+id/tvNumeMedic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ciwPozaProfilMedic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvGradProfesional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNumeMedic"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp" />
+
+    <TextView
+        android:id="@+id/tvSpecialitate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvGradProfesional"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/tvSpecialitate"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/colorDivider" />
+
+    <TextView
+        android:id="@+id/tvNota1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:text="@string/nota"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvNota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNota1"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvProgram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNota"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/program"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold" />
+
+
+    <ListView
+        android:id="@+id/lvProgram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProgram"
+        android:divider="@null" />
+
+    <TextView
+        android:id="@+id/tvEmail1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lvProgram"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/email_medic"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmail1"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textColor="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnProgramare"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@id/tvEmail"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/background_butoane_secundare"
+        android:gravity="center"
+        android:text="@string/programeaza"
+        android:textAllCaps="false"
+        android:textColor="@color/custom_blue"
+        android:textSize="16sp" />
+
+</RelativeLayout>

@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,13 +74,15 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
     private OraDisponibilaAdaptor adaptor;
     private RecyclerView rwOreDisponibile;
 
-    private RelativeLayout rySelectareData;
+    private LinearLayout llSelectareData;
 
     private AutoCompleteTextView actvInvestigatii;
     private List<Investigatie> investigatii;
     private List<String> denumiriInvestigatii = new ArrayList<>();
 
     private Toolbar toolbar;
+
+    private ProgressBar progressBar;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -126,7 +130,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
     private void initializeazaAtribute() {
         toolbar = findViewById(R.id.toolbar);
-        rySelectareData = findViewById(R.id.rySelectareData);
+        llSelectareData = findViewById(R.id.llSelectareData);
         tvMedic = findViewById(R.id.tvMedic);
         tietDataProgramarii = findViewById(R.id.tietDataProgramarii);
 
@@ -134,6 +138,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
         oreDisponibile = new ArrayList<>();
         rwOreDisponibile = findViewById(R.id.rwOreDisponibile);
+
+        progressBar = findViewById(R.id.progressBar);
     }
 
     private ValueEventListener preiaInvestigatii() {
@@ -224,7 +230,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
     }
 
     private void afiseazaOreDisponibile(String dataString) {
-        rySelectareData.setVisibility(View.GONE);
+        llSelectareData.setVisibility(View.GONE);
         Date data = null;
         try {
             data = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataString);
@@ -270,6 +276,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
     }
 
     private ValueEventListener preiaOreDisponibile() {
+        loading(true);
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -286,6 +293,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
                 rwOreDisponibile.setVisibility(View.VISIBLE);
                 seteazaAdaptor();
+
+                loading(false);
             }
 
             @Override
@@ -297,7 +306,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onOraClick(int position) {
-        if (!actvInvestigatii.getText().toString().equals("Selectati tipul investigatiei")) {
+        if (!actvInvestigatii.getText().toString().equals(getString(R.string.selectati_investigatia))) {
             AlertDialog dialog = new AlertDialog.Builder(OreDisponibileActivity.this)
                     .setTitle("Confirmare programare")
                     .setMessage("Trimiteti programarea pentru data " + tietDataProgramarii.getText().toString() + " la ora " + oreDisponibile.get(position) + "?")
@@ -334,8 +343,14 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
             dialog.show();
 
         } else {
-            actvInvestigatii.setError("Selectati investigatia dorita!");
+            actvInvestigatii.setError(getString(R.string.err_empty_investigatie));
             actvInvestigatii.requestFocus();
         }
+    }
+
+    private void loading(Boolean seIncarca) {
+        if (seIncarca) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
     }
 }

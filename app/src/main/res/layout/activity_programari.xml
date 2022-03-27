@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
     tools:context=".activitati.ProgramariActivity">
 
 
@@ -12,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#77cefc"
+        android:background="@color/custom_blue"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleMarginStart="20dp">
@@ -22,26 +23,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Programari"
+            android:text="@string/programari"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
+<!--    <View-->
+<!--        android:id="@+id/view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/_2sdp"-->
+<!--        android:layout_below="@+id/toolbar"-->
+<!--        android:background="@color/white" />-->
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/toolbar"
-        android:background="@color/white"
-        android:layout_alignParentEnd="true"/>
+        android:background="@color/colorDivider" />
 
     <RadioGroup
         android:id="@+id/toggleButtonGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/view">
+        android:layout_below="@+id/view"
+        android:orientation="horizontal">
         <!-- TODO
         android:paddingStart="@dimen/_3sdp"
         android:paddingEnd="@dimen/_4sdp"-->
@@ -51,23 +57,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/custom_blue"
-            android:gravity="center"
-            android:button="@android:color/transparent"
             android:background="@drawable/radio_button_istoric_selector"
+            android:button="@android:color/transparent"
             android:checked="false"
-            android:text="Istoric" />
+            android:gravity="center"
+            android:text="@string/istoric"
+            android:textColor="@color/custom_blue" />
+
         <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/rbViitoare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:button="@android:color/transparent"
             android:background="@drawable/radio_button_viitoare_selector"
+            android:button="@android:color/transparent"
             android:checked="true"
-            android:text="Viitoare" />
+            android:gravity="center"
+            android:text="@string/viitoare"
+            android:textColor="@color/white" />
 
     </RadioGroup>
 
@@ -83,18 +90,19 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_unavailable"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/icon_indisponibil"
+            android:src="@drawable/ic_unavailable" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nu s-au găsit programări"
             android:layout_below="@+id/imageView"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/nicio_programare"
             android:textColor="@color/black"
-            android:layout_marginTop="@dimen/_10sdp"/>
+            android:textSize="@dimen/_15sdp" />
     </RelativeLayout>
 
 
@@ -103,7 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toggleButtonGroup"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -120,9 +128,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:backgroundTint="#77cefc"
+        android:backgroundTint="@color/custom_blue"
         android:clickable="true"
-        android:contentDescription="Adauga programare"
+        android:contentDescription="@string/adauga_programare"
         android:focusable="true"
         android:tint="@color/white"
         app:srcCompat="@drawable/ic_adauga" />

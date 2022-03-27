@@ -10,8 +10,7 @@
         android:id="@+id/tvDenumire"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Denumire"
-        android:textColor="#4169e1"
+        android:textColor="@color/royale_blue"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />
 
@@ -20,9 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:text="Pret"
-        android:textColor="#000"
+        android:drawablePadding="@dimen/_10sdp"
+        android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
         app:drawableStartCompat="@drawable/ic_pret" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/custom_blue" />
 
 </LinearLayout>

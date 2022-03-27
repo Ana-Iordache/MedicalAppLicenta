@@ -46,8 +46,10 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwMedici"
-                android:layout_width="@dimen/_300sdp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
@@ -86,8 +88,10 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwInvestigatii"
-                android:layout_width="@dimen/_300sdp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
@@ -126,8 +130,10 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwProgramari"
-                android:layout_width="@dimen/_300sdp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
@@ -166,8 +172,10 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwFacturi"
-                android:layout_width="@dimen/_300sdp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
@@ -216,7 +224,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:backgroundTint="#77cefc"
             android:clickable="true"
-            android:contentDescription="Call Center"
+            android:contentDescription="@string/call_center"
             android:focusable="true"
             app:srcCompat="@android:drawable/stat_sys_phone_call" />
 

@@ -37,7 +37,8 @@ public class InvestigatieAdaptor extends RecyclerView.Adapter<InvestigatieAdapto
         Investigatie i = investigatii.get(position);
         if (i != null) {
             holder.tvDenumire.setText(i.getDenumire());
-            holder.tvPret.setText(String.valueOf(i.getPret()));
+            String pret = String.valueOf(i.getPret()) + " RON";
+            holder.tvPret.setText(pret);
         }
     }
 

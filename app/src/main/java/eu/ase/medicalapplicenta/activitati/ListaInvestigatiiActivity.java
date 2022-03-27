@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -35,7 +36,8 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
     public static final String SPECIALITATI = "Specialitati";
     private final FirebaseService firebaseService = new FirebaseService(SPECIALITATI);
 
-    private Spinner spnSpecialitati;
+    //    private Spinner spnSpecialitati;
+    private AutoCompleteTextView actvSpecialitati;
     private ProgressBar progressBar;
 
     private Toolbar toolbar;
@@ -81,7 +83,8 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
     private void initializeazaAtribute() {
         progressBar = findViewById(R.id.progressBar);
         toolbar = findViewById(R.id.toolbar);
-        spnSpecialitati = findViewById(R.id.spnSpecialitati);
+//        spnSpecialitati = findViewById(R.id.spnSpecialitati);
+        actvSpecialitati = findViewById(R.id.actvSpecialitati);
         llSelectatiSpecialitatea = findViewById(R.id.llSelectatiSpecialitatea);
         rwListaInvestigatii = findViewById(R.id.rwListaInvestigatii);
         investigatii = new ArrayList<>();
@@ -94,40 +97,31 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Specialitate> specialitati = new ArrayList<>();
                 List<String> denumiriSpecialitati = new ArrayList<>();
-                denumiriSpecialitati.add("Selectati specialitatea");
+//                denumiriSpecialitati.add("Selectati specialitatea");
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Specialitate s = dataSnapshot.getValue(Specialitate.class);
                     specialitati.add(s);
                     denumiriSpecialitati.add(s.getDenumire());
                 }
 
-                //TODO sa pun drop down menu
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item, denumiriSpecialitati);
-                spnSpecialitati.setAdapter(adapter);
+                        R.layout.dropdown_item, denumiriSpecialitati);
+                actvSpecialitati.setAdapter(adapter);
                 loading(false);
 
-                spnSpecialitati.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                actvSpecialitati.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         for (Specialitate s : specialitati)
-                            if (spnSpecialitati.getItemAtPosition(i).toString().equals(s.getDenumire())) {
+                            if (actvSpecialitati.getText().toString().equals(s.getDenumire())) {
                                 investigatii = s.getInvestigatii();
                                 investigatieAdaptor = new InvestigatieAdaptor(investigatii, getApplicationContext());
                                 rwListaInvestigatii.setAdapter(investigatieAdaptor);
-                                //todo poate gasesc altceva
-                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rwListaInvestigatii.getContext(),
-                                        DividerItemDecoration.VERTICAL);
-                                rwListaInvestigatii.addItemDecoration(dividerItemDecoration);
 
                                 rwListaInvestigatii.setVisibility(View.VISIBLE);
                                 llSelectatiSpecialitatea.setVisibility(View.GONE);
                                 break;
                             }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
                     }
                 });
             }

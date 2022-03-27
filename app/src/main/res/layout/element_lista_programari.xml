@@ -6,12 +6,15 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="360dp"
-        android:layout_height="90dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:cardBackgroundColor="@color/custom_light_blue"
-        app:cardCornerRadius="15dp">
+        app:cardCornerRadius="@dimen/_10sdp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,8 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:textColor="#4169e1"
-                android:textSize="23sp"
+                android:textColor="@color/royale_blue"
+                android:textSize="@dimen/_18sdp"
                 android:textStyle="bold" />
 
             <TextView
@@ -34,7 +37,7 @@
                 android:layout_below="@+id/tvNume"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_15sdp" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -42,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -55,9 +58,9 @@
                     android:id="@+id/tvDataProgramarii"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_12sdp"
                     app:drawableStartCompat="@drawable/ic_calendar" />
 
                 <TextView
@@ -65,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/_12sdp"
                     app:drawableStartCompat="@drawable/ic_timp" />
             </LinearLayout>
         </RelativeLayout>

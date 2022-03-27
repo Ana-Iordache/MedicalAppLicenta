@@ -80,7 +80,7 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         TextView tvGradProfesional;
         TextView tvSpecialitate;
         TextView tvNota;
-        TextView tvNrFeedbackuri;
+//        TextView tvNrFeedbackuri;
 
         OnDoctorClickListener onDoctorClickListener;
 
@@ -91,7 +91,7 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
             tvGradProfesional = itemView.findViewById(R.id.tvGradProfesional);
             tvSpecialitate = itemView.findViewById(R.id.tvSpecialitate);
             tvNota = itemView.findViewById(R.id.tvNota);
-            tvNrFeedbackuri = itemView.findViewById(R.id.tvNrFeedbackuri);
+//            tvNrFeedbackuri = itemView.findViewById(R.id.tvNrFeedbackuri);
 
             this.onDoctorClickListener = onDoctorClickListener;
             itemView.setOnClickListener(this);
@@ -112,7 +112,7 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
 
             if (m.getNotaFeedback() == 0.0) {
                 holder.tvNota.setText("");
-                holder.tvNrFeedbackuri.setText("");
+//                holder.tvNrFeedbackuri.setText("");
             } else {
                 holder.tvNota.setText(String.valueOf(m.getNotaFeedback()));
 //                tvNrFeedbackuri.setText(..); todo

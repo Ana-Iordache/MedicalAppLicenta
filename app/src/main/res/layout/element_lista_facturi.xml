@@ -6,13 +6,15 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:cardBackgroundColor="@color/custom_light_blue"
-        app:cardCornerRadius="15dp"
-        android:layout_marginBottom="@dimen/_5sdp">
+        app:cardCornerRadius="@dimen/_10sdp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,23 +26,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Status"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="23sp"
+                android:textSize="@dimen/_18sdp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvStatus"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:drawableStart="@drawable/ic_bani"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:drawablePadding="@dimen/_9sdp"
-                android:text="Valoare:"
+                android:text="@string/valoare"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_16sdp"
+                app:drawableStartCompat="@drawable/ic_bani" />
 
             <TextView
                 android:id="@+id/tvValoare"
@@ -48,17 +48,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvStatus"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:text="200.00 RON"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_16sdp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvValoare"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_below="@+id/tvValoare">
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -70,20 +70,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Data emiterii:"
+                        android:text="@string/data_emiterii"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvDataEmiterii"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
                         android:gravity="center"
-                        android:text="dd/mm/yyyy"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_13sdp" />
 
                 </LinearLayout>
 
@@ -98,9 +96,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Data scadenta:"
+                        android:text="@string/data_scadenta"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
 
 
@@ -109,9 +107,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="dd/mm/yyyy"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_13sdp" />
 
                 </LinearLayout>
             </LinearLayout>

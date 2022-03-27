@@ -1,97 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--android:layout_height="wrap_content"!!!!!!!!!!-->
+<?xml version="1.0" encoding="utf-8"?><!--android:layout_height="wrap_content"!!!!!!!!!!-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llElementListaMedici"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/llElementListaMedici">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:orientation="vertical">
 
         <LinearLayout
 
             android:id="@+id/llDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ciwPozaProfilMedic"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_account"/>
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="@dimen/_65sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:src="@drawable/ic_account" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvNumeMedic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dr. Nume Prenume"
-                    android:textColor="#4169e1"
-                    android:textSize="23sp"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/royale_blue"
+                    android:textSize="@dimen/_17sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvGradProfesional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:text="Grad profesional"
-                    android:textSize="15sp"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvSpecialitate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:text="Specialitate"
-                    android:textSize="15sp"
-                    android:textStyle="italic"/>
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="italic" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvNota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:textSize="@dimen/_12sdp" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvNota"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/llDate"
-            android:text="Nota"
-            android:textSize="15sp" />
 
-        <!--todo se pune naspa-->
-        <TextView
-            android:id="@+id/tvNrFeedbackuri"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@+id/llDate"
-            android:text="nr feedback-uri"
-            android:textStyle="italic" />
-        <!--todo poate pun un delimitator custom-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvNrFeedbackuri"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:layout_marginStart="5dp"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:layout_toEndOf="@+id/llDate"-->
+        <!--            android:text="nr feedback-uri"-->
+        <!--            android:textStyle="italic" />-->
 
-    </RelativeLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@color/custom_blue" />
 
     <LinearLayout
         android:id="@+id/llDisponibilitate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </LinearLayout>
