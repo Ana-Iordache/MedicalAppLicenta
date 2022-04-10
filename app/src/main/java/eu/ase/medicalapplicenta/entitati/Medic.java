@@ -5,16 +5,17 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Medic implements Serializable {
-    private String idMedic; //aici
+    private String idMedic;
     private String nume;
     private String prenume;
     private long nrTelefon;
     private String adresaEmail;
-    private String idSpecialitate; // preluat din bd
-    private double notaFeedback; // initial o sa fie 0
+    private String idSpecialitate;
+    private double notaFeedback;
     private String gradProfesional;
     private String urlPozaProfil;
-    private List<ZiDeLucru> program; //aici
+    private List<ZiDeLucru> program;
+    private boolean contSters;
 
     public Medic(){}
 
@@ -40,6 +41,7 @@ public class Medic implements Serializable {
         this.gradProfesional = gradProfesional;
         this.urlPozaProfil = urlPozaProfil;
         this.program = program;
+        this.contSters = false;
     }
 
     public String getNume() {
@@ -123,7 +125,15 @@ public class Medic implements Serializable {
         this.program = program;
     }
 
-//    @Override
+    public boolean isContSters() {
+        return contSters;
+    }
+
+    public void setContSters(boolean contSters) {
+        this.contSters = contSters;
+    }
+
+    //    @Override
 //    public String toString() {
 //        return "Medic{" +
 //                "nume='" + nume + '\'' +

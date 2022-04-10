@@ -1,213 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="#77cefc"
+    android:background="@color/custom_blue"
+    android:padding="@dimen/_10sdp"
     tools:context=".activitati.InregistrareMedicActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:translationZ="@dimen/_90sdp"
+        android:visibility="gone" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        app:cardBackgroundColor="#d2ecfc"
-        android:elevation="10dp">
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/custom_light_blue"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        android:background="#d2ecfc"
-        android:layout_marginBottom="10dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ciwPozaProfilMedic"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/ic_account"
-            android:layout_gravity="center"/>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="#000"
-            android:textColorHint="#000"
-            android:theme="@style/TextInputLayoutStyle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietNumeMedic"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nume*"
-                android:drawablePadding="10dp"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textColorHint="#000"
-                android:drawableStart="@drawable/ic_nume"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="@color/custom_light_blue"
+                android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="#000"
-            android:theme="@style/TextInputLayoutStyle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ciwPozaProfilMedic"
+                    android:layout_width="@dimen/_86sdp"
+                    android:layout_height="@dimen/_86sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_account" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietPrenumeMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Prenume*"
-                android:drawablePadding="10dp"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textColorHint="#000"
-                android:drawableStart="@drawable/ic_nume"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="@string/atentionare"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="italic" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="#000"
-            android:theme="@style/TextInputLayoutStyle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietNrTelefonMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Numar de telefon"
-                android:drawablePadding="10dp"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textColorHint="#000"
-                android:drawableStart="@drawable/ic_telefon"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietNumeMedic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_nume"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/nume"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvGradProfesional"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Grad profesional"
-            android:drawablePadding="10dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:textColor="#000"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_grad_profesional" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
 
-        <Spinner
-            android:id="@+id/spnGradProfesional"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietPrenumeMedic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_nume"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/prenume"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvSpecialitate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Specialitate*"
-            android:drawablePadding="10dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:textColor="#000"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_specialitate"
-            android:focusable="true"
-            android:focusableInTouchMode="true"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
 
-        <Spinner
-            android:id="@+id/spnSpecialitate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietNrTelefonMedic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_telefon"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/numar_de_telefon_opt"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="#000"
-            android:theme="@style/TextInputLayoutStyle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietEmailMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Adresa de email*"
-                android:drawablePadding="10dp"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textColorHint="#000"
-                android:drawableStart="@drawable/ic_email"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/actvGradeProfesionale"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_grad_profesional"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/grad_profesional"
+                        android:inputType="none"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:text="@string/nespecificat"
+                        android:textSize="16sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="#000"
-            android:theme="@style/TextInputLayoutStyle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietParolaMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Parola*"
-                android:inputType="textPassword"
-                android:drawablePadding="10dp"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textColorHint="#000"
-                android:drawableStart="@drawable/ic_parola"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="#000"
-            android:theme="@style/TextInputLayoutStyle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <AutoCompleteTextView
+                        android:id="@+id/actvSpecialitati"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_specialitate"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/specialitate_medic"
+                        android:inputType="none"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_15sdp"
+                        android:textSize="16sp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietConfirmareParolaMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Confirmati parola*"
-                android:inputType="textPassword"
-                android:drawablePadding="10dp"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textColorHint="#000"
-                android:drawableStart="@drawable/ic_parola"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!--TODO nu se afiseaza in intregime si nu i pune culoara pusa de mine-->
-        <Button
-            android:id="@+id/btnInregistrareMedic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:background="@drawable/background_butoane"
-            android:text="Creeaza cont"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
 
-    </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietProgramLucru"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_program"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/program_lucru"
+                        android:inputType="none"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:cursorVisible="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietEmailMedic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp"
+                    app:passwordToggleDrawable="@drawable/ic_visibility_selector"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietParolaMedic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_parola"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/parola"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:theme="@style/TextInputLayoutStyle"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                    app:boxCornerRadiusTopStart="0dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tietConfirmareParolaMedic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_parola"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:hint="@string/confirmati_parola"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnInregistrareMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/background_butoane"
+                    android:text="@string/register"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_light_blue"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.cardview.widget.CardView>
 
-</ScrollView>
+</RelativeLayout>

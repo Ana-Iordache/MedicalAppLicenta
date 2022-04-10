@@ -2,6 +2,7 @@ package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,7 +27,7 @@ import java.util.regex.Pattern;
 
 import eu.ase.medicalapplicenta.R;
 
-public class ConectareMedicActivity extends AppCompatActivity implements View.OnClickListener{
+public class ConectareMedicActivity extends AppCompatActivity implements View.OnClickListener {
     private TextInputEditText tietLoginEmailMedic;
     private TextInputEditText tietLoginParolaMedic;
 
@@ -38,7 +39,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
     private SharedPreferences.Editor preferinteConectareEditor;
     private Boolean salveazaDateConectare;
 
-    private Button btnLoginMedic;
+    private AppCompatButton btnLoginMedic;
 
     private ImageView ivPacient;
 
@@ -62,13 +63,13 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
     }
 
     private void preiaPreferinte() {
-        preferinteConectare = getSharedPreferences("salveazaDateConectare",MODE_PRIVATE);
+        preferinteConectare = getSharedPreferences("salveazaDateConectare", MODE_PRIVATE);
         preferinteConectareEditor = preferinteConectare.edit();
 
         salveazaDateConectare = preferinteConectare.getBoolean("salveazaDateConectare", false);
-        if(salveazaDateConectare){
+        if (salveazaDateConectare) {
             tietLoginEmailMedic.setText(preferinteConectare.getString("email", ""));
-            tietLoginParolaMedic.setText(preferinteConectare.getString("parola",""));
+            tietLoginParolaMedic.setText(preferinteConectare.getString("parola", ""));
         }
     }
 
@@ -101,7 +102,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
                 conecteazaMedic();
                 break;
             case R.id.tvResetareParola:
-                //TODO poate incerc cu un fragment
+                //TODO poate incerc cu un fragment sau alert dialog mai bn
 //                startActivity(new Intent(getApplicationContext(), ResetareParolaActivity.class));
                 Toast.makeText(getApplicationContext(), "tvResetareParola", Toast.LENGTH_SHORT).show();
                 break;
@@ -117,7 +118,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         String parola = tietLoginParolaMedic.getText().toString().trim();
 
         if (email.isEmpty()) {
-            tietLoginEmailMedic.setError("Introduceti emailul!");
+            tietLoginEmailMedic.setError(getString(R.string.err_empty_email));
             tietLoginEmailMedic.requestFocus();
             return;
         }
@@ -125,19 +126,19 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         Pattern pattern = Pattern.compile(getString(R.string.pattern_email_medic));
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
-            tietLoginEmailMedic.setError("Introduceti emailul oficial (de forma adresa@clinica-medicala.ro)!");
+            tietLoginEmailMedic.setError(getString(R.string.err_not_valid_email_doctor));
             tietLoginEmailMedic.requestFocus();
             return;
         }
 
         if (parola.isEmpty()) {
-            tietLoginParolaMedic.setError("Introduceti parola!");
+            tietLoginParolaMedic.setError(getString(R.string.err_empty_parola));
             tietLoginParolaMedic.requestFocus();
             return;
         }
 
         if (parola.length() < 6) {
-            tietLoginParolaMedic.setError("Parola trebuie sa contina cel putin 6 caractere!");
+            tietLoginParolaMedic.setError(getString(R.string.err_not_valid_parola));
             tietLoginParolaMedic.requestFocus();
             return;
         }
@@ -156,7 +157,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         mAuth.signInWithEmailAndPassword(email, parola).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     // daca emailul a fost verificat prin link conectez utilizatorul in cont
 //                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 //                    if(firebaseUser.isEmailVerified())
@@ -170,7 +171,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
 //                    finish();
                 } else {
                     loading(false);
-                    Toast.makeText(getApplicationContext(), "Credentiale invalide!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_credentiale), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -182,5 +183,4 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         } else progressBar.setVisibility(View.GONE);
     }
 }
-//todo
-//daca ultima data a fost conectat un medic, ar trb sa ramana pagina de pornire ConectareMedicActivity
+//todo daca ultima data a fost conectat un medic, ar trb sa ramana pagina de pornire ConectareMedicActivity

@@ -182,6 +182,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(), ProfilPacientActivity.class));
 //                Toast.makeText(getApplicationContext(), "Profil", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.item_bmi:
+                startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(PACIENT, "pacient"));
+                break;
             case R.id.item_log_out:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));

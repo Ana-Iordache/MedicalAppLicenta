@@ -130,13 +130,13 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         String parola = tietLoginParolaPacient.getText().toString().trim();
 
         if (email.isEmpty()) {
-            tietLoginEmailPacient.setError("Introduceti emailul!");
+            tietLoginEmailPacient.setError(getString(R.string.err_empty_email));
             tietLoginEmailPacient.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            tietLoginEmailPacient.setError("Introduceti un email valid!");
+            tietLoginEmailPacient.setError(getString(R.string.err_not_valid_email));
             tietLoginEmailPacient.requestFocus();
             return;
         }
@@ -145,19 +145,19 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         Pattern pattern = Pattern.compile(getString(R.string.pattern_email_medic));
         Matcher matcher = pattern.matcher(email);
         if (matcher.matches()) {
-            tvSuntMedic.setError("Va rugam sa va conectati din pagina medicului!");
+            tvSuntMedic.setError(getString(R.string.err_conectare_medic));
             tvSuntMedic.requestFocus();
             return;
         }
 
         if (parola.isEmpty()) {
-            tietLoginParolaPacient.setError("Introduceti parola!");
+            tietLoginParolaPacient.setError(getString(R.string.err_empty_parola));
             tietLoginParolaPacient.requestFocus();
             return;
         }
 
         if (parola.length() < 6) {
-            tietLoginParolaPacient.setError("Parola trebuie sa contina cel putin 6 caractere!");
+            tietLoginParolaPacient.setError(getString(R.string.err_not_valid_parola));
             tietLoginParolaPacient.requestFocus();
             return;
         }
@@ -184,7 +184,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                     // dar daca vreau sa revin in ap imi deschide pagina de log in in loc de main
                 } else {
                     loading(false);
-                    Toast.makeText(getApplicationContext(), "Credentiale invalide!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_credentiale), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -211,11 +211,10 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(FirebaseAuth.getInstance().getCurrentUser()==null){
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             moveTaskToBack(true);
         }
     }

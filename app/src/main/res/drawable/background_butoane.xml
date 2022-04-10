@@ -4,7 +4,7 @@
     <solid
         android:color="@color/custom_blue"/>
     <corners
-        android:radius="@dimen/_15sdp"/>
+        android:radius="@dimen/_5sdp"/>
 <!--    <stroke-->
 <!--        android:color="@color/custom_blue"/>-->
 

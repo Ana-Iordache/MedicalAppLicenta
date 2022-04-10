@@ -11,9 +11,18 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#77cefc"
+        android:background="@color/custom_blue"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_profil"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp" />
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -346,7 +355,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!--TODO nu se afiseaza in intregime si nu i pune culoara pusa de mine-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnModificaDate"
                 android:layout_width="match_parent"

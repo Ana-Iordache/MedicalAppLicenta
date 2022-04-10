@@ -284,7 +284,9 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                 oreIndisponibile = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Programare p = dataSnapshot.getValue(Programare.class);
-                    if (p.getIdMedic().equals(medic.getIdMedic()) && p.getData().equals(tietDataProgramarii.getText().toString())) {
+                    if (p.getIdMedic().equals(medic.getIdMedic()) && p.getData().equals(tietDataProgramarii.getText().toString())
+                            && p.getStatus().equals(getString(R.string.status_noua))) {
+                        // daca programarea a fost anulata (statusul nu e "noua") atunci trec ora ca fiind disponibila
                         oreIndisponibile.add(p.getOra());
                     }
                 }
@@ -330,8 +332,14 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                             Factura factura = new Factura(valoare, formatter.format(LocalDate.now()), formatter.format(LocalDate.now().plusDays(30)), "Neachitată");
 
-                            Programare programare = new Programare(medic.getIdMedic(), idPacient, tietDataProgramarii.getText().toString(), oreDisponibile.get(position), factura);
+                            Programare programare = new Programare(null, medic.getIdMedic(),
+                                    idPacient,
+                                    tietDataProgramarii.getText().toString(),
+                                    oreDisponibile.get(position),
+                                    "nouă",
+                                    factura);
                             String idProgramare = firebaseServiceProgramari.databaseReference.push().getKey();
+                            programare.setIdProgramare(idProgramare);
                             firebaseServiceProgramari.databaseReference.child(idProgramare).setValue(programare);
                             Toast.makeText(getApplicationContext(), "Programarea a fost trimisa!", Toast.LENGTH_SHORT).show();
                             dialogInterface.cancel();

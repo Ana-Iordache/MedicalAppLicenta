@@ -1,243 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d2ecfc"
+    android:background="@color/white"
     tools:context=".activitati.ProfilMedicActivity">
 
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical">-->
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#77cefc"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ciwPozaProfilMedic"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_account" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/TextInputLayoutStyle"
-            app:boxStrokeColor="#000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietNota"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_nota"
-                android:drawablePadding="10dp"
-                android:enabled="false"
-                android:hint="Nota"
-                android:textColor="#000"
-                android:textColorHint="#000"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="#000"
-            android:theme="@style/TextInputLayoutStyle"
-            app:boxStrokeColor="#000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietNumeMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_nume"
-                android:drawablePadding="10dp"
-                android:enabled="false"
-                android:hint="Nume*"
-                android:textColor="#000"
-                android:textColorHint="#000"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/TextInputLayoutStyle"
-            app:boxStrokeColor="#000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietPrenumeMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_nume"
-                android:drawablePadding="10dp"
-                android:enabled="false"
-                android:hint="Prenume*"
-                android:textColor="#000"
-                android:textColorHint="#000"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/TextInputLayoutStyle"
-            app:boxStrokeColor="#000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietNrTelefonMedic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_telefon"
-                android:drawablePadding="10dp"
-                android:enabled="false"
-                android:hint="Numar de telefon"
-                android:textColor="#000"
-                android:textColorHint="#000"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/custom_blue"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
-            android:id="@+id/tvGradProfesional"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:drawablePadding="10dp"
-            android:enabled="false"
-            android:text="Grad profesional"
-            android:textColor="#000"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_grad_profesional" />
-
-        <Spinner
-            android:id="@+id/spnGradProfesional"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center" />
+            android:text="@string/title_profil"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp" />
+    </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/tvSpecialitate"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:drawablePadding="10dp"
-            android:enabled="false"
-            android:text="Specialitate*"
-            android:textColor="#000"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_specialitate" />
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_5sdp">
 
-        <Spinner
-            android:id="@+id/spnSpecialitate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ciwPozaProfilMedic"
+                android:layout_width="@dimen/_86sdp"
+                android:layout_height="@dimen/_86sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:src="@drawable/ic_account" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/TextInputLayoutStyle"
-            app:boxStrokeColor="#000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietEmailMedic"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_email"
-                android:drawablePadding="10dp"
-                android:enabled="false"
-                android:hint="Adresa de email*"
-                android:textColor="#000"
-                android:textColorHint="#000"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
 
-        <!--TODO nu se afiseaza in intregime si nu i pune culoara pusa de mine-->
-        <Button
-            android:id="@+id/btnModificaDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/background_butoane"
-            android:text="Modifica date personale"
-            android:textAllCaps="false"
-            android:textColor="#000"
-            android:textSize="20sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietNota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_nota"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:hint="@string/nota"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnSalveaza"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/background_butoane"
-            android:text="Salveaza modificari"
-            android:textAllCaps="false"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
 
-        <Button
-            android:id="@+id/btnRenunta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/background_butoane"
-            android:text="Renunta"
-            android:textAllCaps="false"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:visibility="gone" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietNumeMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_nume"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:hint="@string/nume"
+                    android:inputType="textCapWords"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnSchimbaParola"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/background_butoane"
-            android:text="Schimba parola"
-            android:textAllCaps="false"
-            android:textColor="#000"
-            android:textSize="20sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
 
-        <Button
-            android:id="@+id/btnStergeCont"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/background_butoane"
-            android:text="Sterge contul"
-            android:textAllCaps="false"
-            android:textColor="#000"
-            android:textSize="20sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietPrenumeMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_nume"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:hint="@string/prenume"
+                    android:inputType="textCapWords"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietNrTelefonMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_telefon"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:hint="@string/numar_de_telefon_opt"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actvGradeProfesionale"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_grad_profesional"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/grad_profesional"
+                    android:inputType="none"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tvGradProfesional"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="15dp"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:drawablePadding="10dp"-->
+            <!--                android:enabled="false"-->
+            <!--                android:text="Grad profesional"-->
+            <!--                android:textColor="#000"-->
+            <!--                android:textSize="18sp"-->
+            <!--                app:drawableStartCompat="@drawable/ic_grad_profesional" />-->
+
+            <!--            <Spinner-->
+            <!--                android:id="@+id/spnGradProfesional"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:layout_marginStart="15dp"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:gravity="center" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actvSpecialitati"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_specialitate"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/specialitate_medic"
+                    android:inputType="none"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietProgramLucru"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:drawableStart="@drawable/ic_program"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:hint="@string/program_lucru"
+                    android:inputType="none"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+                app:boxCornerRadiusTopStart="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietEmailMedic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_email"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnModificaDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/background_butoane"
+                android:text="@string/modifica_date_personale"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/llButoane"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSalveaza"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_butoane"
+                    android:text="@string/salveaza"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnRenunta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_butoane_secundare"
+                    android:text="@string/renunta"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llButoaneDateAutentificare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSchimbaParola"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_butoane_selector"
+                    android:text="@string/schimba_parola"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSchimbaEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_butoane_selector"
+                    android:text="@string/schimba_email"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnStergeCont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/background_butoane_selector"
+                android:text="@string/sterge_contul"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </ScrollView>
 
 
-</ScrollView>
+</RelativeLayout>

@@ -2,6 +2,7 @@ package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -19,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +45,7 @@ import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class ProgramariActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProgramariActivity extends AppCompatActivity implements View.OnClickListener, ProgramareAdaptor.OnProgramareClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String ADAUGA_PROGRAMARE = "adaugaProgramare";
     private static final DateTimeFormatter FORMAT_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -110,7 +113,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void seteazaAdaptor() {
-        adaptor = new ProgramareAdaptor(programari, tipUtilizator);
+        adaptor = new ProgramareAdaptor(programari, tipUtilizator, ProgramariActivity.this, getApplicationContext());
         rwProgramari.setAdapter(adaptor);
     }
 
@@ -193,11 +196,11 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                             Date dataProgramarii = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).parse(dataOra);
                             //todo poate mai fac frumos..
                             if (rbViitoare.isChecked()) {
-                                if (dataProgramarii.after(dataCurenta)) {
+                                if (dataProgramarii.after(dataCurenta) && p.getStatus().equals(getString(R.string.status_noua))) {
                                     programari.add(p);
                                 }
                             } else if (rbIstoric.isChecked())
-                                if (dataProgramarii.before(dataCurenta)) {
+                                if (dataProgramarii.before(dataCurenta) || p.getStatus().equals(getString(R.string.status_anulata))) {
                                     programari.add(p);
                                 }
                         } catch (ParseException e) {
@@ -230,5 +233,36 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         if (seIncarca) {
             progressBar.setVisibility(View.VISIBLE);
         } else progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onProgramareClick(int position) {
+        Programare programare = programari.get(position);
+        if (programare.getStatus().equals(getString(R.string.status_noua))) {
+            AlertDialog dialog = new AlertDialog.Builder(ProgramariActivity.this)
+                    .setTitle("Confirmare anulare")
+                    .setMessage("Anulați programarea din " + programari.get(position).getData() + "?")
+                    .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            programare.setStatus(getString(R.string.status_anulata));
+                            firebaseService.databaseReference
+                                    .child(programare.getIdProgramare())
+                                    .child("status")
+                                    .setValue(getString(R.string.status_anulata));
+                            dialogInterface.cancel();
+                            Toast.makeText(getApplicationContext(), "Programarea a fost anulată!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .create();
+            dialog.show();
+        }
+//            Toast.makeText(getApplicationContext(), "Pentru a șterge o programare apăsați lung pe aceasta.", Toast.LENGTH_SHORT).show();
     }
 }

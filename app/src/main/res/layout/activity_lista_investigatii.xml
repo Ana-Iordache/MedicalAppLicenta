@@ -61,7 +61,7 @@
             android:paddingTop="@dimen/_15sdp"
             android:paddingEnd="0dp"
             android:paddingBottom="@dimen/_15sdp"
-            android:text="@string/selectati_specialitatea"
+            android:text="@string/err_empty_specialitate"
             android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>

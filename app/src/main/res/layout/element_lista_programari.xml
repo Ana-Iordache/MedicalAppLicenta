@@ -6,8 +6,9 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cwProgramare"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
@@ -19,7 +20,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp">
 
             <TextView
                 android:id="@+id/tvNume"
@@ -36,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvNume"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
@@ -49,16 +53,19 @@
 
 
             <LinearLayout
+                android:id="@+id/llDataOra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvSpecialitate"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp">
 
                 <TextView
                     android:id="@+id/tvDataProgramarii"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_20sdp"
+                    android:drawablePadding="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     app:drawableStartCompat="@drawable/ic_calendar" />
@@ -67,10 +74,26 @@
                     android:id="@+id/tvOraProgramarii"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     app:drawableStartCompat="@drawable/ic_timp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llDataOra"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:text="@string/status_onorata"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                app:drawableStartCompat="@drawable/ic_ok" />
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

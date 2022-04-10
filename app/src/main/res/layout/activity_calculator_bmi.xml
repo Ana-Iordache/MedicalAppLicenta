@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitati.CalculatorBmiActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/custom_blue"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/calculator_bmi"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/ryInaltime"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/background_card"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvInaltime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/inaltime"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvInaltimeCurenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvInaltime"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvInaltime"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_toEndOf="@+id/tvInaltimeCurenta"
+            android:text="@string/cm"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvInaltimeCurenta"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/minusInaltime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/icon_plus"
+                android:src="@drawable/ic_minus" />
+
+            <SeekBar
+                android:id="@+id/sbInaltime"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/plusInaltime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/icon_minus"
+                android:src="@drawable/ic_plus" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlGreutate"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ryInaltime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/background_card"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvGreutate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/greutate"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvGreutateCurenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvGreutate"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGreutate"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_toEndOf="@+id/tvGreutateCurenta"
+            android:text="@string/kg"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGreutateCurenta"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/minusGreutate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/icon_minus"
+                android:src="@drawable/ic_minus" />
+
+            <SeekBar
+                android:id="@+id/sbGreutate"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/plusGreutate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/icon_plus"
+                android:src="@drawable/ic_plus" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/llGreutateVarsta"-->
+    <!--        android:layout_width="@dimen/_300sdp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/ryInaltime"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="@dimen/_15sdp"-->
+    <!--        android:orientation="horizontal">-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginEnd="@dimen/_5sdp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:background="@drawable/background_card">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tvGreutate"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_centerHorizontal="true"-->
+    <!--                android:layout_marginTop="@dimen/_5sdp"-->
+    <!--                android:text="@string/greutate"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/_16sdp"-->
+    <!--                android:textStyle="bold" />-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/tvGreutate"-->
+    <!--                android:layout_marginTop="@dimen/_5sdp"-->
+    <!--                android:layout_marginBottom="@dimen/_5sdp"-->
+    <!--                android:orientation="horizontal">-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/minusGreutate"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:src="@drawable/ic_minus" />-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/tvGreutateCurenta"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:gravity="center"-->
+    <!--                    android:text="50.7"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="@dimen/_16sdp" />-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/plusGreutate"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:src="@drawable/ic_plus" />-->
+    <!--            </LinearLayout>-->
+
+    <!--        </RelativeLayout>-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="@dimen/_5sdp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:background="@drawable/background_card">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/tvVarsta"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_centerHorizontal="true"-->
+    <!--                android:layout_marginTop="@dimen/_5sdp"-->
+    <!--                android:text="@string/varsta"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/_16sdp"-->
+    <!--                android:textStyle="bold" />-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/tvVarsta"-->
+    <!--                android:layout_marginTop="@dimen/_5sdp"-->
+    <!--                android:layout_marginBottom="@dimen/_5sdp"-->
+    <!--                android:orientation="horizontal">-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/minusVarsta"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:src="@drawable/ic_minus" />-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/tvVarstaCurenta"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:gravity="center"-->
+    <!--                    android:text="21"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="@dimen/_16sdp" />-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/plusVarsta"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    android:layout_weight="1"-->
+    <!--                    android:src="@drawable/ic_plus" />-->
+
+    <!--            </LinearLayout>-->
+    <!--        </RelativeLayout>-->
+
+    <!--    </LinearLayout>-->
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/rlGreutate"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/colorDivider" />
+
+    <LinearLayout
+        android:id="@+id/llRezultat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivBmi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:contentDescription="@string/icon_bmi" />
+
+        <TextView
+            android:id="@+id/tvBmiGrad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBmiText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16sdp" />
+    </LinearLayout>
+
+</RelativeLayout>

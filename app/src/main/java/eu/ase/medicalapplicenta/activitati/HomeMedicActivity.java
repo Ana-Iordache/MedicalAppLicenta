@@ -74,7 +74,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
 
     private void seteazaToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("");
     }
 
     private void initializeazaAtribute() {
@@ -146,6 +146,9 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         switch (item.getItemId()) {
             case R.id.item_profil:
                 startActivity(new Intent(getApplicationContext(), ProfilMedicActivity.class));
+                break;
+            case R.id.item_bmi:
+                startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(MEDIC, "medic"));
                 break;
             case R.id.item_log_out:
                 FirebaseAuth.getInstance().signOut();

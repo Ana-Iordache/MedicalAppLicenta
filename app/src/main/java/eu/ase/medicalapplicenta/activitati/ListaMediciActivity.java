@@ -152,6 +152,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     private ValueEventListener preiaMedici() {
         loading(true);
         return new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 medici.clear();
@@ -178,7 +179,10 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         };
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void seteazaAdaptorMedici(List<Medic> medici) {
+        // elimin intai toti medicii al caror cont este sters
+        medici.removeAll(medici.stream().filter(Medic::isContSters).collect(Collectors.toList()));
         adapter = new MedicAdaptor(medici, getApplicationContext(), ListaMediciActivity.this);
         rwListaMedici.setAdapter(adapter);
     }

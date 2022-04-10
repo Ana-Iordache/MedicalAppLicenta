@@ -7,7 +7,8 @@ public class ZiDeLucru implements Serializable {
     private String oraInceput;
     private String oraSfarsit;
 
-    public ZiDeLucru(){}
+    public ZiDeLucru() {
+    }
 
     public ZiDeLucru(String zi, String oraInceput, String oraSfarsit) {
         this.zi = zi;
@@ -41,10 +42,6 @@ public class ZiDeLucru implements Serializable {
 
     @Override
     public String toString() {
-        return "ZiDeLucru{" +
-                "zi='" + zi + '\'' +
-                ", oraInceput='" + oraInceput + '\'' +
-                ", oraSfarsit='" + oraSfarsit + '\'' +
-                '}';
+        return zi + ": " + oraInceput + " - " + oraSfarsit;
     }
 }

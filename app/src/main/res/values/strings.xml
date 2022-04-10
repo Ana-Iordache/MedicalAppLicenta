@@ -22,8 +22,13 @@
         <item>Medic primar</item>
         <item>Psiholog</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="zile_saptamana">
+        <item>luni</item>
+        <item>marți</item>
+        <item>miercuri</item>
+        <item>joi</item>
+        <item>vineri</item>
+    </string-array>
     <string name="pattern_email_medic">^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$</string>
     <string name="pattern_numar_telefon">^07[2-8][0-9]{7}$</string>
     <string name="pattern_cnp">^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$</string>
@@ -99,7 +104,8 @@
     <string name="title_medici">Medici</string>
     <string name="toate_specialitatile">Toate specialitățile</string>
     <string name="specialitate">Specialitate</string>
-    <string name="selectati_specialitatea">Selectați specialitatea</string>
+    <string name="specialitate_medic">Specialitate <font color="#FF0000">*</font></string>
+    <string name="err_empty_specialitate">Selectați specialitatea</string>
     <string name="selectati_o_specialitate">Selectați o specialitate</string>
     <string name="info_investigatii">Pentru a putea vizualiza informații despre investigații vă rugăm să selectați o specialitate</string>
     <string name="icon_specialitati">Icon specialitati</string>
@@ -123,4 +129,39 @@
     <string name="program">Program</string>
     <string name="email_medic">Email</string>
     <string name="programeaza">Programează-te</string>
+    <string name="conectare_medic">Conectare medic</string>
+    <string name="sunt_pacient">Sunt pacient</string>
+    <string name="err_not_valid_email_doctor">Introduceți emailul oficial (de forma adresa@clinica-medicala.ro)!</string>
+    <string name="err_conectare_medic">Vă rugăm să vă conectați din pagina medicului!</string>
+    <string name="err_credentiale">Credențiale invalide!</string>
+    <string name="numar_de_telefon_opt">Număr de telefon</string>
+    <string name="grad_profesional">Grad profesional</string>
+    <string name="title_profil">Profil</string>
+    <string name="nespecificat">Nespecificat</string>
+    <string name="program_lucru">Program lucru <font color="#FF0000">*</font> </string>
+    <string name="zi_de_lucru">Zi de lucru</string>
+    <string name="ora_de_sfarsit">Ora de sfârșit</string>
+    <string name="ora_de_inceput">Ora de început</string>
+    <string name="adauga">Adaugă</string>
+    <string name="err_empty_program_lucru">Completați programul de lucru!</string>
+    <string name="elimina">Elimină</string>
+    <string name="status_onorata">onorată</string>
+    <string name="status_neonorata">neonorată</string>
+    <string name="status_noua">nouă</string>
+    <string name="status_anulata">anulată</string>
+    <string name="calculator_bmi">Calculator BMI</string>
+    <string name="cm">cm</string>
+    <string name="calculeaza_bmi">Calculează BMI</string>
+    <string name="kg">kg</string>
+    <string name="bmi_subponderal">Subponderal</string>
+    <string name="bmi_normoponderal">Normoponderal</string>
+    <string name="bmi_supraponderal">Supraponderal</string>
+    <string name="bmi_obezitate1">Obezitate de grad I</string>
+    <string name="bmi_obezitate2">Obezitate de grad II</string>
+    <string name="bmi_obezitate_morbida">Obezitate morbidă</string>
+    <string name="greutate_minima">30,0</string>
+    <string name="inaltime_minima">100</string>
+    <string name="icon_plus">Icon plus</string>
+    <string name="icon_minus">Icon minus</string>
+    <string name="icon_bmi">Icon BMI</string>
 </resources>

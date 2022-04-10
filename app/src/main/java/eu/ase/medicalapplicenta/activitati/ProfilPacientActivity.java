@@ -114,7 +114,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
         seteazaDialogSchimbaParola();
         seteazaDialogSchimbaEmail();
-        seteazaDialogStereCont();
+        seteazaDialogStergeCont();
 
 //        spGrupaSange.setEnabled(false); // din xml nu merge
 //        actvGrupeSange.setDropDownHeight(0); todo hmmmmm
@@ -197,7 +197,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
     private void seteazaToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Profil");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -260,7 +260,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             case R.id.btnSchimbaEmail:
                 dialogEmail.show();
                 break;
-            case R.id.btnStergeCont: //TODO
+            case R.id.btnStergeCont:
                 dialogStergereCont.show();
                 break;
             case R.id.btnSalveaza:
@@ -469,7 +469,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         dialogEmail = builder.create();
     }
 
-    private void seteazaDialogStereCont() {
+    private void seteazaDialogStergeCont() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.sterge_contul));
 

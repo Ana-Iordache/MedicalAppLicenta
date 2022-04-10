@@ -202,7 +202,6 @@
                         android:focusableInTouchMode="true"
                         android:hint="@string/data_nasterii"
                         android:inputType="none"
-                        android:text="@string/selectati_data"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
