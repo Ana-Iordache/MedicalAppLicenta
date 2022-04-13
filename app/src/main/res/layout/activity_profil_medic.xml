@@ -280,7 +280,7 @@
                     android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="@dimen/_10sdp"
                     android:enabled="false"
-                    android:hint="@string/email"
+                    android:hint="@string/email_mandatory"
                     android:inputType="textEmailAddress"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>

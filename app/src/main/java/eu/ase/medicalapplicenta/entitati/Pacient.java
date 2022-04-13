@@ -1,88 +1,48 @@
 package eu.ase.medicalapplicenta.entitati;
 
-import java.util.Date;
-
 public class Pacient {
-//    private String idPacient;
+    private String idPacient;
     private String nume;
     private String prenume;
     private Long cnp;
     private Long nrTelefon;
-    private String sex; // setata automat pe baza primei cifre din cnp
-    private String adresa; // optional
-    private String dataNasterii; // ar trb sa corespunda cu cnp TODO maybe
+    private String sex;
+    private String adresa;
+    private String dataNasterii;
     private String adresaEmail;
-    private String urlPozaProfil; // optional
+    private String urlPozaProfil;
     private String grupaSange;
-    private Double greutate; // optional
-    private Double inaltime; // optional
-    private int varsta; // calculata automat pe baza dataNasterii
+    private Double greutate;
+    private Double inaltime;
+    private int varsta;
 
     public Pacient() {
     }
 
+    public Pacient(String idPacient, String nume, String prenume, Long cnp, Long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail, String grupaSange, Double greutate, Double inaltime, int varsta, String urlPozaProfil) {
+        this.idPacient = idPacient;
+        this.nume = nume;
+        this.prenume = prenume;
+        this.cnp = cnp;
+        this.nrTelefon = nrTelefon;
+        this.sex = sex;
+        this.adresa = adresa;
+        this.dataNasterii = dataNasterii;
+        this.adresaEmail = adresaEmail;
+        this.grupaSange = grupaSange;
+        this.greutate = greutate;
+        this.inaltime = inaltime;
+        this.varsta = varsta;
+        this.urlPozaProfil = urlPozaProfil;
+    }
 
-//    public Pacient(String nume, String prenume, Long cnp, Long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail) {
-//        this.nume = nume;
-//        this.prenume = prenume;
-//        this.cnp = cnp;
-//        this.nrTelefon = nrTelefon;
-//        this.sex = sex;
-//        this.adresa = adresa;
-//        this.dataNasterii = dataNasterii;
-//        this.adresaEmail = adresaEmail;
-//    }
-//
-//    public Pacient(String nume, String prenume, Long cnp, Long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail, String urlPozaProfil) {
-//        this.nume = nume;
-//        this.prenume = prenume;
-//        this.cnp = cnp;
-//        this.nrTelefon = nrTelefon;
-//        this.sex = sex;
-//        this.adresa = adresa;
-//        this.dataNasterii = dataNasterii;
-//        this.adresaEmail = adresaEmail;
-//        this.urlPozaProfil = urlPozaProfil;
-//    }
+    public String getIdPacient() {
+        return idPacient;
+    }
 
-//    public Pacient(String nume, String prenume, Long cnp, Long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail, String urlPozaProfil, String grupaSange, Double greutate, Double inaltime, int varsta) {
-//        this.nume = nume;
-//        this.prenume = prenume;
-//        this.cnp = cnp;
-//        this.nrTelefon = nrTelefon;
-//        this.sex = sex;
-//        this.adresa = adresa;
-//        this.dataNasterii = dataNasterii;
-//        this.adresaEmail = adresaEmail;
-//        this.urlPozaProfil = urlPozaProfil;
-//        this.grupaSange = grupaSange;
-//        this.greutate = greutate;
-//        this.inaltime = inaltime;
-//        this.varsta = varsta;
-//    }
-public Pacient(String nume, String prenume, Long cnp, Long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail, String grupaSange, Double greutate, Double inaltime, int varsta, String urlPozaProfil) {
-    this.nume = nume;
-    this.prenume = prenume;
-    this.cnp = cnp;
-    this.nrTelefon = nrTelefon;
-    this.sex = sex;
-    this.adresa = adresa;
-    this.dataNasterii = dataNasterii;
-    this.adresaEmail = adresaEmail;
-    this.grupaSange = grupaSange;
-    this.greutate = greutate;
-    this.inaltime = inaltime;
-    this.varsta = varsta;
-    this.urlPozaProfil = urlPozaProfil;
-}
-
-    //    public String getIdPacient() {
-//        return idPacient;
-//    }
-//
-//    public void setIdPacient(String idPacient) {
-//        this.idPacient = idPacient;
-//    }
+    public void setIdPacient(String idPacient) {
+        this.idPacient = idPacient;
+    }
 
 
     public String getUrlPozaProfil() {
@@ -192,6 +152,7 @@ public Pacient(String nume, String prenume, Long cnp, Long nrTelefon, String sex
     @Override
     public String toString() {
         return "Pacient{" +
+                "idPacient='" + idPacient + '\'' +
                 ", nume='" + nume + '\'' +
                 ", prenume='" + prenume + '\'' +
                 ", cnp=" + cnp +
@@ -200,6 +161,11 @@ public Pacient(String nume, String prenume, Long cnp, Long nrTelefon, String sex
                 ", adresa='" + adresa + '\'' +
                 ", dataNasterii='" + dataNasterii + '\'' +
                 ", adresaEmail='" + adresaEmail + '\'' +
+                ", urlPozaProfil='" + urlPozaProfil + '\'' +
+                ", grupaSange='" + grupaSange + '\'' +
+                ", greutate=" + greutate +
+                ", inaltime=" + inaltime +
+                ", varsta=" + varsta +
                 '}';
     }
 }

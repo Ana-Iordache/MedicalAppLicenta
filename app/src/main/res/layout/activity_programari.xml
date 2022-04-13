@@ -48,9 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/view"
         android:orientation="horizontal">
-        <!-- TODO
-        android:paddingStart="@dimen/_3sdp"
-        android:paddingEnd="@dimen/_4sdp"-->
 
         <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/rbIstoric"

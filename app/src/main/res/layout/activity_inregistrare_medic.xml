@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_email"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:hint="@string/email"
+                        android:hint="@string/email_mandatory"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black"
                         android:textSize="16sp"/>

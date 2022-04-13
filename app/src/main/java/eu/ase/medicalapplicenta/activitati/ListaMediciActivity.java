@@ -255,7 +255,8 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
             String nota = medic.getNotaFeedback() + " din 10";
             tvNota.setText(nota);
 
-            ProgramAdaptor adapter = new ProgramAdaptor(getApplicationContext(), R.layout.element_program_medic, medic.getProgram(), getLayoutInflater());
+            ProgramAdaptor adapter = new ProgramAdaptor(getApplicationContext(), R.layout.element_program_medic,
+                    medic.getProgram(), getLayoutInflater());
             lvProgram.setAdapter(adapter);
 
             bottomSheetDialog.setContentView(view);

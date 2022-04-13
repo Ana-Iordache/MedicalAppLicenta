@@ -134,7 +134,7 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 greutateCurenta = (double) i / 10;
                 tvGreutateCurenta.setText(DECIMAL_FORMAT.format(greutateCurenta));
-                //todo merge din 2 in 2 nush dc.. si la regima maria tot asa face hmm
+                //merge din 2 in 2 nush dc.. si la regima maria tot asa face hmm
                 calculeazaBmi();
             }
 
@@ -292,8 +292,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
                 break;
         }
     }
-//todo poate fac sa se modifice direct indicele in timp ce schimba greutatea sau inaltime si sa renunt la buton
-// sau daca pastrez butonul sa dispara ce se calculase deja pana apasa iar pe buton
 
 //    @Override
 //    public void finish() {

@@ -97,24 +97,24 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
             itemView.setOnClickListener(this);
         }
 
-        void seteazaDateMedic(Medic m, MedicViewHolder holder) {
-            if (!m.getUrlPozaProfil().equals(""))
-                Glide.with(context).load(m.getUrlPozaProfil()).into(holder.ciwPozaProfilMedic);
+        void seteazaDateMedic(Medic medic, MedicViewHolder holder) {
+            if (!medic.getUrlPozaProfil().equals(""))
+                Glide.with(context).load(medic.getUrlPozaProfil()).into(holder.ciwPozaProfilMedic);
 
-            String numeComplet = "Dr. " + m.getNume() + " " + m.getPrenume();
+            String numeComplet = "Dr. " + medic.getNume() + " " + medic.getPrenume();
             holder.tvNumeMedic.setText(numeComplet);
 
-            if (m.getGradProfesional().equals("Nespecificat")) {
+            if (medic.getGradProfesional().equals("Nespecificat")) {
                 holder.tvGradProfesional.setText("");
-            } else holder.tvGradProfesional.setText(m.getGradProfesional());
+            } else holder.tvGradProfesional.setText(medic.getGradProfesional());
 
-            firebaseService.preiaObiectDinFirebase(preiaSpecialitate(holder), m.getIdSpecialitate());
+            firebaseService.preiaObiectDinFirebase(preiaSpecialitate(holder), medic.getIdSpecialitate());
 
-            if (m.getNotaFeedback() == 0.0) {
+            if (medic.getNotaFeedback() == 0.0) {
                 holder.tvNota.setText("");
 //                holder.tvNrFeedbackuri.setText("");
             } else {
-                holder.tvNota.setText(String.valueOf(m.getNotaFeedback()));
+                holder.tvNota.setText(String.valueOf(medic.getNotaFeedback()));
 //                tvNrFeedbackuri.setText(..); todo
             }
         }

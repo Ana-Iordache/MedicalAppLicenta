@@ -124,7 +124,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         tietGreutate = findViewById(R.id.tietGreutate);
         tietInaltime = findViewById(R.id.tietInaltime);
 
-//        spGrupaSange = findViewById(R.id.spGrupaSange); //todo sa fac drop down menu
         actvGrupeSange = findViewById(R.id.actvGrupeSange);
 
         tietEmailPacient = findViewById(R.id.tietEmailPacient);
@@ -249,7 +248,9 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             // daca userul a fost inregistrat
                             if (task.isSuccessful()) {
-                                Pacient pacient = new Pacient(nume,
+                                String idPacient = mAuth.getCurrentUser().getUid();
+
+                                Pacient pacient = new Pacient(idPacient, nume,
                                         prenume,
                                         cnp,
                                         nrTelefon,

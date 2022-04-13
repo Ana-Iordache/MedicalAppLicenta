@@ -56,7 +56,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
         initializeazaAtribute();
 
-        //todo
+        //todo maybe
         tv = findViewById(R.id.tv);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override

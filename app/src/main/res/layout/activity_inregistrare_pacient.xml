@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_telefon"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:hint="@string/numar_de_telefon"
+                        android:hint="@string/numar_de_telefon_mandatory"
                         android:inputType="number"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
@@ -200,7 +200,7 @@
                         android:drawablePadding="@dimen/_10sdp"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:hint="@string/data_nasterii"
+                        android:hint="@string/data_nasterii_mandatory"
                         android:inputType="none"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
@@ -309,7 +309,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_email"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:hint="@string/email"
+                        android:hint="@string/email_mandatory"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
@@ -367,7 +367,6 @@
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!--TODO sa fac outline cu custom_blue si cand da click poate il umplu gen-->
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnInregistrarePacient"
                     android:layout_width="match_parent"

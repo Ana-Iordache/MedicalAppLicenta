@@ -47,6 +47,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
     private CircleImageView ciwPozaProfilUser;
 
     private CardView cwProgramari;
+    private CardView cwPacienti;
 
 
     @Override
@@ -62,6 +63,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
 
         navigationView.setNavigationItemSelectedListener(this);
         cwProgramari.setOnClickListener(this);
+        cwPacienti.setOnClickListener(this);
 
         incarcaInfoNavMenu();
     }
@@ -91,6 +93,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         idMedic = medicConectat.getUid();
 
         cwProgramari = findViewById(R.id.cwProgramari);
+        cwPacienti = findViewById(R.id.cwPacienti);
     }
 
     @Override
@@ -135,6 +138,10 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.cwProgramari:
                 startActivity(new Intent(getApplicationContext(), ProgramariActivity.class).putExtra(MEDIC, "medic"));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            case R.id.cwPacienti:
+                startActivity(new Intent(getApplicationContext(), ListaPacientiActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }

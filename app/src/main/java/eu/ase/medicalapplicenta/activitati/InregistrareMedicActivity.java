@@ -229,14 +229,14 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
 //                    }
 //                }
 
-//                if (tietOraInceput.getText().toString().isEmpty()) {
-//                    //todo
-//                    //ca sa apara si textul trb sa-i pun din xml focusable pe true
-//                    //dar asa imi apare tastatura la primuk click pe tiet uof
-//                    tietOraInceput.setError("Selectați ora de început!");
-//                    tietOraInceput.requestFocus();
-//                    return;
-//                }
+                if (tietOraInceput.getText().toString().isEmpty()) {
+                    //todo
+                    //ca sa apara si textul trb sa-i pun din xml focusable pe true
+                    //dar asa imi apare tastatura la primuk click pe tiet uof
+                    tietOraInceput.setError("Selectați ora de început!");
+                    tietOraInceput.requestFocus();
+                    return;
+                }
 
                 if (tietOraSfarsit.getText().toString().isEmpty()) {
                     tietOraSfarsit.setError("Selectați ora de sfârșit!");
@@ -421,7 +421,16 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                             if (task.isSuccessful()) {
                                 String idMedic = mAuth.getCurrentUser().getUid();
 
-                                Medic medic = new Medic(idMedic, nume, prenume, nrTelefon, adresaEmail, finalIdSpecialitate, 0.0, gradProfesional, "", program);
+                                Medic medic = new Medic(idMedic,
+                                        nume,
+                                        prenume,
+                                        nrTelefon,
+                                        adresaEmail,
+                                        finalIdSpecialitate,
+                                        0.0,
+                                        gradProfesional,
+                                        "",
+                                        program);
 
                                 firebaseServiceMedici.databaseReference.child(idMedic)
                                         .setValue(medic).addOnCompleteListener(new OnCompleteListener<Void>() {

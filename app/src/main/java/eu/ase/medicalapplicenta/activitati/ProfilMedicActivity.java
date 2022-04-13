@@ -734,14 +734,14 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 //                    }
 //                }
 
-//                if (tietOraInceput.getText().toString().isEmpty()) {
-//                    //todo
-//                    //ca sa apara si textul trb sa-i pun din xml focusable pe true
-//                    //dar asa imi apare tastatura la primuk click pe tiet uof
-//                    tietOraInceput.setError("Selectați ora de început!");
-//                    tietOraInceput.requestFocus();
-//                    return;
-//                }
+                if (tietOraInceput.getText().toString().isEmpty()) {
+                    //todo
+                    //ca sa apara si textul trb sa-i pun din xml focusable pe true
+                    //dar asa imi apare tastatura la primuk click pe tiet uof
+                    tietOraInceput.setError("Selectați ora de început!");
+                    tietOraInceput.requestFocus();
+                    return;
+                }
 
                 if (tietOraSfarsit.getText().toString().isEmpty()) {
                     tietOraSfarsit.setError("Selectați ora de sfârșit!");
@@ -882,7 +882,6 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    // todo poate mai bn fac o clasa care sa contina functia asta si s o apelez mereu cand am nevoie
     private void incarcaPoza() {
         StorageReference caleFisier = FirebaseStorage.getInstance().getReference()
                 .child("poze de profil").child(idUserConectat);

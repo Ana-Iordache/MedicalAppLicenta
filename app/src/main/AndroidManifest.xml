@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppLicenta">
         <activity
+            android:name=".activitati.ListaPacientiActivity"
+            android:exported="false" />
+        <activity
             android:name=".activitati.CalculatorBmiActivity"
             android:exported="false" />
         <activity
             android:name=".activitati.FacturiActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activitati.InformatiiMedicActivity"
             android:exported="false" />
         <activity
             android:name=".activitati.OreDisponibileActivity"

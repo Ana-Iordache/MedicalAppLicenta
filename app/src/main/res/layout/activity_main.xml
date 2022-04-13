@@ -48,10 +48,10 @@
                 android:id="@+id/cwMedici"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
 
@@ -90,10 +90,10 @@
                 android:id="@+id/cwInvestigatii"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
 
@@ -132,10 +132,10 @@
                 android:id="@+id/cwProgramari"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
 
@@ -174,10 +174,10 @@
                 android:id="@+id/cwFacturi"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
 

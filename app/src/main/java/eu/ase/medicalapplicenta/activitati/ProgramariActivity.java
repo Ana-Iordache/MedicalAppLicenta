@@ -45,7 +45,7 @@ import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class ProgramariActivity extends AppCompatActivity implements View.OnClickListener, ProgramareAdaptor.OnProgramareClickListener {
+public class ProgramariActivity extends AppCompatActivity implements View.OnClickListener, ProgramareAdaptor.OnProgramareClickListener, ProgramareAdaptor.OnProgramareLongClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String ADAUGA_PROGRAMARE = "adaugaProgramare";
     private static final DateTimeFormatter FORMAT_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -71,9 +71,6 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     private RelativeLayout ryNicioProgramare;
 
     private Toolbar toolbar;
-
-    //todo cand apas pe o programare sa apara mesaj "apasati lung pentru a anula programarea"
-    //si cand apasa lung sa o poata anula
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +110,8 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void seteazaAdaptor() {
-        adaptor = new ProgramareAdaptor(programari, tipUtilizator, ProgramariActivity.this, getApplicationContext());
+        adaptor = new ProgramareAdaptor(programari, tipUtilizator,
+                ProgramariActivity.this, ProgramariActivity.this, getApplicationContext());
         rwProgramari.setAdapter(adaptor);
     }
 
@@ -237,6 +235,12 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onProgramareClick(int position) {
+        Toast.makeText(getApplicationContext(), "Apăsați lung pentru a anula programarea.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProgramareLongClick(int position) {
+
         Programare programare = programari.get(position);
         if (programare.getStatus().equals(getString(R.string.status_noua))) {
             AlertDialog dialog = new AlertDialog.Builder(ProgramariActivity.this)
@@ -263,6 +267,6 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                     .create();
             dialog.show();
         }
-//            Toast.makeText(getApplicationContext(), "Pentru a șterge o programare apăsați lung pe aceasta.", Toast.LENGTH_SHORT).show();
+
     }
 }

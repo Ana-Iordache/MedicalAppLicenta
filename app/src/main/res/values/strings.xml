@@ -34,7 +34,8 @@
     <string name="pattern_cnp">^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$</string>
     <string name="pattern_greutate">^[1-9][0-9]\\.[0-9]$</string>
     <string name="pattern_inaltime">^([1-2]\\.([0-9]{2}|[0-9]{1}))$</string>
-    <string name="email">Email <font color="#FF0000">*</font> </string>
+    <string name="email_mandatory">Email <font color="#FF0000">*</font> </string>
+    <string name="email">Email</string>
     <string name="parola">Parola <font color="#FF0000">*</font> </string>
     <string name="greeting_message">Bine ai (re)venit!</string>
     <string name="conectare_pacient">Conectare pacient</string>
@@ -49,9 +50,11 @@
     <string name="nume">Nume <font color="#FF0000">*</font></string>
     <string name="prenume">Prenume <font color="#FF0000">*</font></string>
     <string name="cnp">CNP <font color="#FF0000">*</font></string>
-    <string name="numar_de_telefon">Număr de telefon <font color="#FF0000">*</font></string>
+    <string name="numar_de_telefon_mandatory">Număr de telefon <font color="#FF0000">*</font></string>
+    <string name="numar_de_telefon">Număr de telefon</string>
     <string name="adresa">Adresa</string>
-    <string name="data_nasterii">Data nașterii <font color="#FF0000">*</font></string>
+    <string name="data_nasterii_mandatory">Data nașterii <font color="#FF0000">*</font></string>
+    <string name="data_nasterii">Data nașterii</string>
     <string name="selectati_data">Selectați data</string>
     <string name="greutate">Greutate</string>
     <string name="inaltime">Înălțime</string>
@@ -164,4 +167,7 @@
     <string name="icon_plus">Icon plus</string>
     <string name="icon_minus">Icon minus</string>
     <string name="icon_bmi">Icon BMI</string>
+    <string name="pacienti">Pacienți</string>
+    <string name="niciun_pacient">Nu s-au găsit pacienți</string>
+    <string name="nicio_ora">Nu s-au găsit ore disponibile</string>
 </resources>

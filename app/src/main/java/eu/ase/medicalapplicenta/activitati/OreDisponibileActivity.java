@@ -84,6 +84,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
     private ProgressBar progressBar;
 
+    private RelativeLayout rlNicioOra;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +142,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         rwOreDisponibile = findViewById(R.id.rwOreDisponibile);
 
         progressBar = findViewById(R.id.progressBar);
+
+        rlNicioOra = findViewById(R.id.rlNicioOra);
     }
 
     private ValueEventListener preiaInvestigatii() {
@@ -266,12 +270,14 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
             } else oreDisponibile = null;
         }
 
-        if (oreDisponibile == null) {
+        if (oreDisponibile == null) { //todo poate ar fi bine sa afisez si programul ca sa vada zilele de lucru
             rwOreDisponibile.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), "Medicul nu are program in zilele de " + ziProgramare + "!", Toast.LENGTH_SHORT).show();
-        } else {
+        } else if (!oreDisponibile.isEmpty()) {
             firebaseServiceProgramari.preiaDateDinFirebase(preiaOreDisponibile());
-
+        } else { //todo sa testez (cand toate orele din program sunt indisponibile)
+            rwOreDisponibile.setVisibility(View.GONE);
+            rlNicioOra.setVisibility(View.VISIBLE);
         }
     }
 

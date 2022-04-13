@@ -36,15 +36,18 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
     private final FirebaseService firebaseServicePacienti;
     private final List<Programare> programari;
     private final OnProgramareClickListener onProgramareClickListener;
+    private final OnProgramareLongClickListener onProgramareLongClickListener;
 
     private final String tipUser;
 
-    private Context context;
+    private final Context context;
 
-    public ProgramareAdaptor(List<Programare> programari, String tipUser, OnProgramareClickListener onProgramareClickListener, Context context) {
+    public ProgramareAdaptor(List<Programare> programari, String tipUser, OnProgramareClickListener onProgramareClickListener,
+                             OnProgramareLongClickListener onProgramareLongClickListener, Context context) {
         this.programari = programari;
         this.tipUser = tipUser;
         this.onProgramareClickListener = onProgramareClickListener;
+        this.onProgramareLongClickListener = onProgramareLongClickListener;
         this.context = context;
         firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
         firebaseServiceMedici = new FirebaseService(MEDICI);
@@ -55,7 +58,7 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
     @Override
     public ProgramareAdaptorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_lista_programari, parent, false);
-        return new ProgramareAdaptorViewHolder(view, onProgramareClickListener);
+        return new ProgramareAdaptorViewHolder(view, onProgramareClickListener, onProgramareLongClickListener);
     }
 
     @Override
@@ -151,7 +154,11 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
         void onProgramareClick(int position);
     }
 
-    public class ProgramareAdaptorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public interface OnProgramareLongClickListener {
+        void onProgramareLongClick(int position);
+    }
+
+    public class ProgramareAdaptorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView tvNume;
         TextView tvSpecialitate;
         TextView tvDataProgramarii;
@@ -161,8 +168,9 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
 
         CardView cwProgramare;
         OnProgramareClickListener onProgramareClickListener;
+        OnProgramareLongClickListener onProgramareLongClickListener;
 
-        public ProgramareAdaptorViewHolder(@NonNull View itemView, OnProgramareClickListener onProgramareClickListener) {
+        public ProgramareAdaptorViewHolder(@NonNull View itemView, OnProgramareClickListener onProgramareClickListener, OnProgramareLongClickListener onProgramareLongClickListener) {
             super(itemView);
             tvNume = itemView.findViewById(R.id.tvNume);
             tvSpecialitate = itemView.findViewById(R.id.tvSpecialitate);
@@ -173,14 +181,22 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
 
             cwProgramare = itemView.findViewById(R.id.cwProgramare);
             cwProgramare.setOnClickListener(this);
+            cwProgramare.setOnLongClickListener(this);
 
             this.onProgramareClickListener = onProgramareClickListener;
+            this.onProgramareLongClickListener = onProgramareLongClickListener;
         }
 
 
         @Override
         public void onClick(View view) {
             onProgramareClickListener.onProgramareClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onProgramareLongClickListener.onProgramareLongClick(getAdapterPosition());
+            return true;
         }
     }
 }

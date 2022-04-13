@@ -188,7 +188,7 @@
                     android:drawableStart="@drawable/ic_telefon"
                     android:drawablePadding="@dimen/_10sdp"
                     android:enabled="false"
-                    android:hint="@string/numar_de_telefon"
+                    android:hint="@string/numar_de_telefon_mandatory"
                     android:inputType="number"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -242,7 +242,7 @@
                     android:enabled="false"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="@string/data_nasterii"
+                    android:hint="@string/data_nasterii_mandatory"
                     android:inputType="none"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -349,7 +349,7 @@
                     android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="@dimen/_10sdp"
                     android:enabled="false"
-                    android:hint="@string/email"
+                    android:hint="@string/email_mandatory"
                     android:inputType="textEmailAddress"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
