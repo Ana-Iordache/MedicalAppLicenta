@@ -19,9 +19,9 @@
         android:title="@string/logout" />
 
     <item
-        android:id="@+id/item_feedback"
+        android:id="@+id/item_feedback_aplicatie"
         android:icon="@drawable/ic_email"
-        android:title="@string/feedback" />
+        android:title="@string/feedback_aplicatie" />
 
     <item
         android:id="@+id/item_despre_noi"

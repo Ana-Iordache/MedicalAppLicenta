@@ -8,10 +8,12 @@ public class Programare {
     private String ora;
     private String status;
     private Factura factura;
+    private boolean feedbackAcordat;
 
-    public Programare(){}
+    public Programare() {
+    }
 
-    public Programare(String idProgramare, String idMedic, String idPacient, String data, String ora, String status, Factura factura) {
+    public Programare(String idProgramare, String idMedic, String idPacient, String data, String ora, String status, Factura factura, boolean feedbackAcordat) {
         this.idProgramare = idProgramare;
         this.idMedic = idMedic;
         this.idPacient = idPacient;
@@ -19,6 +21,7 @@ public class Programare {
         this.ora = ora;
         this.status = status;
         this.factura = factura;
+        this.feedbackAcordat = feedbackAcordat;
     }
 
     public String getIdProgramare() {
@@ -77,13 +80,23 @@ public class Programare {
         this.factura = factura;
     }
 
+    public boolean isFeedbackAcordat() {
+        return feedbackAcordat;
+    }
+
+    public void setFeedbackAcordat(boolean feedbackAcordat) {
+        this.feedbackAcordat = feedbackAcordat;
+    }
+
     @Override
     public String toString() {
         return "Programare{" +
-                "idMedic='" + idMedic + '\'' +
+                "idProgramare='" + idProgramare + '\'' +
+                ", idMedic='" + idMedic + '\'' +
                 ", idPacient='" + idPacient + '\'' +
                 ", data='" + data + '\'' +
                 ", ora='" + ora + '\'' +
+                ", status='" + status + '\'' +
                 ", factura=" + factura +
                 '}';
     }

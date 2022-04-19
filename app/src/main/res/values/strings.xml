@@ -101,7 +101,7 @@
     <string name="facturi">Facturi</string>
     <string name="profil">Profil</string>
     <string name="logout">Ieși din cont</string>
-    <string name="feedback">Feedback</string>
+    <string name="feedback_aplicatie">Feedback aplicație</string>
     <string name="despre_noi">Despre noi</string>
     <string name="call_center">Call Center</string>
     <string name="title_medici">Medici</string>
@@ -152,6 +152,7 @@
     <string name="status_neonorata">neonorată</string>
     <string name="status_noua">nouă</string>
     <string name="status_anulata">anulată</string>
+    <string name="status_necompletat">completează status</string>
     <string name="calculator_bmi">Calculator BMI</string>
     <string name="cm">cm</string>
     <string name="calculeaza_bmi">Calculează BMI</string>
@@ -170,4 +171,7 @@
     <string name="pacienti">Pacienți</string>
     <string name="niciun_pacient">Nu s-au găsit pacienți</string>
     <string name="nicio_ora">Nu s-au găsit ore disponibile</string>
+    <string name="acorda_feedback">Acordă feedback</string>
+    <string name="trimite">Trimite</string>
+    <string name="recenzie">Câteva cuvinte despre experiența avută</string>
 </resources>

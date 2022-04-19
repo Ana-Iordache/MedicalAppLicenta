@@ -12,4 +12,5 @@
     <color name="royale_blue">#4169E1</color>
     <color name="colorDivider">#F5F5F5</color>
     <color name="colorBackground">#FAFAFA</color>
+    <color name="default_grey">#9E9E9E</color>
 </resources>

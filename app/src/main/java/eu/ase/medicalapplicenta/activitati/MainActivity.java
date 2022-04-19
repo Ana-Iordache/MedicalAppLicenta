@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             //TODO
-            case R.id.item_feedback:
+            case R.id.item_feedback_aplicatie:
                 Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
                 break;
             //TODO

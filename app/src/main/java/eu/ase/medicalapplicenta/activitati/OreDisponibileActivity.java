@@ -343,7 +343,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                                     tietDataProgramarii.getText().toString(),
                                     oreDisponibile.get(position),
                                     "nouă",
-                                    factura);
+                                    factura,
+                                    false);
                             String idProgramare = firebaseServiceProgramari.databaseReference.push().getKey();
                             programare.setIdProgramare(idProgramare);
                             firebaseServiceProgramari.databaseReference.child(idProgramare).setValue(programare);

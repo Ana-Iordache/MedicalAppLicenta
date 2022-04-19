@@ -163,7 +163,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 finish();
                 break;
             //TODO
-            case R.id.item_feedback:
+            case R.id.item_feedback_aplicatie:
                 Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
                 break;
             //TODO

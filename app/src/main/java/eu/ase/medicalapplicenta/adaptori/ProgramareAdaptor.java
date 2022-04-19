@@ -1,6 +1,9 @@
 package eu.ase.medicalapplicenta.adaptori;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,24 +35,29 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.ProgramareAdaptorViewHolder> {
     public static final String SPECIALITATI = "Specialitati";
     public static final String MEDICI = "Medici";
+    public static final String MEDIC = "medic";
     public static final String PACIENTI = "Pacienti";
+    public static final String PACIENT = "pacient";
     private final FirebaseService firebaseServiceSpecialitati;
     private final FirebaseService firebaseServiceMedici;
     private final FirebaseService firebaseServicePacienti;
     private final List<Programare> programari;
     private final OnProgramareClickListener onProgramareClickListener;
     private final OnProgramareLongClickListener onProgramareLongClickListener;
+    private final OnBtnFeedbackClickListener onBtnFeedbackClickListener;
 
     private final String tipUser;
 
     private final Context context;
 
     public ProgramareAdaptor(List<Programare> programari, String tipUser, OnProgramareClickListener onProgramareClickListener,
-                             OnProgramareLongClickListener onProgramareLongClickListener, Context context) {
+                             OnProgramareLongClickListener onProgramareLongClickListener,
+                             OnBtnFeedbackClickListener onBtnFeedbackClickListener, Context context) {
         this.programari = programari;
         this.tipUser = tipUser;
         this.onProgramareClickListener = onProgramareClickListener;
         this.onProgramareLongClickListener = onProgramareLongClickListener;
+        this.onBtnFeedbackClickListener = onBtnFeedbackClickListener;
         this.context = context;
         firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
         firebaseServiceMedici = new FirebaseService(MEDICI);
@@ -58,9 +68,10 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
     @Override
     public ProgramareAdaptorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_lista_programari, parent, false);
-        return new ProgramareAdaptorViewHolder(view, onProgramareClickListener, onProgramareLongClickListener);
+        return new ProgramareAdaptorViewHolder(view, onProgramareClickListener, onProgramareLongClickListener, onBtnFeedbackClickListener);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull ProgramareAdaptorViewHolder holder, int position) {
 
@@ -73,15 +84,37 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
             if (p.getStatus().equals(context.getString(R.string.status_anulata))
                     || p.getStatus().equals(context.getString(R.string.status_neonorata))) {
                 holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0);
+                holder.btnFeedback.setEnabled(false);
+                holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
+            } else if (p.getStatus().equals(context.getString(R.string.status_necompletat))) {
+                holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_important, 0, 0, 0);
+                if (tipUser.equals(MEDIC)) {
+                    holder.tvStatus.setTextColor(Color.parseColor("#F5CE85"));
+                } else {
+                    holder.tvStatus.setText("");
+                }
+            } else if (p.getStatus().equals(context.getString(R.string.status_onorata))) {
+                holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok, 0, 0, 0);
+                holder.btnFeedback.setEnabled(true);
+                holder.btnFeedback.setTextColor(context.getColor(R.color.custom_blue));
+            } else if (p.getStatus().equals(context.getString(R.string.status_noua))) {
+                holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok, 0, 0, 0);
+                holder.btnFeedback.setEnabled(false);
+                holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
             }
 
-            if (tipUser.equals("pacient")) {
+            if (p.isFeedbackAcordat()) {
+                holder.btnFeedback.setEnabled(false);
+                holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
+            }
+
+            if (tipUser.equals(PACIENT)) {
                 seteazaDateMedic(p, holder);
             } else {
                 holder.tvSpecialitate.setVisibility(View.GONE);
+                holder.btnFeedback.setVisibility(View.GONE);
                 seteazaNumePacient(p, holder);
             }
-
         }
 
     }
@@ -158,39 +191,57 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
         void onProgramareLongClick(int position);
     }
 
+    public interface OnBtnFeedbackClickListener {
+        void onBtnFeedbackClick(int position);
+    }
+
     public class ProgramareAdaptorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView tvNume;
         TextView tvSpecialitate;
         TextView tvDataProgramarii;
         TextView tvOraProgramarii;
         TextView tvStatus;
+        AppCompatButton btnFeedback;
         ProgressBar progressBar;
 
         CardView cwProgramare;
         OnProgramareClickListener onProgramareClickListener;
         OnProgramareLongClickListener onProgramareLongClickListener;
+        OnBtnFeedbackClickListener onBtnFeedbackClickListener;
 
-        public ProgramareAdaptorViewHolder(@NonNull View itemView, OnProgramareClickListener onProgramareClickListener, OnProgramareLongClickListener onProgramareLongClickListener) {
+        public ProgramareAdaptorViewHolder(@NonNull View itemView, OnProgramareClickListener onProgramareClickListener,
+                                           OnProgramareLongClickListener onProgramareLongClickListener, OnBtnFeedbackClickListener onBtnFeedbackClickListener) {
             super(itemView);
             tvNume = itemView.findViewById(R.id.tvNume);
             tvSpecialitate = itemView.findViewById(R.id.tvSpecialitate);
             tvDataProgramarii = itemView.findViewById(R.id.tvDataProgramarii);
             tvOraProgramarii = itemView.findViewById(R.id.tvOraProgramarii);
             tvStatus = itemView.findViewById(R.id.tvStatus);
+            btnFeedback = itemView.findViewById(R.id.btnFeedback);
             progressBar = itemView.findViewById(R.id.progressBar);
-
             cwProgramare = itemView.findViewById(R.id.cwProgramare);
+
             cwProgramare.setOnClickListener(this);
             cwProgramare.setOnLongClickListener(this);
+            btnFeedback.setOnClickListener(this);
 
             this.onProgramareClickListener = onProgramareClickListener;
             this.onProgramareLongClickListener = onProgramareLongClickListener;
+            this.onBtnFeedbackClickListener = onBtnFeedbackClickListener;
         }
 
 
+        @SuppressLint("NonConstantResourceId")
         @Override
         public void onClick(View view) {
-            onProgramareClickListener.onProgramareClick(getAdapterPosition());
+            switch (view.getId()) {
+                case R.id.cwProgramare:
+                    onProgramareClickListener.onProgramareClick(getAdapterPosition());
+                    break;
+                case R.id.btnFeedback:
+                    onBtnFeedbackClickListener.onBtnFeedbackClick(getAdapterPosition());
+                    break;
+            }
         }
 
         @Override
