@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppLicenta">
         <activity
+            android:name=".activitati.FeedbackPacientActivity"
+            android:exported="false" />
+        <activity
             android:name=".activitati.ListaPacientiActivity"
             android:exported="false" />
         <activity

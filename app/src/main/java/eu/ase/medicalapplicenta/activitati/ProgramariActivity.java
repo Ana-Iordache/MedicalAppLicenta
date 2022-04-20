@@ -30,12 +30,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -48,6 +50,7 @@ import java.util.Locale;
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.adaptori.ProgramareAdaptor;
 import eu.ase.medicalapplicenta.entitati.Feedback;
+import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
@@ -57,15 +60,16 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         ProgramareAdaptor.OnProgramareLongClickListener,
         ProgramareAdaptor.OnBtnFeedbackClickListener {
     public static final String PROGRAMARI = "Programari";
+    public static final String MEDICI = "Medici";
     public static final String ADAUGA_PROGRAMARE = "adaugaProgramare";
-    public static final String FEEDBACKURI = "Feedbackuri";
     private static final DateTimeFormatter FORMAT_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#.00");
     private static final DateFormat FORMAT_ORA = new SimpleDateFormat("HH:mm", Locale.US);
     private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
+    private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
     //    private final DatabaseReference referintaDb = firebaseService.databaseReference;
     private final String idUtilizator = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public String tipUtilizator;
-    private FirebaseService firebaseServiceFeedbackuri = new FirebaseService(FEEDBACKURI);
     //    ListView lv;
     private FloatingActionButton fabAdaugaProgramare;
     private AppCompatRadioButton rbIstoric;
@@ -90,10 +94,8 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     private TextView tvNota;
     private Programare programare;
     private RadioGroup rgNote;
-    private EditText etRecenzie;
-    private String idFeedback;
-
-    private List<Feedback> feedbackuri;
+//    private EditText etRecenzie;
+    private TextInputEditText tietRecenzie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         View view = getLayoutInflater().inflate(R.layout.dialog_feedback_medic, null);
         rgNote = view.findViewById(R.id.rgNote);
 
-        etRecenzie = view.findViewById(R.id.etRecenzie);
+        tietRecenzie = view.findViewById(R.id.tietRecenzie);
         AppCompatButton btnTrimite = view.findViewById(R.id.btnTrimite);
         AppCompatButton btnRenunta = view.findViewById(R.id.btnRenunta);
         tvNota = view.findViewById(R.id.tvNota);
@@ -147,46 +149,32 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         btnTrimite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // o sa caut daca exista feedback acordata de pacient pentru medic
-                // si daca exista preiau feedback-ul si actualizez nota si adaug recenzia in lista daca e cazul
-                // adica daca a completat campul cu experienta avuta
+                int nota = rgNote.getCheckedRadioButtonId(); //todo sa vad care-i faza ca uneori imi mai pune o cifra inainte de nota aleasa
+                Toast.makeText(getApplicationContext(), String.valueOf(nota), Toast.LENGTH_SHORT).show();
+                if (nota == -1) {
+                    tvNota.setError("Alegeți o notă!");
+                    tvNota.requestFocus();
+                    return;
+                }
 
-                firebaseServiceFeedbackuri.preiaObiectDinFirebase(preiaFeedback(), idFeedback);
+                String recenzie = tietRecenzie.getText().toString();
+                if (recenzie.isEmpty()) {
+                    tietRecenzie.setError("Vă rugăm să justificați nota acordată!");
+                    tietRecenzie.requestFocus();
+                    return;
+                }
 
-//                firebaseServiceFeedbackuri = new FirebaseService(FEEDBACKURI);
+                Feedback feedback = new Feedback(nota, recenzie);
+                firebaseServiceProgramari.databaseReference.child(programare.getIdProgramare()).child("feedback").setValue(feedback);
+                firebaseServiceMedici.preiaObiectDinFirebase(preiaMedic(), programare.getIdMedic());
 
-//                List<String> recenzii = new ArrayList<>();
-//                int notaAcordata = rgNote.getCheckedRadioButtonId();
-//                if (notaAcordata == -1) {
-//                    tvNota.setError("Alegeți o notă!");
-//                    tvNota.requestFocus();
-//                    return;
-//                }
-//
-//                if (etRecenzie.getText().toString().isEmpty()) {
-//                    recenzii = null;
-//                } else {
-//                    recenzii.add(etRecenzie.getText().toString());
-//                }
-//
-//
-//                Feedback feedback = new Feedback(idFeedback,
-//                        programare.getIdMedic(),
-//                        programare.getIdPacient(),
-//                        notaAcordata,
-//                        recenzii);
-//                firebaseServiceFeedbackuri.databaseReference.
-//                feedback.setIdFeedback(idFeedback);
+//                double notaFeedback = 0.0;
+//                if (medic.getNoteFeedback() != null)
+//                    notaFeedback = medic.getNoteFeedback().stream().mapToInt(i -> i).average().orElse(0.0);
+                // programarea de pe 24/3/2022 la popescu maria de la iancu catalina face figuri si nu pricep de ce
+                Toast.makeText(getApplicationContext(), "Feedback-ul a fost trimis!", Toast.LENGTH_SHORT).show();
 
-
-//                firebaseServiceFeedbackuri.databaseReference.child(idFeedback).setValue(feedback);
-//                firebaseServiceProgramari.databaseReference
-//                        .child(programare.getIdProgramare())
-//                        .child("feedbackAcordat")
-//                        .setValue(true);
-//                Toast.makeText(getApplicationContext(), "Feedback-ul a fost trimis!", Toast.LENGTH_SHORT).show();
-//                rgNote.clearCheck();
-//                dialogFeedback.dismiss();
+                dialogFeedback.dismiss();
             }
         });
 
@@ -194,14 +182,18 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         dialogFeedback = builder.create();
     }
 
-    private ValueEventListener preiaNotaFeedback() {
+    private ValueEventListener preiaMedic() {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Feedback feedback = snapshot.getValue(Feedback.class);
-                if (feedback != null) {
-                    rgNote.check(feedback.getNota());
+                Medic medic = snapshot.getValue(Medic.class);
+                if (medic.getNoteFeedback() == null) {
+                    medic.setNoteFeedback(new ArrayList<>());
                 }
+                medic.getNoteFeedback().add(rgNote.getCheckedRadioButtonId());
+                medic.setNotaFeedback(medic.getNoteFeedback().stream().mapToInt(i -> i).average().orElse(0.0));
+
+                firebaseServiceMedici.databaseReference.child(medic.getIdMedic()).setValue(medic);
             }
 
             @Override
@@ -211,68 +203,6 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         };
     }
 
-    private ValueEventListener preiaFeedback() {
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Feedback feedback = snapshot.getValue(Feedback.class);
-
-                int notaAcordata;
-                List<String> recenzii;
-                if (feedback != null) {
-                    notaAcordata = rgNote.getCheckedRadioButtonId();
-                    if (feedback.getRecenzii() != null)
-                        recenzii = feedback.getRecenzii();
-                    else {
-                        recenzii = new ArrayList<>();
-                        feedback.setRecenzii(recenzii);
-                    }
-
-                    if (!etRecenzie.getText().toString().isEmpty()) {
-                        recenzii.add(etRecenzie.getText().toString());
-                    }
-
-                    feedback.setNota(notaAcordata);
-                } else {
-                    recenzii = new ArrayList<>();
-
-                    notaAcordata = rgNote.getCheckedRadioButtonId();
-                    if (notaAcordata == -1) {
-                        tvNota.setError("Alegeți o notă!");
-                        tvNota.requestFocus();
-                        return;
-                    }
-
-                    if (etRecenzie.getText().toString().isEmpty()) {
-                        recenzii = null;
-                    } else {
-                        recenzii.add(etRecenzie.getText().toString());
-                    }
-
-                    feedback = new Feedback(idFeedback,
-                            programare.getIdMedic(),
-                            programare.getIdPacient(),
-                            notaAcordata,
-                            recenzii);
-                }
-
-                firebaseServiceFeedbackuri = new FirebaseService(FEEDBACKURI);
-                firebaseServiceFeedbackuri.databaseReference.child(idFeedback).setValue(feedback);
-                firebaseServiceProgramari.databaseReference
-                        .child(programare.getIdProgramare())
-                        .child("feedbackAcordat")
-                        .setValue(true);
-                Toast.makeText(getApplicationContext(), "Feedback-ul a fost trimis!", Toast.LENGTH_SHORT).show();
-                rgNote.clearCheck();
-                dialogFeedback.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-    }
 
     private void seteazaTipUtilizator() {
         Intent intent = getIntent();
@@ -487,9 +417,15 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBtnFeedbackClick(int position) {
         programare = programari.get(position);
-        idFeedback = programare.getIdMedic() + programare.getIdPacient();
-        firebaseServiceFeedbackuri.preiaObiectDinFirebase(preiaNotaFeedback(), idFeedback);
-        tvNota.setError(null);
+        reseteazaInput();
         dialogFeedback.show();
+    }
+
+    private void reseteazaInput() {
+        rgNote.clearCheck();
+        tvNota.setError(null);
+        tietRecenzie.setText("");
+        tietRecenzie.setError(null);
+        tietRecenzie.clearFocus();
     }
 }

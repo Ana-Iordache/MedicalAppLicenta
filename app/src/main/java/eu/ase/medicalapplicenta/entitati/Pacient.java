@@ -1,6 +1,8 @@
 package eu.ase.medicalapplicenta.entitati;
 
-public class Pacient {
+import java.io.Serializable;
+
+public class Pacient implements Serializable {
     private String idPacient;
     private String nume;
     private String prenume;

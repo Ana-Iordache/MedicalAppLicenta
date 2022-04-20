@@ -17,8 +17,8 @@ import eu.ase.medicalapplicenta.entitati.Investigatie;
 import eu.ase.medicalapplicenta.entitati.Medic;
 
 public class InvestigatieAdaptor extends RecyclerView.Adapter<InvestigatieAdaptor.InvestigatieViewHolder> {
-    private List<Investigatie> investigatii;
-    private Context context;
+    private final List<Investigatie> investigatii;
+    private final Context context;
 
     public InvestigatieAdaptor(List<Investigatie> investigatii, Context context) {
         this.investigatii = investigatii;

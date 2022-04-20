@@ -48,7 +48,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     public static final String INFORMATII_MEDIC = "informatiiMedic";
     private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
-    AppCompatButton btnProgramare;
+    private AppCompatButton btnProgramare;
     //    private ListView lwListaMedici;
     private Toolbar toolbar;
     private ProgressBar progressBar;
@@ -252,7 +252,10 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
 
             tvEmail.setText(medic.getAdresaEmail());
 
-            String nota = medic.getNotaFeedback() + " din 10";
+            String nota = "-";
+            if (medic.getNotaFeedback() != 0) {
+                nota = MedicAdaptor.NUMBER_FORMAT.format(medic.getNotaFeedback()) + " din 10";
+            }
             tvNota.setText(nota);
 
             ProgramAdaptor adapter = new ProgramAdaptor(getApplicationContext(), R.layout.element_program_medic,

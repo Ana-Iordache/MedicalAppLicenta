@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activitati.ListaPacientiActivity">
+    tools:context=".activitati.FeedbackPacientActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -20,29 +20,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/pacienti"
             android:textColor="@color/black"
             android:textSize="25sp" />
     </androidx.appcompat.widget.Toolbar>
-
-    <!--    <ListView-->
-    <!--        android:id="@+id/lv"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"/>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rwListaPacienti"
+            android:id="@+id/rwListaFeedback"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone" />
 
         <RelativeLayout
-            android:id="@+id/rlNiciunPacient"
+            android:id="@+id/rlNiciunFeedback"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -62,7 +56,7 @@
                 android:layout_below="@+id/imageView"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/niciun_pacient"
+                android:text="@string/niciun_feedback"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
@@ -75,6 +69,5 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
     </RelativeLayout>
-
 
 </LinearLayout>

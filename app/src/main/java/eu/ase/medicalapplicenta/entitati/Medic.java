@@ -11,13 +11,15 @@ public class Medic implements Serializable {
     private long nrTelefon;
     private String adresaEmail;
     private String idSpecialitate;
+    private List<Integer> noteFeedback;
     private double notaFeedback;
     private String gradProfesional;
     private String urlPozaProfil;
     private List<ZiDeLucru> program;
     private boolean contSters;
 
-    public Medic(){}
+    public Medic() {
+    }
 
 //    public Medic(String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, double notaFeedback, String gradProfesional, String urlPozaProfil) {
 //        this.nume = nume;
@@ -30,7 +32,7 @@ public class Medic implements Serializable {
 //        this.urlPozaProfil = urlPozaProfil;
 //    }
 
-    public Medic(String idMedic, String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, double notaFeedback, String gradProfesional, String urlPozaProfil, List<ZiDeLucru> program) {
+    public Medic(String idMedic, String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, List<Integer> noteFeedback, double notaFeedback, String gradProfesional, String urlPozaProfil, List<ZiDeLucru> program) {
         this.idMedic = idMedic;
         this.nume = nume;
         this.prenume = prenume;
@@ -38,6 +40,7 @@ public class Medic implements Serializable {
         this.adresaEmail = adresaEmail;
         this.idSpecialitate = idSpecialitate;
         this.notaFeedback = notaFeedback;
+        this.noteFeedback = noteFeedback;
         this.gradProfesional = gradProfesional;
         this.urlPozaProfil = urlPozaProfil;
         this.program = program;
@@ -92,6 +95,14 @@ public class Medic implements Serializable {
         this.notaFeedback = notaFeedback;
     }
 
+    public List<Integer> getNoteFeedback() {
+        return noteFeedback;
+    }
+
+    public void setNoteFeedback(List<Integer> noteFeedback) {
+        this.noteFeedback = noteFeedback;
+    }
+
     public String getGradProfesional() {
         return gradProfesional;
     }
@@ -133,21 +144,6 @@ public class Medic implements Serializable {
         this.contSters = contSters;
     }
 
-    //    @Override
-//    public String toString() {
-//        return "Medic{" +
-//                "nume='" + nume + '\'' +
-//                ", prenume='" + prenume + '\'' +
-//                ", nrTelefon=" + nrTelefon +
-//                ", adresaEmail='" + adresaEmail + '\'' +
-//                ", idSpecialitate='" + idSpecialitate + '\'' +
-//                ", notaFeedback=" + notaFeedback +
-//                ", gradProfesional='" + gradProfesional + '\'' +
-//                ", urlPozaProfil='" + urlPozaProfil + '\'' +
-//                '}';
-//    }
-
-
     @Override
     public String toString() {
         return "Medic{" +
@@ -157,10 +153,12 @@ public class Medic implements Serializable {
                 ", nrTelefon=" + nrTelefon +
                 ", adresaEmail='" + adresaEmail + '\'' +
                 ", idSpecialitate='" + idSpecialitate + '\'' +
+                ", noteFeedback=" + noteFeedback +
                 ", notaFeedback=" + notaFeedback +
                 ", gradProfesional='" + gradProfesional + '\'' +
                 ", urlPozaProfil='" + urlPozaProfil + '\'' +
                 ", program=" + program +
+                ", contSters=" + contSters +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -38,7 +39,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="1"
+            android:text="@string/nota1"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -49,7 +50,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="2"
+            android:text="@string/nota2"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -60,7 +61,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="3"
+            android:text="@string/nota3"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -71,7 +72,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="4"
+            android:text="@string/nota4"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -82,7 +83,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="5"
+            android:text="@string/nota5"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -93,7 +94,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="6"
+            android:text="@string/nota6"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -104,7 +105,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="7"
+            android:text="@string/nota7"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -115,7 +116,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="8"
+            android:text="@string/nota8"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -126,7 +127,7 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="9"
+            android:text="@string/nota9"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
@@ -136,30 +137,61 @@
             android:layout_weight="1"
             android:background="@drawable/radio_button_nota_selector"
             android:button="@android:color/transparent"
-            android:text="10"
+            android:text="@string/nota10"
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
     </RadioGroup>
 
-    <EditText
-        android:id="@+id/etRecenzie"
+    <!--    <EditText-->
+    <!--        android:id="@+id/etRecenzie"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/rgNote"-->
+    <!--        android:layout_marginStart="@dimen/_5sdp"-->
+    <!--        android:layout_marginTop="@dimen/_10sdp"-->
+    <!--        android:layout_marginEnd="@dimen/_5sdp"-->
+    <!--        android:background="@drawable/background_edit_text_selector"-->
+    <!--        android:hint="@string/recenzie"-->
+    <!--        android:padding="@dimen/_10sdp"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textSize="@dimen/_13sdp"-->
+    <!--        app:counterEnabled="true"-->
+    <!--        app:counterMaxLength="200" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilRecenzie"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rgNote"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:background="@drawable/background_edit_text_selector"
-        android:hint="@string/recenzie"
-        android:padding="@dimen/_10sdp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_13sdp" />
+        android:layout_marginTop="@dimen/_5sdp"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:theme="@style/TextInputLayoutStyle"
+        app:boxCornerRadiusBottomEnd="0dp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="0dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="200">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietRecenzie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/recenzie"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLength="200"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:id="@+id/llButoane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etRecenzie"
+        android:layout_below="@+id/tilRecenzie"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
@@ -191,34 +223,5 @@
             android:textColor="@color/custom_blue"
             android:textSize="16sp" />
     </LinearLayout>
-
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--        android:id="@+id/tilEmail"-->
-    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/rgNota"-->
-    <!--        android:layout_marginTop="@dimen/_5sdp"-->
-    <!--        android:paddingStart="@dimen/_5sdp"-->
-    <!--        android:paddingEnd="@dimen/_5sdp"-->
-    <!--        android:paddingBottom="@dimen/_5sdp"-->
-    <!--        android:theme="@style/TextInputLayoutStyle"-->
-    <!--        app:boxCornerRadiusBottomEnd="0dp"-->
-    <!--        app:boxCornerRadiusBottomStart="@dimen/_10sdp"-->
-    <!--        app:boxCornerRadiusTopEnd="@dimen/_10sdp"-->
-    <!--        app:boxCornerRadiusTopStart="0dp">-->
-
-    <!--        <com.google.android.material.textfield.TextInputEditText-->
-    <!--            android:id="@+id/tietEmail"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:drawableStart="@drawable/ic_email"-->
-    <!--            android:drawablePadding="@dimen/_10sdp"-->
-    <!--            android:hint="Câteva cuvinte despre experiența avută"-->
-    <!--            android:inputType="textEmailAddress"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="16sp" />-->
-
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
 
 </RelativeLayout>

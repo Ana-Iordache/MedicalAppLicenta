@@ -427,6 +427,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                                         nrTelefon,
                                         adresaEmail,
                                         finalIdSpecialitate,
+                                        new ArrayList<>(),
                                         0.0,
                                         gradProfesional,
                                         "",

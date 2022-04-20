@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -25,6 +26,7 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHolder> {
     public static final String SPECIALITATI = "Specialitati";
+    public static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#.00");
     private final List<Medic> medici;
     private final Context context;
     private final FirebaseService firebaseService;
@@ -114,7 +116,7 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
                 holder.tvNota.setText("");
 //                holder.tvNrFeedbackuri.setText("");
             } else {
-                holder.tvNota.setText(String.valueOf(medic.getNotaFeedback()));
+                holder.tvNota.setText(NUMBER_FORMAT.format(medic.getNotaFeedback()));
 //                tvNrFeedbackuri.setText(..); todo
             }
         }

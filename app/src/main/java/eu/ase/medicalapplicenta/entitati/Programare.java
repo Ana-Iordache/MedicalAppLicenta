@@ -8,12 +8,13 @@ public class Programare {
     private String ora;
     private String status;
     private Factura factura;
-    private boolean feedbackAcordat;
+    private Feedback feedback;
 
     public Programare() {
     }
 
-    public Programare(String idProgramare, String idMedic, String idPacient, String data, String ora, String status, Factura factura, boolean feedbackAcordat) {
+    public Programare(String idProgramare, String idMedic, String idPacient, String data, String ora, String status,
+                      Factura factura, Feedback feedback) {
         this.idProgramare = idProgramare;
         this.idMedic = idMedic;
         this.idPacient = idPacient;
@@ -21,7 +22,7 @@ public class Programare {
         this.ora = ora;
         this.status = status;
         this.factura = factura;
-        this.feedbackAcordat = feedbackAcordat;
+        this.feedback = feedback;
     }
 
     public String getIdProgramare() {
@@ -80,12 +81,12 @@ public class Programare {
         this.factura = factura;
     }
 
-    public boolean isFeedbackAcordat() {
-        return feedbackAcordat;
+    public Feedback getFeedback() {
+        return feedback;
     }
 
-    public void setFeedbackAcordat(boolean feedbackAcordat) {
-        this.feedbackAcordat = feedbackAcordat;
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
 
     @Override
@@ -98,6 +99,7 @@ public class Programare {
                 ", ora='" + ora + '\'' +
                 ", status='" + status + '\'' +
                 ", factura=" + factura +
+                ", feedback=" + feedback +
                 '}';
     }
 }

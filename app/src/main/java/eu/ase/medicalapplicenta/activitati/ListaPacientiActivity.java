@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 public class ListaPacientiActivity extends AppCompatActivity implements PacientAdaptor.OnPacientClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String PACIENTI = "Pacienti";
+    public static final String PACIENT = "pacient";
     private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
     private final FirebaseService firebaseServicePacienti = new FirebaseService(PACIENTI);
     private final String idUtilizator = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -51,6 +53,10 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     private ProgressBar progressBar;
 
     private RelativeLayout rlNiciunPacient;
+
+    private TextView tvTitlu;
+
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +91,9 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         progressBar = findViewById(R.id.progressBar);
         rlNiciunPacient = findViewById(R.id.rlNiciunPacient);
         pacienti = new ArrayList<>();
+        tvTitlu = findViewById(R.id.tvTitlu);
+
+        intent = getIntent();
     }
 
     private void loading(Boolean seIncarca) {
@@ -181,6 +190,9 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (intent.hasExtra(HomeMedicActivity.VIZUALIZARE_FEEDBACK)) {
+            tvTitlu.setText(getString(R.string.feedback_pacienti));
+        }
     }
 
 
@@ -202,46 +214,51 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     @Override
     public void onPacientClick(int position) {
         Pacient pacient = pacienti.get(position);
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ListaPacientiActivity.this,
-                R.style.BottomSheetDialogTheme);
-        View view = LayoutInflater.from(getApplicationContext())
-                .inflate(
-                        R.layout.bottom_sheet_pacient,
-                        findViewById(R.id.rlBottomSheet)
-                );
-        CircleImageView ciwPozaProfilPacient = view.findViewById(R.id.ciwPozaProfilPacient);
-        TextView tvNumePacient = view.findViewById(R.id.tvNumePacient);
-        TextView tvSex = view.findViewById(R.id.tvSex);
-        TextView tvCnp = view.findViewById(R.id.tvCnp);
-        TextView tvVarsta = view.findViewById(R.id.tvVarsta);
-        TextView tvNrTel = view.findViewById(R.id.tvNrTel);
-        TextView tvAdresa = view.findViewById(R.id.tvAdresa);
-        TextView tvDataNasterii = view.findViewById(R.id.tvDataNasterii);
-        TextView tvGrupaSange = view.findViewById(R.id.tvGrupaSange);
-        TextView tvGreutate = view.findViewById(R.id.tvGreutate);
-        TextView tvInaltime = view.findViewById(R.id.tvInaltime);
-        TextView tvEmail = view.findViewById(R.id.tvEmail);
+        if (intent.hasExtra(HomeMedicActivity.VIZUALIZARE_FEEDBACK)) {
+            startActivity(new Intent(getApplicationContext(), FeedbackPacientActivity.class).putExtra(PACIENT, pacient));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else if (intent.hasExtra(HomeMedicActivity.VIZUALIZARE_PACIENTI)) {
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ListaPacientiActivity.this,
+                    R.style.BottomSheetDialogTheme);
+            View view = LayoutInflater.from(getApplicationContext())
+                    .inflate(
+                            R.layout.bottom_sheet_pacient,
+                            findViewById(R.id.rlBottomSheet)
+                    );
+            CircleImageView ciwPozaProfilPacient = view.findViewById(R.id.ciwPozaProfilPacient);
+            TextView tvNumePacient = view.findViewById(R.id.tvNumePacient);
+            TextView tvSex = view.findViewById(R.id.tvSex);
+            TextView tvCnp = view.findViewById(R.id.tvCnp);
+            TextView tvVarsta = view.findViewById(R.id.tvVarsta);
+            TextView tvNrTel = view.findViewById(R.id.tvNrTel);
+            TextView tvAdresa = view.findViewById(R.id.tvAdresa);
+            TextView tvDataNasterii = view.findViewById(R.id.tvDataNasterii);
+            TextView tvGrupaSange = view.findViewById(R.id.tvGrupaSange);
+            TextView tvGreutate = view.findViewById(R.id.tvGreutate);
+            TextView tvInaltime = view.findViewById(R.id.tvInaltime);
+            TextView tvEmail = view.findViewById(R.id.tvEmail);
 
-        String urlPozaProfil = pacient.getUrlPozaProfil();
-        if (!urlPozaProfil.equals("")) {
-            Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilPacient);
+            String urlPozaProfil = pacient.getUrlPozaProfil();
+            if (!urlPozaProfil.equals("")) {
+                Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilPacient);
+            }
+
+            String numeComplet = pacient.getNume() + " " + pacient.getPrenume();
+            tvNumePacient.setText(numeComplet);
+
+            tvSex.setText(pacient.getSex());
+            tvCnp.setText(String.valueOf(pacient.getCnp()));
+            tvVarsta.setText(String.valueOf(pacient.getVarsta()));
+            tvNrTel.setText(String.valueOf(pacient.getNrTelefon()).substring(1));
+            tvAdresa.setText(pacient.getAdresa());
+            tvDataNasterii.setText(pacient.getDataNasterii());
+            tvGrupaSange.setText(pacient.getGrupaSange());
+            tvGreutate.setText(String.valueOf(pacient.getGreutate()));
+            tvInaltime.setText(String.valueOf(pacient.getInaltime()));
+            tvEmail.setText(pacient.getAdresaEmail());
+
+            bottomSheetDialog.setContentView(view);
+            bottomSheetDialog.show();
         }
-
-        String numeComplet = pacient.getNume() + " " + pacient.getPrenume();
-        tvNumePacient.setText(numeComplet);
-
-        tvSex.setText(pacient.getSex());
-        tvCnp.setText(String.valueOf(pacient.getCnp()));
-        tvVarsta.setText(String.valueOf(pacient.getVarsta()));
-        tvNrTel.setText(String.valueOf(pacient.getNrTelefon()).substring(1));
-        tvAdresa.setText(pacient.getAdresa());
-        tvDataNasterii.setText(pacient.getDataNasterii());
-        tvGrupaSange.setText(pacient.getGrupaSange());
-        tvGreutate.setText(String.valueOf(pacient.getGreutate()));
-        tvInaltime.setText(String.valueOf(pacient.getInaltime()));
-        tvEmail.setText(pacient.getAdresaEmail());
-
-        bottomSheetDialog.setContentView(view);
-        bottomSheetDialog.show();
     }
 }

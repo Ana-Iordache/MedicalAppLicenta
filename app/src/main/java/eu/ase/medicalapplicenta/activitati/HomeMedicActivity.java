@@ -31,6 +31,8 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class HomeMedicActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     public static final String MEDIC = "medic";
+    public static final String VIZUALIZARE_FEEDBACK = "vizualizareFeedback";
+    public static final String VIZUALIZARE_PACIENTI = "vizualizarePacienti";
 
     private Toolbar toolbar; // ca sa atasez toolbarul in pagina
     private DrawerLayout drawerLayout;
@@ -48,6 +50,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
 
     private CardView cwProgramari;
     private CardView cwPacienti;
+    private CardView cwFeedback;
 
 
     @Override
@@ -64,6 +67,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         navigationView.setNavigationItemSelectedListener(this);
         cwProgramari.setOnClickListener(this);
         cwPacienti.setOnClickListener(this);
+        cwFeedback.setOnClickListener(this);
 
         incarcaInfoNavMenu();
     }
@@ -94,6 +98,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
 
         cwProgramari = findViewById(R.id.cwProgramari);
         cwPacienti = findViewById(R.id.cwPacienti);
+        cwFeedback = findViewById(R.id.cwFeedback);
     }
 
     @Override
@@ -141,7 +146,11 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.cwPacienti:
-                startActivity(new Intent(getApplicationContext(), ListaPacientiActivity.class));
+                startActivity(new Intent(getApplicationContext(), ListaPacientiActivity.class).putExtra(VIZUALIZARE_PACIENTI, ""));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            case R.id.cwFeedback:
+                startActivity(new Intent(getApplicationContext(), ListaPacientiActivity.class).putExtra(VIZUALIZARE_FEEDBACK, ""));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }

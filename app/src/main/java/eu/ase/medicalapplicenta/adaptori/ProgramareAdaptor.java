@@ -92,6 +92,8 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
                     holder.tvStatus.setTextColor(Color.parseColor("#F5CE85"));
                 } else {
                     holder.tvStatus.setText("");
+                    holder.btnFeedback.setEnabled(false);
+                    holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
                 }
             } else if (p.getStatus().equals(context.getString(R.string.status_onorata))) {
                 holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok, 0, 0, 0);
@@ -103,7 +105,7 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
                 holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
             }
 
-            if (p.isFeedbackAcordat()) {
+            if (p.getFeedback() != null) {
                 holder.btnFeedback.setEnabled(false);
                 holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
             }

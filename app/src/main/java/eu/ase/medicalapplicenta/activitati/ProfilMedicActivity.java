@@ -65,6 +65,7 @@ import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
+import eu.ase.medicalapplicenta.adaptori.MedicAdaptor;
 import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Specialitate;
 import eu.ase.medicalapplicenta.entitati.ZiDeLucru;
@@ -534,7 +535,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                     else tietNrTelefonMedic.setText("");
 
                     tietEmailMedic.setText(adresaEmail);
-                    tietNota.setText(String.valueOf(notaFeedback));
+                    tietNota.setText(MedicAdaptor.NUMBER_FORMAT.format(notaFeedback));
 
                     ArrayAdapter<String> adapter = (ArrayAdapter<String>) actvGradeProfesionale.getAdapter();
                     for (int i = 0; i < adapter.getCount(); i++) {

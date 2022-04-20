@@ -174,4 +174,17 @@
     <string name="acorda_feedback">Acordă feedback</string>
     <string name="trimite">Trimite</string>
     <string name="recenzie">Câteva cuvinte despre experiența avută</string>
+    <string name="feedback_pacienti">Feedback pacienți</string>
+    <string name="niciun_feedback">Nu s-a găsit niciun feedback</string>
+    <string name="recenzie_">Recenzie</string>
+    <string name="nota1">1</string>
+    <string name="nota2">2</string>
+    <string name="nota3">3</string>
+    <string name="nota4">4</string>
+    <string name="nota5">5</string>
+    <string name="nota6">6</string>
+    <string name="nota7">7</string>
+    <string name="nota8">8</string>
+    <string name="nota9">9</string>
+    <string name="nota10">10</string>
 </resources>
