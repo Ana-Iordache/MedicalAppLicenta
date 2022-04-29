@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
     tools:context=".activitati.ProgramariActivity">
 
 
@@ -13,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/custom_blue"
+        android:background="@color/colorBackground"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleMarginStart="20dp">
@@ -29,18 +28,18 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-<!--    <View-->
-<!--        android:id="@+id/view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/_2sdp"-->
-<!--        android:layout_below="@+id/toolbar"-->
-<!--        android:background="@color/white" />-->
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/toolbar"
         android:background="@color/colorDivider" />
+    <!--    <View-->
+    <!--        android:id="@+id/view"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/_1sdp"-->
+    <!--        android:layout_below="@+id/toolbar"-->
+    <!--        android:background="@color/colorDivider" />-->
 
     <RadioGroup
         android:id="@+id/toggleButtonGroup"

@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#77cefc"
+        android:background="@color/colorBackground"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -25,10 +25,11 @@
             android:textSize="25sp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!--    <ListView-->
-    <!--        android:id="@+id/lv"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"/>-->
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:background="@color/colorDivider" />
 
     <RelativeLayout
         android:layout_width="match_parent"

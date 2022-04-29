@@ -23,7 +23,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/custom_blue"
+            android:background="@color/colorBackground"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -36,10 +36,17 @@
                 android:textSize="@dimen/_20sdp" />
         </androidx.appcompat.widget.Toolbar>
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/toolbar"
+            android:background="@color/colorDivider" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/view"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
@@ -57,7 +64,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -73,7 +82,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_doctor" />
 
                     <ImageView
@@ -99,7 +107,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -115,7 +125,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_investigatii" />
 
                     <ImageView
@@ -141,7 +150,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -157,7 +168,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_programari" />
 
                     <ImageView
@@ -183,7 +193,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -199,7 +211,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_facturi" />
 
                     <ImageView
@@ -222,11 +233,25 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="#77cefc"
+            android:backgroundTint="@color/custom_blue"
             android:clickable="true"
             android:contentDescription="@string/call_center"
             android:focusable="true"
             app:srcCompat="@android:drawable/stat_sys_phone_call" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabNotificari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="@color/custom_blue"
+            android:clickable="true"
+            android:contentDescription="@string/notificari"
+            android:focusable="true"
+            app:srcCompat="@drawable/ic_notificari" />
 
 
     </RelativeLayout>

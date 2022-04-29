@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#77cefc"
+        android:background="@color/colorBackground"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -24,11 +24,18 @@
             android:textSize="25sp" />
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/colorDivider" />
+
     <RelativeLayout
         android:id="@+id/ryNicioFactura"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/view"
         android:visibility="gone">
 
         <ImageView

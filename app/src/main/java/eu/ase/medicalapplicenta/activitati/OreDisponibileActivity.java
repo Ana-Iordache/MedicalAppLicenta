@@ -50,18 +50,24 @@ import eu.ase.medicalapplicenta.adaptori.OraDisponibilaAdaptor;
 import eu.ase.medicalapplicenta.entitati.Factura;
 import eu.ase.medicalapplicenta.entitati.Investigatie;
 import eu.ase.medicalapplicenta.entitati.Medic;
+import eu.ase.medicalapplicenta.entitati.Notificare;
 import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.entitati.Specialitate;
 import eu.ase.medicalapplicenta.entitati.ZiDeLucru;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class OreDisponibileActivity extends AppCompatActivity implements View.OnClickListener, OraDisponibilaAdaptor.OnOraClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String SPECIALITATI = "Specialitati";
+    public static final String NOTIFICARI = "Notificari";
     private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
     private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
+    private final FirebaseService firebaseServiceNotificari = new FirebaseService(NOTIFICARI);
     private final String idPacient = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private final DateFormat format = new SimpleDateFormat("HH:mm", Locale.US); //parsare ora din string
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final String dataCurenta = formatter.format(LocalDate.now());
 
     private List<Programare> programari = new ArrayList<>();
     private TextView tvMedic;
@@ -148,7 +154,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
     private ValueEventListener preiaInvestigatii() {
         return new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 investigatii = new ArrayList<>();
@@ -335,8 +341,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                                     .orElseThrow(Resources.NotFoundException::new);
                             double valoare = investigatie.getPret();
 
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                            Factura factura = new Factura(valoare, formatter.format(LocalDate.now()), formatter.format(LocalDate.now().plusDays(30)), "Neachitată");
+
+                            Factura factura = new Factura(valoare, dataCurenta, formatter.format(LocalDate.now().plusDays(30)), "Neachitată");
 
                             Programare programare = new Programare(null, medic.getIdMedic(),
                                     idPacient,
@@ -348,6 +354,19 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                             String idProgramare = firebaseServiceProgramari.databaseReference.push().getKey();
                             programare.setIdProgramare(idProgramare);
                             firebaseServiceProgramari.databaseReference.child(idProgramare).setValue(programare);
+
+                            Notificare notificare = new Notificare(null,
+                                    getString(R.string.programare_noua),
+                                    idPacient,
+                                    programare.getIdMedic(),
+                                    programare.getData(),
+                                    programare.getOra(),
+                                    dataCurenta,
+                                    false);
+                            String idNotificare = firebaseServiceNotificari.databaseReference.push().getKey();
+                            notificare.setIdNotificare(idNotificare);
+                            firebaseServiceNotificari.databaseReference.child(idNotificare).setValue(notificare);
+
                             Toast.makeText(getApplicationContext(), "Programarea a fost trimisa!", Toast.LENGTH_SHORT).show();
                             dialogInterface.cancel();
 

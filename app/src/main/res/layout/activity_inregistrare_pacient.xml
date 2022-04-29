@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/custom_blue"
-    android:padding="@dimen/_10sdp"
+    android:background="@color/custom_light_blue"
     tools:context=".activitati.InregistrarePacientActivity">
 
     <ProgressBar
@@ -17,32 +16,65 @@
         android:translationZ="@dimen/_90sdp"
         android:visibility="gone" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:elevation="@dimen/_10sdp"
-        app:cardBackgroundColor="@color/custom_light_blue"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardElevation="@dimen/_5sdp">
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:elevation="@dimen/_10sdp"-->
+    <!--        app:cardBackgroundColor="@color/custom_light_blue"-->
+    <!--        app:cardCornerRadius="@dimen/_10sdp"-->
+    <!--        app:cardElevation="@dimen/_5sdp">-->
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_10sdp">
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/topView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@color/custom_blue" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:text="@string/inregistrare_pacient"
+                android:textColor="@color/custom_light_blue"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:translationZ="90dp" />
+
+            <View
+                android:id="@+id/topWave"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_below="@+id/topView"
+                android:background="@drawable/ic_wave_top" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ciwPozaProfilUser"
+                android:layout_width="@dimen/_86sdp"
+                android:layout_height="@dimen/_86sdp"
+                android:layout_below="@+id/textView1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:src="@drawable/ic_account" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ciwPozaProfilUser"
                 android:background="@color/custom_light_blue"
                 android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ciwPozaProfilUser"
-                    android:layout_width="@dimen/_86sdp"
-                    android:layout_height="@dimen/_86sdp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_account" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -383,8 +415,9 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
-        </ScrollView>
+        </RelativeLayout>
+    </ScrollView>
 
-    </androidx.cardview.widget.CardView>
+    <!--    </androidx.cardview.widget.CardView>-->
 
 </RelativeLayout>

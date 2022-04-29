@@ -4,9 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/custom_blue"
-    android:padding="@dimen/_15sdp"
+    android:background="@color/custom_light_blue"
     tools:context=".activitati.ConectarePacientActivity">
+
+    <View
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@color/custom_blue" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:text="@string/greeting_message"
+        android:textColor="@color/custom_light_blue"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:translationZ="90dp" />
+
+    <View
+        android:id="@+id/topWave"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_below="@+id/topView"
+        android:background="@drawable/ic_wave_top" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -17,208 +42,211 @@
         android:translationZ="@dimen/_90sdp"
         android:visibility="gone" />
 
-    <androidx.cardview.widget.CardView
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:elevation="@dimen/_10sdp"-->
+    <!--        app:cardBackgroundColor="@color/custom_light_blue"-->
+    <!--        app:cardCornerRadius="@dimen/_10sdp"-->
+    <!--        app:cardElevation="@dimen/_5sdp">-->
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:elevation="@dimen/_10sdp"
-        app:cardBackgroundColor="@color/custom_light_blue"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardElevation="@dimen/_5sdp">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topWave"
+        android:background="@color/custom_light_blue">
 
-        <RelativeLayout
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/icon_pacient"
+            app:srcCompat="@drawable/ic_pacient" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:text="@string/conectare_pacient"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@color/custom_light_blue">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView2"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:theme="@style/TextInputLayoutStyle"
+            app:boxCornerRadiusBottomEnd="0dp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="0dp">
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietLoginEmailPacient"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_30sdp"
-                android:text="@string/greeting_message"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/email_mandatory"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/black"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView1"
-                android:layout_centerHorizontal="true"
-                android:contentDescription="@string/icon_pacient"
-                app:srcCompat="@drawable/ic_pacient" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_30sdp"
-                android:text="@string/conectare_pacient"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilEmail"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView2"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:theme="@style/TextInputLayoutStyle"
-                app:boxCornerRadiusBottomEnd="0dp"
-                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                app:boxCornerRadiusTopStart="0dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tietLoginEmailPacient"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_email"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:hint="@string/email_mandatory"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilParola"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tilEmail"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:theme="@style/TextInputLayoutStyle"
-                app:boxCornerRadiusBottomEnd="0dp"
-                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                app:boxCornerRadiusTopStart="0dp"
-                app:passwordToggleDrawable="@drawable/ic_visibility_selector"
-                app:passwordToggleEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tietLoginParolaPacient"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_parola"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:hint="@string/parola"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/tvResetareParola"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tilParola"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/forgot_password"
-                android:textColor="@color/black" />
-
-            <CheckBox
-                android:id="@+id/cbRamaiAutentificat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tilParola"
-                android:layout_alignParentStart="true"
-                android:buttonTint="@color/custom_blue"
-                android:checked="true"
-                android:text="@string/remember_me"
-                android:textColor="@color/black" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnLoginPacient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cbRamaiAutentificat"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:background="@drawable/background_butoane"
-                android:text="@string/login"
-                android:textAllCaps="false"
-                android:textColor="@color/custom_light_blue"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tvCreareCont"
-                android:layout_width="wrap_content"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilParola"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tilEmail"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:theme="@style/TextInputLayoutStyle"
+            app:boxCornerRadiusBottomEnd="0dp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="0dp"
+            app:passwordToggleDrawable="@drawable/ic_visibility_selector"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietLoginParolaPacient"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btnLoginPacient"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:text="@string/create_account"
+                android:drawableStart="@drawable/ic_parola"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/parola"
+                android:inputType="textPassword"
                 android:textColor="@color/black"
-                android:textStyle="italic" />
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!--todo pagina de admin-->
-            <TextView
-                android:id="@+id/tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btnLoginPacient"
-                android:layout_marginStart="9dp"
-                android:focusable="true"
-                android:text="Admin"
-                android:textColor="#000" />
+        <TextView
+            android:id="@+id/tvResetareParola"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tilParola"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/forgot_password"
+            android:textColor="@color/black" />
 
-            <RelativeLayout
-                android:id="@+id/rlSuntMedic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvCreareCont"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_40sdp">
+        <CheckBox
+            android:id="@+id/cbRamaiAutentificat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tilParola"
+            android:layout_alignParentStart="true"
+            android:buttonTint="@color/custom_blue"
+            android:checked="true"
+            android:text="@string/remember_me"
+            android:textColor="@color/black" />
 
-                <ImageView
-                    android:id="@+id/ivMedic"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:clickable="true"
-                    android:contentDescription="@string/icon_medic"
-                    android:focusable="true"
-                    app:srcCompat="@drawable/ic_doctor" />
-
-                <TextView
-                    android:id="@+id/tvSuntMedic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ivMedic"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:text="@string/sunt_medic"
-                    android:textColor="@color/black" />
-            </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLoginPacient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cbRamaiAutentificat"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@drawable/background_butoane"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="@color/custom_light_blue"
+            android:textSize="16sp" />
 
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+        <!--todo pagina de admin-->
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnLoginPacient"
+            android:layout_marginStart="9dp"
+            android:focusable="true"
+            android:text="Admin"
+            android:textColor="#000" />
 
+
+    </RelativeLayout>
+    <!--    </androidx.cardview.widget.CardView>-->
+
+
+    <TextView
+        android:id="@+id/tvCreareCont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomWave"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:text="@string/create_account"
+        android:textColor="@color/custom_blue" />
+
+    <View
+        android:id="@+id/bottomWave"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_above="@+id/bottomView"
+        android:background="@drawable/ic_wave_bottom" />
+
+    <RelativeLayout
+        android:id="@+id/rlSuntMedic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:translationZ="90dp">
+
+        <ImageView
+            android:id="@+id/ivMedic"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:clickable="true"
+            android:contentDescription="@string/icon_medic"
+            android:focusable="true"
+            app:srcCompat="@drawable/ic_doctor" />
+
+        <TextView
+            android:id="@+id/tvSuntMedic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivMedic"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/sunt_medic"
+            android:textColor="@color/custom_light_blue" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/bottomView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/custom_blue" />
 
 </RelativeLayout>

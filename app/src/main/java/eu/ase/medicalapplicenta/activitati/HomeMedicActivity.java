@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,6 +53,8 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
     private CardView cwPacienti;
     private CardView cwFeedback;
 
+    private FloatingActionButton fabNotificari;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         cwProgramari.setOnClickListener(this);
         cwPacienti.setOnClickListener(this);
         cwFeedback.setOnClickListener(this);
+        fabNotificari.setOnClickListener(this);
 
         incarcaInfoNavMenu();
     }
@@ -99,6 +103,8 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         cwProgramari = findViewById(R.id.cwProgramari);
         cwPacienti = findViewById(R.id.cwPacienti);
         cwFeedback = findViewById(R.id.cwFeedback);
+
+        fabNotificari = findViewById(R.id.fabNotificari);
     }
 
     @Override
@@ -152,6 +158,9 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
             case R.id.cwFeedback:
                 startActivity(new Intent(getApplicationContext(), ListaPacientiActivity.class).putExtra(VIZUALIZARE_FEEDBACK, ""));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            case R.id.fabNotificari:
+                startActivity(new Intent(getApplicationContext(), NotificariActivity.class).putExtra(MEDIC, "medic"));
                 break;
         }
     }

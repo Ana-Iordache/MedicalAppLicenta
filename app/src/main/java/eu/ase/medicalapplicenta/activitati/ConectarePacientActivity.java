@@ -52,6 +52,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_MedicalAppLicenta);
         setContentView(R.layout.activity_conectare_pacient);
 
         initializeazaAtribute();
@@ -179,7 +180,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 //                        Toast.makeText(getApplicationContext(), "Accesati link-ul primit pe email pentru verificare!", Toast.LENGTH_SHORT).show();
 //                    }
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                    finish(); TODO daca dau back din main sa nu ma intoarca la login
+                    finish(); //TODO daca dau back din main sa nu ma intoarca la login
                     // dar daca pun asa cand dau back ma scoate din ap, e ok
                     // dar daca vreau sa revin in ap imi deschide pagina de log in in loc de main
                 } else {

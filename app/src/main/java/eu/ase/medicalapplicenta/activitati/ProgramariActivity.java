@@ -14,16 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,6 +37,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -51,6 +49,7 @@ import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.adaptori.ProgramareAdaptor;
 import eu.ase.medicalapplicenta.entitati.Feedback;
 import eu.ase.medicalapplicenta.entitati.Medic;
+import eu.ase.medicalapplicenta.entitati.Notificare;
 import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
@@ -61,14 +60,18 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         ProgramareAdaptor.OnBtnFeedbackClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String MEDICI = "Medici";
+    public static final String NOTIFICARI = "Notificari";
     public static final String ADAUGA_PROGRAMARE = "adaugaProgramare";
     private static final DateTimeFormatter FORMAT_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#.00");
     private static final DateFormat FORMAT_ORA = new SimpleDateFormat("HH:mm", Locale.US);
     private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
+    private final FirebaseService firebaseServiceNotificari = new FirebaseService(NOTIFICARI);
     //    private final DatabaseReference referintaDb = firebaseService.databaseReference;
     private final String idUtilizator = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final String dataNotificare = formatter.format(LocalDate.now());
     public String tipUtilizator;
     //    ListView lv;
     private FloatingActionButton fabAdaugaProgramare;
@@ -94,7 +97,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     private TextView tvNota;
     private Programare programare;
     private RadioGroup rgNote;
-//    private EditText etRecenzie;
+    //    private EditText etRecenzie;
     private TextInputEditText tietRecenzie;
 
     @Override
@@ -404,6 +407,26 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                                     .child(programare.getIdProgramare())
                                     .child("status")
                                     .setValue(getString(R.string.status_anulata));
+
+                            String idReceptor = "";
+                            if (tipUtilizator.equals(HomeMedicActivity.MEDIC)) {
+                                idReceptor = programare.getIdPacient();
+                            } else if (tipUtilizator.equals(MainActivity.PACIENT)) {
+                                idReceptor = programare.getIdMedic();
+                            }
+
+                            Notificare notificare = new Notificare(null,
+                                    getString(R.string.programare_anulata),
+                                    idUtilizator,
+                                    idReceptor,
+                                    programare.getData(),
+                                    programare.getOra(),
+                                    dataNotificare,
+                                    false);
+                            String idNotificare = firebaseServiceNotificari.databaseReference.push().getKey();
+                            notificare.setIdNotificare(idNotificare);
+                            firebaseServiceNotificari.databaseReference.child(idNotificare).setValue(notificare);
+
                             dialogInterface.cancel();
                             Toast.makeText(getApplicationContext(), "Programarea a fost anulată!", Toast.LENGTH_SHORT).show();
                         }

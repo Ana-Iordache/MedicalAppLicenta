@@ -7,8 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="custom_blue">#77CEFC</color>
+<!--    <color name="custom_blue">#77CEFC</color>-->
+<!--    <color name="custom_blue">#10BAEB</color>-->
+    <color name="custom_blue">#0099FF</color>
+<!--    <color name="custom_blue">#1f74fb</color>-->
     <color name="custom_light_blue">#D2ECFC</color>
+<!--    <color name="custom_light_blue">#c9e9ff</color>-->
     <color name="royale_blue">#4169E1</color>
     <color name="colorDivider">#F5F5F5</color>
     <color name="colorBackground">#FAFAFA</color>

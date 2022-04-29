@@ -187,4 +187,10 @@
     <string name="nota8">8</string>
     <string name="nota9">9</string>
     <string name="nota10">10</string>
+    <string name="notificari">Notificări</string>
+    <string name="programare_anulata">Programare anulată</string>
+    <string name="programare_noua">Programare nouă</string>
+    <string name="nicio_notificare">Nu aveți nicio notificare</string>
+    <string name="inregistrare_medic">Înregistrare medic</string>
+    <string name="inregistrare_pacient">Înregistrare pacient</string>
 </resources>
