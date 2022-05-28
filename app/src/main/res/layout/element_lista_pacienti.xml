@@ -30,8 +30,7 @@
                 android:id="@+id/tvNumePacient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Iordache Ana-Maria"
-                android:textColor="@color/royale_blue"
+                android:textColor="@color/custom_blue"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />
 
@@ -40,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvNumePacient"
-                android:text="CNP:"
+                android:text="@string/cnp_"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold" />
@@ -52,7 +51,6 @@
                 android:layout_below="@+id/tvNumePacient"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_toEndOf="@+id/tvCnp"
-                android:text="6000426420057"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold" />
@@ -62,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCnp"
-                android:text="Ultima programare onorată:"
+                android:text="@string/ultima_programare_onorata"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="italic" />
@@ -74,7 +72,6 @@
                 android:layout_below="@+id/tvCnp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_toEndOf="@+id/tvUltimaProgramare"
-                android:text="22/03/2022"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="italic" />

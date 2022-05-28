@@ -31,7 +31,7 @@
                     android:id="@+id/tvNumeMedic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/royale_blue"
+                    android:textColor="@color/custom_blue"
                     android:textSize="@dimen/_17sdp"
                     android:textStyle="bold" />
 

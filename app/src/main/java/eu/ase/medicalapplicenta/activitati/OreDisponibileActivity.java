@@ -342,7 +342,11 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                             double valoare = investigatie.getPret();
 
 
-                            Factura factura = new Factura(valoare, dataCurenta, formatter.format(LocalDate.now().plusDays(30)), "Neachitată");
+                            Factura factura = new Factura(null,
+                                    valoare,
+                                    dataCurenta,
+                                    formatter.format(LocalDate.now().plusDays(30)),
+                                    getString(R.string.neachitata));
 
                             Programare programare = new Programare(null, medic.getIdMedic(),
                                     idPacient,
@@ -353,6 +357,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                                     null);
                             String idProgramare = firebaseServiceProgramari.databaseReference.push().getKey();
                             programare.setIdProgramare(idProgramare);
+                            factura.setIdFactura(idProgramare);
                             firebaseServiceProgramari.databaseReference.child(idProgramare).setValue(programare);
 
                             Notificare notificare = new Notificare(null,

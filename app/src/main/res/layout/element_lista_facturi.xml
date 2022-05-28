@@ -21,42 +21,10 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvStatus"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:drawablePadding="@dimen/_9sdp"
-                android:text="@string/valoare"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                app:drawableStartCompat="@drawable/ic_bani" />
-
-            <TextView
-                android:id="@+id/tvValoare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvStatus"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
-
-
             <LinearLayout
+                android:id="@+id/ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvValoare"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:baselineAligned="false">
 
@@ -112,6 +80,89 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_9sdp"
+                android:text="@string/valoare"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                app:drawableStartCompat="@drawable/ic_bani" />
+
+            <TextView
+                android:id="@+id/tvValoare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/tvValoare"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@color/colorDivider" />
+
+            <ImageView
+                android:id="@+id/ivNeachitata"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_below="@+id/view"
+                android:layout_centerHorizontal="true"
+                android:layout_toStartOf="@+id/tvStatus"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:src="@drawable/ic_neachitat"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivAchitata"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_below="@+id/view"
+                android:layout_centerHorizontal="true"
+                android:layout_toStartOf="@+id/tvStatus"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:src="@drawable/ic_achitat"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:layout_centerHorizontal="true"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPlata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvStatus"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/background_butoane_secundare_selector"
+                android:text="@string/plateste"
+                android:textAllCaps="false"
+                android:textColor="@color/custom_blue" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

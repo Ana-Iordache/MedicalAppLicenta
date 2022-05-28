@@ -34,6 +34,7 @@
     <string name="pattern_cnp">^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$</string>
     <string name="pattern_greutate">^[1-9][0-9]\\.[0-9]$</string>
     <string name="pattern_inaltime">^([1-2]\\.([0-9]{2}|[0-9]{1}))$</string>
+    <string name="pattern_data_expirarii">^([0][1-9]|[1-2][0-9]|[3][0-1])/([2][2-9]|[3][0-5])$</string>
     <string name="email_mandatory">Email <font color="#FF0000">*</font> </string>
     <string name="email">Email</string>
     <string name="parola">Parola <font color="#FF0000">*</font> </string>
@@ -79,6 +80,13 @@
     <string name="err_not_valid_parola">Parola trebuie să conțină cel puțin 6 caractere!</string>
     <string name="err_empty_confirmare_parola">Reintroduceți parola!</string>
     <string name="err_not_valid_confirmare_parola">Cele 2 parole nu corespund!</string>
+    <string name="err_empty_nume_titular">Introduceți numele titularului!</string>
+    <string name="err_empty_numar_card">Introduceți numărul cardului!</string>
+    <string name="err_not_valid_numar_card">Introduceți un număr de card valid!</string>
+    <string name="err_empty_data_expirarii">Introduceți data expirării!</string>
+    <string name="err_not_valid_data_expirarii">Introduceți o dată validă în formatul MM/yy!</string>
+    <string name="err_empty_cvv">Introduceți codul CVV/CVC!</string>
+    <string name="err_not_valid_cvv">Introduceți un CVV/CVC valid!</string>
     <string name="varsta">Vârsta</string>
     <string name="sex">Sex</string>
     <string name="modifica_date_personale">Modifică date personale</string>
@@ -193,4 +201,13 @@
     <string name="nicio_notificare">Nu aveți nicio notificare</string>
     <string name="inregistrare_medic">Înregistrare medic</string>
     <string name="inregistrare_pacient">Înregistrare pacient</string>
+    <string name="plateste">Plătește</string>
+    <string name="achitata">achitată</string>
+    <string name="neachitata">neachitată</string>
+    <string name="nume_titular">Nume titular</string>
+    <string name="numar_card">Număr card</string>
+    <string name="data_expirarii">Data expirării</string>
+    <string name="cvv_cvc">CVV/CVC</string>
+    <string name="cnp_">CNP:</string>
+    <string name="ultima_programare_onorata">Ultima programare onorată:</string>
 </resources>
