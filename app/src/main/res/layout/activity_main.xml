@@ -9,9 +9,6 @@
     tools:context=".activitati.MainActivity"
     tools:openDrawer="start">
 
-    <!--ii pun start ca sa stie cum sa se deschida
-    si ca sa nu se faca overlapping intre elemente pun fitsSystemWindows="true" -->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,6 +31,15 @@
                 android:text="@string/title_home"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20sdp" />
+
+            <ImageView
+                android:id="@+id/ivNotificari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:src="@drawable/ic_notificari" />
         </androidx.appcompat.widget.Toolbar>
 
         <View
@@ -43,7 +49,9 @@
             android:layout_below="@+id/toolbar"
             android:background="@color/colorDivider" />
 
+
         <LinearLayout
+            android:id="@+id/llCards"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/view"
@@ -239,8 +247,23 @@
             android:focusable="true"
             app:srcCompat="@android:drawable/stat_sys_phone_call" />
 
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/fabNotificari"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginEnd="@dimen/_20sdp"-->
+<!--            android:layout_marginBottom="@dimen/_20sdp"-->
+<!--            android:backgroundTint="@color/custom_blue"-->
+<!--            android:clickable="true"-->
+<!--            android:contentDescription="@string/notificari"-->
+<!--            android:focusable="true"-->
+<!--            android:visibility="gone"-->
+<!--            app:srcCompat="@drawable/ic_notificari" />-->
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabNotificari"
+            android:id="@+id/fabChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -249,9 +272,9 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:backgroundTint="@color/custom_blue"
             android:clickable="true"
-            android:contentDescription="@string/notificari"
+            android:contentDescription="@string/chat"
             android:focusable="true"
-            app:srcCompat="@drawable/ic_notificari" />
+            app:srcCompat="@drawable/ic_chat" />
 
 
     </RelativeLayout>

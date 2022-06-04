@@ -29,6 +29,15 @@
                 android:text="@string/title_home"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20sdp" />
+
+            <ImageView
+                android:id="@+id/ivNotificari"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:src="@drawable/ic_notificari" />
         </androidx.appcompat.widget.Toolbar>
 
         <View
@@ -175,7 +184,7 @@
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabNotificari"
+            android:id="@+id/fabChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -184,20 +193,20 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:backgroundTint="@color/custom_blue"
             android:clickable="true"
-            android:contentDescription="@string/notificari"
+            android:contentDescription="@string/chat"
             android:focusable="true"
-            app:srcCompat="@drawable/ic_notificari" />
+            app:srcCompat="@drawable/ic_chat" />
     </RelativeLayout>
 
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/white"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_drawer_menu" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/white"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/nav_drawer_menu" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

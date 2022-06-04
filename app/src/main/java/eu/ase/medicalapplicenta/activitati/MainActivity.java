@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,21 +30,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.entitati.Notificare;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
-import eu.ase.medicalapplicenta.utile.NotificareTimeTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     public static final String VIZUALIZARE_MEDICI = "vizualizareMedici";
@@ -75,7 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView cwFacturi;
 
     private FloatingActionButton fabCallCenter;
-    private FloatingActionButton fabNotificari;
+    //    private FloatingActionButton fabNotificari;
+    private ImageView ivNotificari;
+    private FloatingActionButton fabChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cwProgramari.setOnClickListener(this);
         cwFacturi.setOnClickListener(this);
         fabCallCenter.setOnClickListener(this);
-        fabNotificari.setOnClickListener(this);
+//        fabNotificari.setOnClickListener(this);
+        ivNotificari.setOnClickListener(this);
+        fabChat.setOnClickListener(this);
 
         incarcaInfoNavMenu();
     }
@@ -128,9 +126,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (!notificari.isEmpty()) {
                     if (!notificari.stream().anyMatch(Notificare::isNotificareCitita)) {
-                        fabNotificari.setImageResource(R.drawable.ic_notificari_necitite);
+                        ivNotificari.setImageResource(R.drawable.ic_notificari_necitite);
                     } else {
-                        fabNotificari.setImageResource(R.drawable.ic_notificari);
+                        ivNotificari.setImageResource(R.drawable.ic_notificari);
                     }
                 }
             }
@@ -170,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cwProgramari = findViewById(R.id.cwProgramari);
         cwFacturi = findViewById(R.id.cwFacturi);
         fabCallCenter = findViewById(R.id.fabCallCenter);
-        fabNotificari = findViewById(R.id.fabNotificari);
+        ivNotificari = findViewById(R.id.ivNotificari);
+        fabChat = findViewById(R.id.fabChat);
     }
 
     @Override
@@ -233,9 +232,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fabCallCenter:
                 startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", NUMAR_CALL_CENTER, null)));
                 break;
-            case R.id.fabNotificari:
+            case R.id.ivNotificari:
 //                notificari.stream().filter(n -> !n.isNotificareCitita()).forEach(n -> n.setNotificareCitita(true));
                 startActivity(new Intent(getApplicationContext(), NotificariActivity.class).putExtra(PACIENT, "pacient"));
+                break;
+            case R.id.fabChat:
+                startActivity(new Intent(getApplicationContext(), ConversatiiActivity.class).putExtra(PACIENT, "pacient"));
                 break;
         }
     }

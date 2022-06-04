@@ -210,4 +210,10 @@
     <string name="cvv_cvc">CVV/CVC</string>
     <string name="cnp_">CNP:</string>
     <string name="ultima_programare_onorata">Ultima programare onorată:</string>
+    <string name="chat">Chat</string>
+    <string name="conversatii">Conversații</string>
+    <string name="conversatie_noua">Conversatie noua</string>
+    <string name="nicio_conversatie">Nu aveți nicio conversație</string>
+    <string name="scrie_un_mesaj">Scrie un mesaj...</string>
+    <string name="trimite_mesaj">Trimite mesaj</string>
 </resources>

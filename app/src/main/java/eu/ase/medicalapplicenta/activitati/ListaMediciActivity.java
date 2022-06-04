@@ -46,6 +46,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     public static final String MEDICI = "Medici";
     public static final String ORE_DISPONIBILE = "oreDisponibile";
     public static final String INFORMATII_MEDIC = "informatiiMedic";
+    public static final String MEDIC = "medic";
     private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
     private AppCompatButton btnProgramare;
@@ -265,6 +266,8 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
             bottomSheetDialog.setContentView(view);
             bottomSheetDialog.show();
 
+        } else if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
+            startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra(MEDIC, medic));
         }
     }
 

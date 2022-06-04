@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,9 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
     private CardView cwPacienti;
     private CardView cwFeedback;
 
-    private FloatingActionButton fabNotificari;
+    private ImageView ivNotificari;
 
+    private FloatingActionButton fabChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,8 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         cwProgramari.setOnClickListener(this);
         cwPacienti.setOnClickListener(this);
         cwFeedback.setOnClickListener(this);
-        fabNotificari.setOnClickListener(this);
+        ivNotificari.setOnClickListener(this);
+        fabChat.setOnClickListener(this);
 
         incarcaInfoNavMenu();
     }
@@ -104,7 +107,9 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         cwPacienti = findViewById(R.id.cwPacienti);
         cwFeedback = findViewById(R.id.cwFeedback);
 
-        fabNotificari = findViewById(R.id.fabNotificari);
+        ivNotificari = findViewById(R.id.ivNotificari);
+
+        fabChat = findViewById(R.id.fabChat);
     }
 
     @Override
@@ -159,8 +164,11 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(getApplicationContext(), ListaPacientiActivity.class).putExtra(VIZUALIZARE_FEEDBACK, ""));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
-            case R.id.fabNotificari:
+            case R.id.ivNotificari:
                 startActivity(new Intent(getApplicationContext(), NotificariActivity.class).putExtra(MEDIC, "medic"));
+                break;
+            case R.id.fabChat:
+                startActivity(new Intent(getApplicationContext(), ConversatiiActivity.class).putExtra(MEDIC, "medic"));
                 break;
         }
     }

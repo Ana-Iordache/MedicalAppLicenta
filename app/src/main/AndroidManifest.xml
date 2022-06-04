@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalAppLicenta">
         <activity
+            android:name=".activitati.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitati.ConversatiiActivity"
+            android:exported="false" />
+        <activity
             android:name=".activitati.NotificariActivity"
             android:exported="false" />
         <activity

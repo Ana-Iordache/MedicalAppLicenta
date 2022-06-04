@@ -11,19 +11,22 @@
         android:id="@+id/et1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Denumire specialitate" />
+        android:hint="Denumire specialitate"
+        android:inputType="textCapSentences"/>
 
     <EditText
         android:id="@+id/et2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Denumire investigatie" />
+        android:hint="Denumire investigatie"
+        android:inputType="textCapSentences"/>
 
     <EditText
         android:id="@+id/et3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="pret" />
+        android:hint="pret"
+        android:inputType="numberDecimal"/>
 
     <Button
         android:id="@+id/button1"
