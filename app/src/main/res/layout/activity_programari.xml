@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:contentDescription="@string/icon_indisponibil"
-            android:src="@drawable/ic_unavailable" />
+            android:src="@drawable/ic_nicio_programare" />
 
         <TextView
             android:layout_width="wrap_content"

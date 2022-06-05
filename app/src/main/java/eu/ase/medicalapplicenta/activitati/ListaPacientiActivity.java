@@ -261,6 +261,7 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
             bottomSheetDialog.show();
         } else if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
             startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra(PACIENT, pacient));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 }

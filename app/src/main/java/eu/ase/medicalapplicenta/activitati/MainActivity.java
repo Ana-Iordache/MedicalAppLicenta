@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,12 +45,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String PACIENT = "pacient";
     public static final String PACIENTI = "Pacienti";
     public static final String NOTIFICARI = "Notificari";
+    public static final String EMAIL = "iordacheana19@stud.ase.ro";
+    public static final String SUBIECT = "Feedback aplicatie medicala";
     private static final String NUMAR_CALL_CENTER = "0219268";
     //todo sa pun un progress bar sau ceva pana se incarca datele de la profil
     private Toolbar toolbar; // ca sa atasez toolbarul in pagina
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
     private NavigationView navigationView; // ca sa gestionez optiunile din meniu
+
+    private RelativeLayout rlLogout;
 
     private TextView tvNumeUserConectat;
     private TextView tvEmailUserConectat;
@@ -72,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //    private FloatingActionButton fabNotificari;
     private ImageView ivNotificari;
     private FloatingActionButton fabChat;
+
+    private String numeComplet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         verificaNotificariNecitite();
 
         navigationView.setNavigationItemSelectedListener(this);
+        rlLogout.setOnClickListener(this);
         cwMedici.setOnClickListener(this);
         cwInvestigatii.setOnClickListener(this);
         cwProgramari.setOnClickListener(this);
@@ -160,6 +168,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvEmailUserConectat = navigationView.getHeaderView(0).findViewById(R.id.tvEmailUserConectat);
         ciwPozaProfilUser = navigationView.getHeaderView(0).findViewById(R.id.ciwPozaProfilUser);
 
+        rlLogout = findViewById(R.id.rlLogout);
+
         pacientConectat = FirebaseAuth.getInstance().getCurrentUser();
         idPacient = pacientConectat.getUid();
 
@@ -187,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (pacient != null) {
                     String nume = pacient.getNume();
                     String prenume = pacient.getPrenume();
-                    String numeComplet = nume + " " + prenume;
+                    numeComplet = nume + " " + prenume;
                     String email = pacient.getAdresaEmail();
                     String urlPozaProfil = pacient.getUrlPozaProfil();
 
@@ -239,6 +249,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fabChat:
                 startActivity(new Intent(getApplicationContext(), ConversatiiActivity.class).putExtra(PACIENT, "pacient"));
                 break;
+            case R.id.rlLogout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
+                finish();
+                break;
         }
     }
 
@@ -254,18 +269,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.item_bmi:
                 startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(PACIENT, "pacient"));
                 break;
-            case R.id.item_log_out:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
-                finish();
-                break;
-            //TODO
+//            case R.id.item_log_out:
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
+//                finish();
+//                break;
             case R.id.item_feedback_aplicatie:
-                Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL});
+                intent.putExtra(Intent.EXTRA_SUBJECT, SUBIECT);
+                intent.putExtra(Intent.EXTRA_TEXT, "Nume pacient: " + numeComplet + "\nFeedback: ");
+                startActivity(intent);
                 break;
-            //TODO
             case R.id.item_despre_noi:
-                Toast.makeText(getApplicationContext(), "Despre noi", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), DespreNoiActivity.class));
                 break;
         }
         return true;

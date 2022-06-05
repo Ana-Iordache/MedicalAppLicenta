@@ -1,5 +1,8 @@
 package eu.ase.medicalapplicenta.activitati;
 
+import static eu.ase.medicalapplicenta.activitati.MainActivity.EMAIL;
+import static eu.ase.medicalapplicenta.activitati.MainActivity.SUBIECT;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,11 +12,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +46,8 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
     private ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
     private NavigationView navigationView; // ca sa gestionez optiunile din meniu
 
+    private RelativeLayout rlLogout;
+
     private TextView tvNumeUserConectat;
     private TextView tvEmailUserConectat;
 
@@ -53,10 +60,13 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
     private CardView cwProgramari;
     private CardView cwPacienti;
     private CardView cwFeedback;
+    private CardView cwIncasari;
 
     private ImageView ivNotificari;
 
     private FloatingActionButton fabChat;
+
+    private String numeComplet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +80,11 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         seteazaToggle();
 
         navigationView.setNavigationItemSelectedListener(this);
+        rlLogout.setOnClickListener(this);
         cwProgramari.setOnClickListener(this);
         cwPacienti.setOnClickListener(this);
         cwFeedback.setOnClickListener(this);
+        cwIncasari.setOnClickListener(this);
         ivNotificari.setOnClickListener(this);
         fabChat.setOnClickListener(this);
 
@@ -100,12 +112,15 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         tvEmailUserConectat = navigationView.getHeaderView(0).findViewById(R.id.tvEmailUserConectat);
         ciwPozaProfilUser = navigationView.getHeaderView(0).findViewById(R.id.ciwPozaProfilUser);
 
+        rlLogout = findViewById(R.id.rlLogout);
+
         medicConectat = FirebaseAuth.getInstance().getCurrentUser();
         idMedic = medicConectat.getUid();
 
         cwProgramari = findViewById(R.id.cwProgramari);
         cwPacienti = findViewById(R.id.cwPacienti);
         cwFeedback = findViewById(R.id.cwFeedback);
+        cwIncasari = findViewById(R.id.cwIncasari);
 
         ivNotificari = findViewById(R.id.ivNotificari);
 
@@ -127,7 +142,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 if (medic != null) {
                     String nume = medic.getNume();
                     String prenume = medic.getPrenume();
-                    String numeComplet = nume + " " + prenume;
+                    numeComplet = nume + " " + prenume;
                     String email = medic.getAdresaEmail();
                     String urlPozaProfil = medic.getUrlPozaProfil();
 
@@ -164,11 +179,19 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(getApplicationContext(), ListaPacientiActivity.class).putExtra(VIZUALIZARE_FEEDBACK, ""));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+            case R.id.cwIncasari:
+                Toast.makeText(getApplicationContext(), "todo", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.ivNotificari:
                 startActivity(new Intent(getApplicationContext(), NotificariActivity.class).putExtra(MEDIC, "medic"));
                 break;
             case R.id.fabChat:
                 startActivity(new Intent(getApplicationContext(), ConversatiiActivity.class).putExtra(MEDIC, "medic"));
+                break;
+            case R.id.rlLogout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class));
+                finish();
                 break;
         }
     }
@@ -183,18 +206,21 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
             case R.id.item_bmi:
                 startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(MEDIC, "medic"));
                 break;
-            case R.id.item_log_out:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class));
-                finish();
-                break;
-            //TODO
+//            case R.id.item_log_out:
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class));
+//                finish();
+//                break;
             case R.id.item_feedback_aplicatie:
-                Toast.makeText(getApplicationContext(), "Feedback", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL});
+                intent.putExtra(Intent.EXTRA_SUBJECT, SUBIECT);
+                intent.putExtra(Intent.EXTRA_TEXT, "Nume medic: " + numeComplet + "\nFeedback: ");
+                startActivity(intent);
                 break;
-            //TODO
             case R.id.item_despre_noi:
-                Toast.makeText(getApplicationContext(), "Despre noi", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), DespreNoiActivity.class));
                 break;
         }
         return true;

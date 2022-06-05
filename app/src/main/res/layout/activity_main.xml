@@ -62,10 +62,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwMedici"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
@@ -105,10 +105,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwInvestigatii"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
@@ -148,10 +148,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwProgramari"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
@@ -191,10 +191,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cwFacturi"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
                 app:cardCornerRadius="@dimen/_15sdp">
@@ -247,20 +247,20 @@
             android:focusable="true"
             app:srcCompat="@android:drawable/stat_sys_phone_call" />
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/fabNotificari"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_marginEnd="@dimen/_20sdp"-->
-<!--            android:layout_marginBottom="@dimen/_20sdp"-->
-<!--            android:backgroundTint="@color/custom_blue"-->
-<!--            android:clickable="true"-->
-<!--            android:contentDescription="@string/notificari"-->
-<!--            android:focusable="true"-->
-<!--            android:visibility="gone"-->
-<!--            app:srcCompat="@drawable/ic_notificari" />-->
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/fabNotificari"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_marginEnd="@dimen/_20sdp"-->
+        <!--            android:layout_marginBottom="@dimen/_20sdp"-->
+        <!--            android:backgroundTint="@color/custom_blue"-->
+        <!--            android:clickable="true"-->
+        <!--            android:contentDescription="@string/notificari"-->
+        <!--            android:focusable="true"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:srcCompat="@drawable/ic_notificari" />-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChat"
@@ -288,6 +288,27 @@
         android:layout_gravity="start"
         android:background="@color/white"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_drawer_menu" />
+        app:menu="@menu/nav_drawer_menu">
+
+        <RelativeLayout
+            android:id="@+id/rlLogout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorBackground">
+
+            <TextView
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="@dimen/_5sdp"
+                android:text="@string/logout"
+                android:textColor="@color/black"
+                app:drawableStartCompat="@drawable/ic_log_out"
+                app:drawableTint="@color/black" />
+        </RelativeLayout>
+
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -54,9 +54,9 @@ public class ConversatiiActivity extends AppCompatActivity implements View.OnCli
     private List<Medic> medici = new ArrayList<>();
     private List<Pacient> pacienti = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
-//    private MedicAdaptor medicAdaptor;
+    //    private MedicAdaptor medicAdaptor;
     private MedicConversatieAdaptor medicConversatieAdaptor;
-//    private PacientAdaptor pacientAdaptor;
+    //    private PacientAdaptor pacientAdaptor;
     private PacientConversatieAdaptor pacientConversatieAdaptor;
 
     private String tipUtilizator;
@@ -270,12 +270,14 @@ public class ConversatiiActivity extends AppCompatActivity implements View.OnCli
     public void onPacientClick(int position) {
         Pacient pacient = pacienti.get(position);
         startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra(ListaPacientiActivity.PACIENT, pacient));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override
     public void onDoctorClick(int position) {
         Medic medic = medici.get(position);
         startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra(ListaMediciActivity.MEDIC, medic));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void loading(Boolean seIncarca) {

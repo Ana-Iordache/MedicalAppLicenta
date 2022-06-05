@@ -268,6 +268,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
 
         } else if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
             startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra(MEDIC, medic));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 

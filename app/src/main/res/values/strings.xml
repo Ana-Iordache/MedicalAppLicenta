@@ -110,7 +110,7 @@
     <string name="profil">Profil</string>
     <string name="logout">Ieși din cont</string>
     <string name="feedback_aplicatie">Feedback aplicație</string>
-    <string name="despre_noi">Despre noi</string>
+    <string name="title_despre_noi">Despre noi</string>
     <string name="call_center">Call Center</string>
     <string name="title_medici">Medici</string>
     <string name="toate_specialitatile">Toate specialitățile</string>
@@ -214,6 +214,10 @@
     <string name="conversatii">Conversații</string>
     <string name="conversatie_noua">Conversatie noua</string>
     <string name="nicio_conversatie">Nu aveți nicio conversație</string>
-    <string name="scrie_un_mesaj">Scrie un mesaj...</string>
+    <string name="scrie_un_mesaj">Scrie un mesaj…</string>
     <string name="trimite_mesaj">Trimite mesaj</string>
+    <string name="title_facturi">Facturi</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="contact">Contact</string>
+    <string name="incasari">Încasări</string>
 </resources>
