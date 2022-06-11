@@ -8,13 +8,13 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvMesaj"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/background_mesaj_trimis"
             android:paddingStart="@dimen/_15sdp"
             android:paddingTop="@dimen/_8sdp"
@@ -23,6 +23,15 @@
             android:text="buna ziua"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/tvStatusMesaj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvMesaj"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:text="@string/mesaj_livrat" />
     </RelativeLayout>
 
 </RelativeLayout>

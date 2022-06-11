@@ -217,7 +217,13 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL});
                 intent.putExtra(Intent.EXTRA_SUBJECT, SUBIECT);
                 intent.putExtra(Intent.EXTRA_TEXT, "Nume medic: " + numeComplet + "\nFeedback: ");
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Nu aveti niciun serviciu de email disponibil!", Toast.LENGTH_SHORT).show();
+                }
+
+
                 break;
             case R.id.item_despre_noi:
                 startActivity(new Intent(getApplicationContext(), DespreNoiActivity.class));

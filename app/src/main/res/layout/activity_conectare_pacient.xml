@@ -183,7 +183,8 @@
             android:layout_marginStart="9dp"
             android:focusable="true"
             android:text="Admin"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>

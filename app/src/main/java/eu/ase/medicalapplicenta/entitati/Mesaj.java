@@ -4,14 +4,16 @@ public class Mesaj {
     private String idEmitator;
     private String idReceptor;
     private String text;
+    private boolean mesajCitit;
 
     public Mesaj() {
     }
 
-    public Mesaj(String idEmitator, String idReceptor, String text) {
+    public Mesaj(String idEmitator, String idReceptor, String text, boolean mesajCitit) {
         this.idEmitator = idEmitator;
         this.idReceptor = idReceptor;
         this.text = text;
+        this.mesajCitit = mesajCitit;
     }
 
     public String getIdEmitator() {
@@ -38,12 +40,21 @@ public class Mesaj {
         this.text = text;
     }
 
+    public boolean isMesajCitit() {
+        return mesajCitit;
+    }
+
+    public void setMesajCitit(boolean mesajCitit) {
+        this.mesajCitit = mesajCitit;
+    }
+
     @Override
     public String toString() {
         return "Mesaj{" +
                 "idEmitator='" + idEmitator + '\'' +
                 ", idReceptor='" + idReceptor + '\'' +
                 ", text='" + text + '\'' +
+                ", mesajCitit=" + mesajCitit +
                 '}';
     }
 }

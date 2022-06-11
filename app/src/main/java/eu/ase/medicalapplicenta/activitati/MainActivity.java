@@ -36,6 +36,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
+import eu.ase.medicalapplicenta.entitati.Conversatie;
+import eu.ase.medicalapplicenta.entitati.Mesaj;
 import eu.ase.medicalapplicenta.entitati.Notificare;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView ivNotificari;
     private FloatingActionButton fabChat;
 
+    private FirebaseService firebaseServiceConversatii = new FirebaseService("Conversatii");
+    private List<Mesaj> mesaje = new ArrayList<>();
+
     private String numeComplet;
 
     @Override
@@ -101,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
 
         verificaNotificariNecitite();
+        verificaMesajeNecitite();
 
         navigationView.setNavigationItemSelectedListener(this);
         rlLogout.setOnClickListener(this);
@@ -114,6 +120,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabChat.setOnClickListener(this);
 
         incarcaInfoNavMenu();
+    }
+
+    private void verificaMesajeNecitite() {
+        firebaseServiceConversatii.preiaDateDinFirebase(preiaConversatii());
+    }
+
+    private ValueEventListener preiaConversatii() {
+        mesaje.clear();
+        return new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Conversatie conversatie = dataSnapshot.getValue(Conversatie.class);
+                    List<Mesaj> mesaje = conversatie.getMesaje();
+                    Mesaj ultimulMesaj = mesaje.get(mesaje.size() - 1);
+                    if (ultimulMesaj.getIdReceptor().equals(idPacient) && !ultimulMesaj.isMesajCitit()) {
+                        fabChat.setImageResource(R.drawable.ic_chat_mesaje_necitite);
+                        break;
+                    } else {
+                        fabChat.setImageResource(R.drawable.ic_chat);
+                    }
+//                    if (conversatie.getMesaje().stream().anyMatch(m -> m.getIdReceptor().equals(idPacient))) {
+//                        mesaje.addAll(conversatie.getMesaje());
+//                    }
+//                    for (Mesaj mesaj : conversatie.getMesaje()) {
+//                        if (mesaj.getIdReceptor().equals(idPacient)) {
+//                            if (!mesaj.isMesajCitit()) {
+//                                fabChat.setImageResource(R.drawable.ic_chat_mesaje_necitite);
+//                            } else {
+//                                fabChat.setImageResource(R.drawable.ic_chat);
+//                            }
+//                        }
+//                    }
+
+                }
+
+//                if (!mesaje.isEmpty()) {
+//                    if ((!mesaje.stream().anyMatch(Mesaj::isMesajCitit))) {
+//                        fabChat.setImageResource(R.drawable.ic_chat_mesaje_necitite);
+//                    } else {
+//                        fabChat.setImageResource(R.drawable.ic_chat);
+//                    }
+//                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
     }
 
     private void verificaNotificariNecitite() {

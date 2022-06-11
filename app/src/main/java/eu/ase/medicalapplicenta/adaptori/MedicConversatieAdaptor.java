@@ -1,6 +1,7 @@
 package eu.ase.medicalapplicenta.adaptori;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,11 +70,24 @@ public class MedicConversatieAdaptor extends RecyclerView.Adapter<MedicConversat
                     // daca in conversatia cu user-ul concetat si cu medicul respectiv ultimul mesaj e trimis de pacient
                     // atunci setez textul pt tvUltimulMesaj cu "Dvs: text mesaj";
                     Mesaj ultimulMesaj = conversatie.getMesaje().get(conversatie.getMesaje().size() - 1);
+                    String text;
                     if (ultimulMesaj.getIdEmitator().equals(idUserConectat) && ultimulMesaj.getIdReceptor().equals(idMedic)) {
-                        String text = "Dvs.: " + ultimulMesaj.getText();
+                        text = "Dvs.: " + ultimulMesaj.getText();
+                        if (text.length() > 40) {
+                            text = text.substring(0, 37) + "...";
+                        }
                         holder.tvUltimulMesaj.setText(text);
                     } else if (ultimulMesaj.getIdEmitator().equals(idMedic) && ultimulMesaj.getIdReceptor().equals(idUserConectat)) {
-                        holder.tvUltimulMesaj.setText(ultimulMesaj.getText());
+                        text = ultimulMesaj.getText();
+                        if (text.length() > 40) {
+                            text = text.substring(0, 37) + "...";
+                        }
+                        holder.tvUltimulMesaj.setText(text);
+                        if (!ultimulMesaj.isMesajCitit()) {
+                            holder.tvUltimulMesaj.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD_ITALIC));
+                        } else {
+                            holder.tvUltimulMesaj.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+                        }
                     }
 //                    break;
                 }

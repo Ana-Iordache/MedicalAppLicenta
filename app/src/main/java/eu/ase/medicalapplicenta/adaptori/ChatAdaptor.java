@@ -1,5 +1,6 @@
 package eu.ase.medicalapplicenta.adaptori;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +15,19 @@ import java.util.List;
 
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.entitati.Mesaj;
+import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class ChatAdaptor extends RecyclerView.Adapter<ChatAdaptor.ChatViewHolder> {
     public static final int TIP_MESAJ_PRIMIT = 0;
     public static final int TIP_MESAJ_TRIMIS = 1;
     private final List<Mesaj> mesaje;
+    private final Context context;
 
     private String idUserConectat;
 
-    public ChatAdaptor(List<Mesaj> mesaje) {
+    public ChatAdaptor(List<Mesaj> mesaje, Context context) {
         this.mesaje = mesaje;
+        this.context = context;
     }
 
     @NonNull
@@ -43,6 +47,17 @@ public class ChatAdaptor extends RecyclerView.Adapter<ChatAdaptor.ChatViewHolder
         Mesaj mesaj = mesaje.get(position);
         if (mesaj != null) {
             holder.tvMesaj.setText(mesaj.getText());
+
+            if (position == mesaje.size() - 1 && getItemViewType(position) == TIP_MESAJ_TRIMIS) {
+                holder.tvStatusMesaj.setVisibility(View.VISIBLE);
+                if (mesaj.isMesajCitit()) {
+                    holder.tvStatusMesaj.setText(context.getString(R.string.mesaj_citit));
+                } else {
+                    holder.tvStatusMesaj.setText(context.getString(R.string.mesaj_livrat));
+                }
+            } else {
+                holder.tvStatusMesaj.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -63,10 +78,12 @@ public class ChatAdaptor extends RecyclerView.Adapter<ChatAdaptor.ChatViewHolder
 
     public class ChatViewHolder extends RecyclerView.ViewHolder {
         TextView tvMesaj;
+        TextView tvStatusMesaj;
 
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);
             tvMesaj = itemView.findViewById(R.id.tvMesaj);
+            tvStatusMesaj = itemView.findViewById(R.id.tvStatusMesaj);
         }
     }
 }

@@ -58,6 +58,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private String tipUtilizator;
 
+    private ValueEventListener mesajeCititeListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
 
         seteazaRecycleView();
 
-        String numeComplet = "";
+        String numeComplet;
         if (tipUtilizator.equals(MainActivity.PACIENT)) {
             numeComplet = "Dr. " + medic.getNume() + " " + medic.getPrenume();
             if (!medic.getUrlPozaProfil().equals("")) {
@@ -99,14 +101,122 @@ public class ChatActivity extends AppCompatActivity {
                 etMesaj.setText("");
             }
         });
+
+        if (tipUtilizator.equals(MainActivity.PACIENT)) {
+            marcheazaMesajeCititeDePacient();
+        } else if (tipUtilizator.equals(HomeMedicActivity.MEDIC)) {
+            marcheazaMesajeCititeDeMedic();
+        }
+//        firebaseService.preiaDateDinFirebase(marcheazaMesajeCitite()); todo
     }
+
 
     private void seteazaRecycleView() {
         rwMesaje.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         rwMesaje.setLayoutManager(layoutManager);
-        adaptor = new ChatAdaptor(mesaje);
+        seteazaAdaptor();
+    }
+
+    private void seteazaAdaptor() {
+        adaptor = new ChatAdaptor(mesaje, this);
         rwMesaje.setAdapter(adaptor);
+    }
+
+    private void marcheazaMesajeCititeDeMedic() {
+        mesajeCititeListener = firebaseService.databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Conversatie conversatie = dataSnapshot.getValue(Conversatie.class);
+                    List<Mesaj> mesaje = conversatie.getMesaje();
+                    if ((mesaje.get(0).getIdEmitator().equals(idUserConectat) && mesaje.get(0).getIdReceptor().equals(idPacient))
+                            || (mesaje.get(0).getIdReceptor().equals(idUserConectat) && mesaje.get(0).getIdEmitator().equals(idPacient))) {
+                        for (int i = 0; i < conversatie.getMesaje().size(); i++) {
+                            if (mesaje.get(i).getIdEmitator().equals(idPacient) && !mesaje.get(i).isMesajCitit()) {
+                                firebaseService.databaseReference
+                                        .child(conversatie.getIdConversatie())
+                                        .child("mesaje")
+                                        .child(String.valueOf(i))
+                                        .child("mesajCitit")
+                                        .setValue(true);
+                                mesaje.get(i).setMesajCitit(true);
+                            }
+                        }
+
+//                        break;
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void marcheazaMesajeCititeDePacient() {
+        mesajeCititeListener = firebaseService.databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Conversatie conversatie = dataSnapshot.getValue(Conversatie.class);
+                    List<Mesaj> mesaje = conversatie.getMesaje();
+                    if ((mesaje.get(0).getIdEmitator().equals(idUserConectat) && mesaje.get(0).getIdReceptor().equals(idMedic))
+                            || (mesaje.get(0).getIdReceptor().equals(idUserConectat) && mesaje.get(0).getIdEmitator().equals(idMedic))) {
+                        for (int i = 0; i < conversatie.getMesaje().size(); i++) {
+                            if (mesaje.get(i).getIdEmitator().equals(idMedic) && !mesaje.get(i).isMesajCitit()) {
+                                firebaseService.databaseReference
+                                        .child(conversatie.getIdConversatie())
+                                        .child("mesaje")
+                                        .child(String.valueOf(i))
+                                        .child("mesajCitit")
+                                        .setValue(true);
+                                mesaje.get(i).setMesajCitit(true);
+                            }
+                        }
+
+//                        break;
+                    }
+
+                }
+
+//                    adaptor.notifyDataSetChanged();
+                // daca sunt conectat ca pacient marchez ca citite mesajele care au ca trimitator medicul
+//                    for (int i = 0; i < conversatie.getMesaje().size(); i++) {
+//                        if (tipUtilizator.equals(HomeMedicActivity.MEDIC) && mesaje.get(i).getIdEmitator().equals(idPacient)
+//                                && !mesaje.get(i).isMesajCitit()) {
+//                            firebaseService.databaseReference
+//                                    .child(idConversatie)
+//                                    .child("mesaje")
+//                                    .child(String.valueOf(i))
+//                                    .child("mesajCitit")
+//                                    .setValue(true);
+//                        }
+//
+//                        if (tipUtilizator.equals(MainActivity.PACIENT) && mesaje.get(i).getIdEmitator().equals(idMedic)
+//                                && !mesaje.get(i).isMesajCitit()) {
+//                            firebaseService.databaseReference
+//                                    .child(idConversatie)
+//                                    .child("mesaje")
+//                                    .child(String.valueOf(i))
+//                                    .child("mesajCitit")
+//                                    .setValue(true);
+//                        }
+//                    }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private ValueEventListener preiaMesaje() {
@@ -123,12 +233,14 @@ public class ChatActivity extends AppCompatActivity {
                             ((mesaje.get(0).getIdEmitator().equals(idUserConectat) && mesaje.get(0).getIdReceptor().equals(idPacient))
                                     || (mesaje.get(0).getIdReceptor().equals(idUserConectat) && mesaje.get(0).getIdEmitator().equals(idPacient))))) {
                         idConversatie = conversatie.getIdConversatie();
-                        seteazaRecycleView();
+//                        seteazaRecycleView();
+                        seteazaAdaptor();
                         break;
                     } else {
                         mesaje = new ArrayList<>();
                     }
                 }
+
             }
 
             @Override
@@ -139,13 +251,15 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void trimiteMesaj(String idEmitator, String idReceptor, String text) {
-        Mesaj mesaj = new Mesaj(idEmitator, idReceptor, text);
+        Mesaj mesaj = new Mesaj(idEmitator, idReceptor, text, false);
         if (!idConversatie.equals("")) {
             mesaje.add(mesaj);
+//            adaptor.notifyDataSetChanged();
             firebaseService.databaseReference.child(idConversatie)
                     .child("mesaje").setValue(mesaje);
         } else {
             mesaje.add(mesaj);
+//            adaptor.notifyDataSetChanged();
             Conversatie conversatie = new Conversatie(null, mesaje);
             idConversatie = firebaseService.databaseReference.push().getKey();
             conversatie.setIdConversatie(idConversatie);
@@ -210,6 +324,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
+        firebaseService.databaseReference.removeEventListener(mesajeCititeListener);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
