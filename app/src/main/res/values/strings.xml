@@ -29,6 +29,12 @@
         <item>joi</item>
         <item>vineri</item>
     </string-array>
+    <string-array name="ani">
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+    </string-array>
     <string name="pattern_email_medic">^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$</string>
     <string name="pattern_numar_telefon">^07[2-8][0-9]{7}$</string>
     <string name="pattern_cnp">^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$</string>
@@ -222,4 +228,5 @@
     <string name="incasari">Încasări</string>
     <string name="mesaj_citit">Văzut</string>
     <string name="mesaj_livrat">Livrat</string>
+    <string name="exporta_date">Exportă date</string>
 </resources>

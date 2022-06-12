@@ -180,7 +180,8 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.cwIncasari:
-                Toast.makeText(getApplicationContext(), "todo", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), IncasariActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.ivNotificari:
                 startActivity(new Intent(getApplicationContext(), NotificariActivity.class).putExtra(MEDIC, "medic"));

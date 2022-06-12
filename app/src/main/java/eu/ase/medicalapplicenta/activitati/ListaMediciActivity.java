@@ -137,7 +137,9 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
                                     .collect(Collectors.toList());
 
                             seteazaAdaptorMedici(mediciFiltered);
-                        } else seteazaAdaptorMedici(medici);
+                        } else {
+                            seteazaAdaptorMedici(medici);
+                        }
                     }
                 });
 
