@@ -37,9 +37,38 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center"
+        android:text="Nume"
         android:textColor="@color/black"
         android:textSize="@dimen/_15sdp"
         android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/rlProgram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvProgram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/program"
+            android:textColor="@color/black" />
+
+
+        <ListView
+            android:id="@+id/lvProgram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvProgram"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:divider="@null"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -94,6 +123,7 @@
             android:inputType="none"
             android:paddingStart="@dimen/_10sdp"
             android:paddingTop="@dimen/_15sdp"
+            android:paddingEnd="@dimen/_10sdp"
             android:paddingBottom="@dimen/_15sdp"
             android:text="@string/selectati_investigatia"
             android:textSize="16sp" />
@@ -101,15 +131,24 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/colorDivider" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:paddingStart="@dimen/_5sdp"
         android:paddingEnd="@dimen/_5sdp"
         android:text="@string/ore_disponibile"
         android:textColor="@color/black"
-        android:textSize="@dimen/_15sdp" />
-
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="italic" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -154,30 +193,31 @@
             android:textSize="@dimen/_13sdp" />
     </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlNicioOra"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+    <RelativeLayout
+        android:id="@+id/rlNicioOra"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_unavailable"
-                android:layout_centerInParent="true"/>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_nicio_programare" />
 
-            <TextView
-                android:id="@+id/tvNicioOra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nicio_ora"
-                android:layout_below="@+id/imageView"
-                android:layout_centerInParent="true"
-                android:textSize="@dimen/_15sdp"
-                android:textColor="@color/black"
-                android:layout_marginTop="@dimen/_10sdp"/>
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tvNicioOra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/nicio_ora"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp" />
+    </RelativeLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView

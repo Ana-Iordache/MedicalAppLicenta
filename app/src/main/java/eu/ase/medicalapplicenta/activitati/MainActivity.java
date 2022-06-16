@@ -326,11 +326,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.item_bmi:
                 startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(PACIENT, "pacient"));
                 break;
-//            case R.id.item_log_out:
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
-//                finish();
-//                break;
+            case R.id.item_documente_personale:
+                startActivity(new Intent(getApplicationContext(), DocumentePersonaleActivity.class));
+                break;
             case R.id.item_feedback_aplicatie:
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:"));

@@ -229,4 +229,9 @@
     <string name="mesaj_citit">Văzut</string>
     <string name="mesaj_livrat">Livrat</string>
     <string name="exporta_date">Exportă date</string>
+    <string name="title_conversatie_noua">Conversație nouă</string>
+    <string name="documente_personale">Documente personale</string>
+    <string name="niciun_document_atasat">Niciun document atașat</string>
+    <string name="card_de_sanatate">Card de sănătate</string>
+    <string name="buletin">Buletin</string>
 </resources>

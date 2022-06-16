@@ -49,6 +49,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     public static final String MEDIC = "medic";
     private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
+    private Intent intent;// = getIntent();
     private AppCompatButton btnProgramare;
     //    private ListView lwListaMedici;
     private Toolbar toolbar;
@@ -60,6 +61,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     private FrameLayout flInfoMedic;
     //    MedicAdaptor.OnDoctorClickListener onDoctorClickListener;
     private AutoCompleteTextView actvSpecialitati;
+    private TextView tvTitlu;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -89,10 +91,11 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     private void seteazaToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        //!!!cand imi da eroare aici de nullNullPointerException inseamna ca nu am pus <Toolbar/> in xml
-        // setez un button de back ca sa ma pot intoarce in pagina principala
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
+            tvTitlu.setText(R.string.title_conversatie_noua);
+        }
     }
 
     private void initializeazaAtribute() {
@@ -102,6 +105,8 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         rwListaMedici = findViewById(R.id.rwListaMedici);
         flInfoMedic = findViewById(R.id.flInfoMedic);
         actvSpecialitati = findViewById(R.id.actvSpecialitati);
+        tvTitlu = findViewById(R.id.tvTitlu);
+        intent = getIntent();
     }
 
     private void loading(Boolean seIncarca) {
@@ -209,7 +214,6 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     @Override
     public void onDoctorClick(int position) {
         Medic medic = medici.get(position);
-        final Intent intent = getIntent();
         if (intent.hasExtra(ProgramariActivity.ADAUGA_PROGRAMARE)) {
             startActivity(new Intent(getApplicationContext(), OreDisponibileActivity.class).putExtra(ORE_DISPONIBILE, medic));
         } else if (intent.hasExtra(MainActivity.VIZUALIZARE_MEDICI)) {

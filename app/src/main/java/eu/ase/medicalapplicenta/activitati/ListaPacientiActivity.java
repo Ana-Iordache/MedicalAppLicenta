@@ -1,13 +1,25 @@
 package eu.ase.medicalapplicenta.activitati;
 
+import static eu.ase.medicalapplicenta.activitati.DocumentePersonaleActivity.BULETIN;
+import static eu.ase.medicalapplicenta.activitati.DocumentePersonaleActivity.CARD_DE_SANATATE;
+import static eu.ase.medicalapplicenta.activitati.DocumentePersonaleActivity.DOCUMENTE_PACIENTI;
+import static eu.ase.medicalapplicenta.activitati.DocumentePersonaleActivity.EXTENSIE_PDF;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,11 +28,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,13 +49,15 @@ import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-public class ListaPacientiActivity extends AppCompatActivity implements PacientAdaptor.OnPacientClickListener {
+public class ListaPacientiActivity extends AppCompatActivity implements PacientAdaptor.OnPacientClickListener, View.OnClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String PACIENTI = "Pacienti";
     public static final String PACIENT = "pacient";
     private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
     private final FirebaseService firebaseServicePacienti = new FirebaseService(PACIENTI);
     private final String idUtilizator = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private StorageReference referintaBuletin;
+    private StorageReference referintaCardSanatate;
     private Toolbar toolbar;
 
     private HashSet<String> iduriPacienti;
@@ -57,6 +75,12 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     private TextView tvTitlu;
 
     private Intent intent;
+
+    private Uri uriCardSanatate;
+    private Uri uriBuletin;
+
+    private String denumirePdfCardSanatate;
+    private String denumirePdfBuletin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +238,13 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     @Override
     public void onPacientClick(int position) {
         Pacient pacient = pacienti.get(position);
+
+        referintaBuletin = FirebaseStorage.getInstance().getReference().child(DOCUMENTE_PACIENTI)
+                .child(pacient.getIdPacient()).child(BULETIN);
+
+        referintaCardSanatate = FirebaseStorage.getInstance().getReference().child(DOCUMENTE_PACIENTI)
+                .child(pacient.getIdPacient()).child(CARD_DE_SANATATE);
+
         if (intent.hasExtra(HomeMedicActivity.VIZUALIZARE_FEEDBACK)) {
             startActivity(new Intent(getApplicationContext(), FeedbackPacientActivity.class).putExtra(PACIENT, pacient));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -237,6 +268,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
             TextView tvGreutate = view.findViewById(R.id.tvGreutate);
             TextView tvInaltime = view.findViewById(R.id.tvInaltime);
             TextView tvEmail = view.findViewById(R.id.tvEmail);
+            AppCompatButton btnCardSanatate = view.findViewById(R.id.btnCardSanatate);
+            AppCompatButton btnBuletin = view.findViewById(R.id.btnBuletin);
 
             String urlPozaProfil = pacient.getUrlPozaProfil();
             if (!urlPozaProfil.equals("")) {
@@ -257,11 +290,69 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
             tvInaltime.setText(String.valueOf(pacient.getInaltime()));
             tvEmail.setText(pacient.getAdresaEmail());
 
+            referintaCardSanatate.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    denumirePdfCardSanatate = CARD_DE_SANATATE + " - " + pacient.getNume() +
+                            " " + pacient.getPrenume() + EXTENSIE_PDF;
+                    btnCardSanatate.setEnabled(true);
+                    btnCardSanatate.setTextColor(getResources().getColor(R.color.custom_blue));
+                    uriCardSanatate = uri;
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    btnCardSanatate.setEnabled(false);
+                    btnCardSanatate.setTextColor(getResources().getColor(R.color.custom_light_blue));
+                }
+            });
+
+            referintaBuletin.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    denumirePdfBuletin = BULETIN + " - " + pacient.getNume() + " " + pacient.getPrenume()
+                            + EXTENSIE_PDF;
+                    btnBuletin.setEnabled(true);
+                    btnBuletin.setTextColor(getResources().getColor(R.color.custom_blue));
+                    uriBuletin = uri;
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    btnBuletin.setEnabled(false);
+                    btnBuletin.setTextColor(getResources().getColor(R.color.custom_light_blue));
+                }
+            });
+
+            btnCardSanatate.setOnClickListener(this);
+            btnBuletin.setOnClickListener(this);
+
             bottomSheetDialog.setContentView(view);
             bottomSheetDialog.show();
         } else if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
             startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra(PACIENT, pacient));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnCardSanatate:
+                descarcaDocument(uriCardSanatate, Environment.DIRECTORY_DOWNLOADS, denumirePdfCardSanatate);
+                break;
+            case R.id.btnBuletin:
+                descarcaDocument(uriBuletin, Environment.DIRECTORY_DOWNLOADS, denumirePdfBuletin);
+                break;
+        }
+    }
+
+    private void descarcaDocument(Uri uri, String directorDestinatie, String denumireFisier) {
+        DownloadManager downloadManager = (DownloadManager) getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(getApplicationContext(), directorDestinatie, denumireFisier);
+        downloadManager.enqueue(request);
     }
 }

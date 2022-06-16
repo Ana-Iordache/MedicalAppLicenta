@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ import java.util.stream.Collectors;
 
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.adaptori.OraDisponibilaAdaptor;
+import eu.ase.medicalapplicenta.adaptori.ProgramAdaptor;
 import eu.ase.medicalapplicenta.entitati.Factura;
 import eu.ase.medicalapplicenta.entitati.Investigatie;
 import eu.ase.medicalapplicenta.entitati.Medic;
@@ -91,6 +93,10 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
     private ProgressBar progressBar;
 
     private RelativeLayout rlNicioOra;
+    private TextView tvNicioOra;
+
+    private ListView lvProgram;
+    private ProgramAdaptor programAdaptor;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -107,14 +113,22 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
         actvInvestigatii.setOnClickListener(this);
 
-        String nume = "Dr. " + medic.getNume() + " " + medic.getPrenume();
-        tvMedic.setText(nume);
+        seteazaInformatiiMedic();
 
         tietDataProgramarii.setOnClickListener(this);
 
         firebaseServiceSpecialitati.preiaObiectDinFirebase(preiaInvestigatii(), medic.getIdSpecialitate());
 
         seteazaRecyclerView();
+    }
+
+    private void seteazaInformatiiMedic() {
+        String nume = "Dr. " + medic.getNume() + " " + medic.getPrenume();
+        tvMedic.setText(nume);
+
+        programAdaptor = new ProgramAdaptor(getApplicationContext(), R.layout.element_program_medic,
+                medic.getProgram(), getLayoutInflater());
+        lvProgram.setAdapter(programAdaptor);
     }
 
     private void seteazaRecyclerView() {
@@ -150,6 +164,9 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         progressBar = findViewById(R.id.progressBar);
 
         rlNicioOra = findViewById(R.id.rlNicioOra);
+        tvNicioOra = findViewById(R.id.tvNicioOra);
+
+        lvProgram = findViewById(R.id.lvProgram);
     }
 
     private ValueEventListener preiaInvestigatii() {
@@ -276,15 +293,18 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
             } else oreDisponibile = null;
         }
 
-        if (oreDisponibile == null) { //todo poate ar fi bine sa afisez si programul ca sa vada zilele de lucru
+        if (oreDisponibile == null) {
             rwOreDisponibile.setVisibility(View.GONE);
-            Toast.makeText(getApplicationContext(), "Medicul nu are program in zilele de " + ziProgramare + "!", Toast.LENGTH_SHORT).show();
+            String mesaj = "Medicul nu are program in zilele de " + ziProgramare + "!";
+            tvNicioOra.setText(mesaj);
+            rlNicioOra.setVisibility(View.VISIBLE);
         } else if (!oreDisponibile.isEmpty()) {
             firebaseServiceProgramari.preiaDateDinFirebase(preiaOreDisponibile());
-        } else { //todo sa testez (cand toate orele din program sunt indisponibile)
+        } /*else {
             rwOreDisponibile.setVisibility(View.GONE);
+            tvNicioOra.setText(getString(R.string.nicio_ora));
             rlNicioOra.setVisibility(View.VISIBLE);
-        }
+        }*/
     }
 
     private ValueEventListener preiaOreDisponibile() {
@@ -305,8 +325,16 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
                 oreDisponibile.removeAll(oreIndisponibile);
 
-                rwOreDisponibile.setVisibility(View.VISIBLE);
-                seteazaAdaptor();
+                //todo sa testez (cand toate orele din program sunt indisponibile)
+                if (oreDisponibile.isEmpty()) {
+                    rwOreDisponibile.setVisibility(View.GONE);
+                    tvNicioOra.setText(getString(R.string.nicio_ora));
+                    rlNicioOra.setVisibility(View.VISIBLE);
+                } else {
+                    rlNicioOra.setVisibility(View.GONE);
+                    rwOreDisponibile.setVisibility(View.VISIBLE);
+                    seteazaAdaptor();
+                }
 
                 loading(false);
             }

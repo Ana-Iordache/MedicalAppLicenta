@@ -3,8 +3,8 @@
     android:id="@+id/rlBottomSheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_bottom_sheet"
-    android:paddingBottom="@dimen/_15sdp">
+    android:layout_marginBottom="@dimen/_20sdp"
+    android:background="@drawable/background_bottom_sheet">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciwPozaProfilPacient"
@@ -27,54 +27,68 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:id="@+id/llSex"
-        android:layout_width="wrap_content"
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNumePacient"
-        android:layout_centerHorizontal="true">
+        android:layout_marginTop="@dimen/_10sdp">
 
-        <TextView
-            android:id="@+id/tvSexText"
+        <LinearLayout
+            android:id="@+id/llSex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sex:"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp" />
+            android:layout_weight="1.4"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/tvSex"
+            <TextView
+                android:id="@+id/tvSexText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sex:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
+
+            <TextView
+                android:id="@+id/tvSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="Feminin"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@color/colorDivider" />
+
+        <LinearLayout
+            android:id="@+id/llCnp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:text="Feminin"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp" />
+            android:layout_weight="0.6"
+            android:gravity="center">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvCnpText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CNP:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
 
-    <LinearLayout
-        android:id="@+id/llCnp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/llSex"
-        android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/tvCnp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="1234567890333"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp" />
 
-        <TextView
-            android:id="@+id/tvCnpText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CNP:"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp" />
-
-        <TextView
-            android:id="@+id/tvCnp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:text="1234567890"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -82,169 +96,352 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/llCnp"
+        android:layout_below="@+id/ll"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@color/colorDivider" />
 
-    <TextView
-        android:id="@+id/tvVarstaText"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/llVarsta"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/varsta"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        android:layout_marginStart="@dimen/_20sdp">
 
-    <TextView
-        android:id="@+id/tvVarsta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvVarstaText"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="21"
-        android:textColor="@color/black" />
+        <ImageView
+            android:id="@+id/ivVarsta"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_nume" />
 
-    <TextView
-        android:id="@+id/tvNrTelText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvVarsta"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/numar_de_telefon"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvVarstaText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivVarsta"
+            android:text="@string/varsta"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/tvNrTel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNrTelText"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="0771594957"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/tvVarsta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvVarstaText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivVarsta"
+            android:text="21"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvAdresaText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNrTel"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/adresa"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvAdresa"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/llNrTelefon"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAdresaText"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="ceva adresa"
-        android:textColor="@color/black" />
+        android:layout_below="@+id/llVarsta"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
 
-    <TextView
-        android:id="@+id/tvDataNasteriiText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAdresa"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/data_nasterii"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivNrTelefon"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_telefon" />
 
-    <TextView
-        android:id="@+id/tvDataNasterii"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDataNasteriiText"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="26/04/2000"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/tvNrTelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivNrTelefon"
+            android:text="@string/numar_de_telefon"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/tvGrupaSangeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDataNasterii"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/grupa_de_sange"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvNrTel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNrTelText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivNrTelefon"
+            android:text="0771594957"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvGrupaSange"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/llAdresa"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGrupaSangeText"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="B+"
-        android:textColor="@color/black" />
+        android:layout_below="@+id/llNrTelefon"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
 
-    <TextView
-        android:id="@+id/tvGreutateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGrupaSange"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/greutate"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivAdresa"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_adresa" />
 
-    <TextView
-        android:id="@+id/tvGreutate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGreutateText"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="50.0"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/tvAdresaText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivAdresa"
+            android:text="@string/adresa"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/tvInaltimeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGreutate"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/inaltime"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvAdresa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvAdresaText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivAdresa"
+            android:text="ceva adresa"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvInaltime"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/llDataNasterii"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvInaltimeText"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="1.68"
-        android:textColor="@color/black" />
+        android:layout_below="@+id/llAdresa"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
 
-    <TextView
-        android:id="@+id/tvEmailText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvInaltime"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/email"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivDataNasterii"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_data_nasterii" />
 
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvDataNasteriiText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivDataNasterii"
+            android:text="@string/data_nasterii"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvDataNasterii"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDataNasteriiText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivDataNasterii"
+            android:text="26/04/2000"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/llGrupaSange"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEmailText"
+        android:layout_below="@+id/llDataNasterii"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/ivGrupaSange"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_grupa_sange" />
+
+        <TextView
+            android:id="@+id/tvGrupaSangeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivGrupaSange"
+            android:text="@string/grupa_de_sange"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvGrupaSange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGrupaSangeText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivGrupaSange"
+            android:text="B+"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/llGreutate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llGrupaSange"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/ivGreutate"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_greutate" />
+
+        <TextView
+            android:id="@+id/tvGreutateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@id/ivGreutate"
+            android:text="@string/greutate"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvGreutate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGreutateText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@id/ivGreutate"
+            android:text="50.0"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/llInaltime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llGreutate"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/ivInaltime"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_inaltime" />
+
+        <TextView
+            android:id="@+id/tvInaltimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivInaltime"
+            android:text="@string/inaltime"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvInaltime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvInaltimeText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivInaltime"
+            android:text="1.68"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/llEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llInaltime"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/ivEmail"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_email" />
+
+        <TextView
+            android:id="@+id/tvEmailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivEmail"
+            android:text="@string/email"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvEmailText"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivEmail"
+            android:text="ana@yahoo.com"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llDocumentePacient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llEmail"
         android:layout_marginStart="@dimen/_10sdp"
-        android:text="ana@yahoo.com"
-        android:textColor="@color/black" />
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCardSanatate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:background="@drawable/background_butoane_secundare_selector"
+            android:drawableEnd="@drawable/ic_download_blue"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:text="@string/card_de_sanatate"
+            android:textAllCaps="false"
+            android:textColor="@color/custom_blue"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBuletin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:background="@drawable/background_butoane_secundare_selector"
+            android:drawableEnd="@drawable/ic_download_blue"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_35sdp"
+            android:paddingEnd="@dimen/_25sdp"
+            android:text="@string/buletin"
+            android:textAllCaps="false"
+            android:textColor="@color/custom_blue"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

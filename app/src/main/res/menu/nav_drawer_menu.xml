@@ -13,6 +13,11 @@
         android:icon="@drawable/ic_bmi"
         android:title="@string/calculator_bmi" />
 
+    <item
+        android:id="@+id/item_documente_personale"
+        android:icon="@drawable/ic_documente"
+        android:title="@string/documente_personale" />
+
 <!--        <item-->
 <!--            android:id="@+id/item_log_out"-->
 <!--            android:icon="@drawable/ic_log_out"-->

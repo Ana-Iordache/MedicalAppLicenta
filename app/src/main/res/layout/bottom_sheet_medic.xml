@@ -24,100 +24,168 @@
         android:textSize="@dimen/_20sdp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvGradProfesional"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNumeMedic"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_15sdp" />
+        android:layout_marginTop="@dimen/_10sdp">
 
-    <TextView
-        android:id="@+id/tvSpecialitate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGradProfesional"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_15sdp" />
+        <TextView
+            android:id="@+id/tvGradProfesional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="Medic primar"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp" />
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:background="@color/colorDivider" />
+
+        <TextView
+            android:id="@+id/tvSpecialitate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:text="Oftalmogie"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp" />
+    </LinearLayout>
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/tvSpecialitate"
+        android:layout_below="@+id/ll"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@color/colorDivider" />
 
-    <TextView
-        android:id="@+id/tvNota1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:text="@string/nota"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvNota"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNota1"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:textColor="@color/black" />
-
-    <TextView
-        android:id="@+id/tvProgram"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNota"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:text="@string/program"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
-
-
-    <ListView
-        android:id="@+id/lvProgram"
+    <RelativeLayout
+        android:id="@+id/rlNota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProgram"
-        android:divider="@null" />
+        android:layout_below="@+id/view"
+        android:layout_marginStart="@dimen/_20sdp">
 
-    <TextView
-        android:id="@+id/tvEmail1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lvProgram"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:text="@string/email_medic"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivNota"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_nota" />
 
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvNota1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@id/ivNota"
+            android:text="@string/nota"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvNota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNota1"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@id/ivNota"
+            android:text="7,33 din 10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlProgram"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEmail1"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:textColor="@color/black" />
+        android:layout_below="@+id/rlNota"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/ivProgram"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_program" />
+
+        <TextView
+            android:id="@+id/tvProgram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/ivProgram"
+            android:text="@string/program"
+            android:textColor="@color/black" />
+
+
+        <ListView
+            android:id="@+id/lvProgram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvProgram"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivProgram"
+            android:divider="@null" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlProgram"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/ivEmail"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_email" />
+
+        <TextView
+            android:id="@+id/tvEmail1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/ivEmail"
+            android:text="@string/email_medic"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvEmail1"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivEmail"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnProgramare"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:layout_below="@id/tvEmail"
+        android:layout_below="@id/rlEmail"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@drawable/background_butoane_secundare"
@@ -125,6 +193,6 @@
         android:text="@string/programeaza"
         android:textAllCaps="false"
         android:textColor="@color/custom_blue"
-        android:textSize="16sp" />
+        android:textSize="@dimen/_15sdp" />
 
 </RelativeLayout>
