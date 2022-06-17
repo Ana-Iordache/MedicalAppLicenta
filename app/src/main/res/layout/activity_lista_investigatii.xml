@@ -49,17 +49,10 @@
             android:id="@+id/actvSpecialitati"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableStart="@drawable/ic_specialitate"
-            android:drawablePadding="@dimen/_10sdp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:hint="@string/specialitate"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:inputType="none"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingTop="@dimen/_15sdp"
-            android:paddingEnd="0dp"
-            android:paddingBottom="@dimen/_15sdp"
+            android:padding="@dimen/_10sdp"
             android:text="@string/err_empty_specialitate"
             android:textSize="16sp" />
 
@@ -113,8 +106,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
+            android:padding="@dimen/_10sdp"
             android:text="@string/info_investigatii"
             android:textSize="@dimen/_13sdp" />
 

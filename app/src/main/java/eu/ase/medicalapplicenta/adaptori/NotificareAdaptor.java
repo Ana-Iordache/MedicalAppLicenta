@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -59,10 +60,13 @@ public class NotificareAdaptor extends RecyclerView.Adapter<NotificareAdaptor.No
         Notificare notificare = notificari.get(position);
         if (notificare != null) {
             if (!notificare.isNotificareCitita()) {
-                firebaseServiceNotificari.databaseReference
-                        .child(notificare.getIdNotificare())
-                        .child("notificareCitita")
-                        .setValue(true);
+//                firebaseServiceNotificari.databaseReference
+//                        .child(notificare.getIdNotificare())
+//                        .child("notificareCitita")
+//                        .setValue(true);
+                holder.cwNotificare.setCardBackgroundColor(context.getColor(R.color.custom_light_blue));
+            } else {
+                holder.cwNotificare.setCardBackgroundColor(context.getColor(R.color.colorDivider));
             }
 
             holder.tvTitluNotificare.setText(notificare.getTitlu());
@@ -134,17 +138,19 @@ public class NotificareAdaptor extends RecyclerView.Adapter<NotificareAdaptor.No
     }
 
     public class NotificareAdaptorViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout rlNotificare;
+        //        RelativeLayout rlNotificare;
         TextView tvTitluNotificare;
         TextView tvMesajNotificare;
         TextView tvDataNotificare;
+        CardView cwNotificare;
 
         public NotificareAdaptorViewHolder(@NonNull View itemView) {
             super(itemView);
-            rlNotificare = itemView.findViewById(R.id.rlNotificare);
+//            rlNotificare = itemView.findViewById(R.id.rlNotificare);
             tvTitluNotificare = itemView.findViewById(R.id.tvTitluNotificare);
             tvMesajNotificare = itemView.findViewById(R.id.tvMesajNotificare);
             tvDataNotificare = itemView.findViewById(R.id.tvDataNotificare);
+            cwNotificare = itemView.findViewById(R.id.cwNotificare);
         }
     }
 }

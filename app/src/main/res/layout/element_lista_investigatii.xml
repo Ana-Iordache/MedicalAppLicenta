@@ -30,6 +30,6 @@
         android:layout_height="@dimen/_1sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@color/custom_blue" />
+        android:background="@color/colorDivider" />
 
 </LinearLayout>

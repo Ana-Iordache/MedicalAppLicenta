@@ -1,10 +1,12 @@
 package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -49,6 +51,10 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
     private FirebaseAuth mAuth;
 
+    private AlertDialog resetareParolaDialog;
+
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,66 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
         preiaPreferinte();
 
+        seteazaDialogResetareParola();
+    }
+
+    private void seteazaDialogResetareParola() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Resetare parolă");
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_resetare_parola, null);
+        TextInputEditText tietEmail = view.findViewById(R.id.tietEmail);
+        AppCompatButton btnReseteazaParola = view.findViewById(R.id.btnReseteazaParola);
+        AppCompatButton btnRenunta = view.findViewById(R.id.btnRenunta);
+
+        btnReseteazaParola.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = tietEmail.getText().toString();
+                if (email.isEmpty()) {
+                    tietEmail.setError(getString(R.string.err_empty_email));
+                    tietEmail.requestFocus();
+                    return;
+                }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    tietEmail.setError(getString(R.string.err_not_valid_email));
+                    tietEmail.requestFocus();
+                    return;
+                }
+
+                progressDialog = new ProgressDialog(ConectarePacientActivity.this);
+                progressDialog.setMessage("Se trimite emailul...");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+                mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Link-ul de resetare a parolei a fost trimis pe email!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Nu s-a putut trimite link-ul de resetare a parolei!", Toast.LENGTH_LONG).show();
+                        }
+                        progressDialog.dismiss();
+                        resetareParolaDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        btnRenunta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetareParolaDialog.dismiss();
+                tietEmail.clearFocus();
+                tietEmail.setText("");
+            }
+        });
+
+        builder.setView(view);
+        resetareParolaDialog = builder.create();
+        resetareParolaDialog.setCanceledOnTouchOutside(false);
     }
 
     private void preiaPreferinte() {
@@ -117,7 +183,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                 conecteazaPacient();
                 break;
             case R.id.tvResetareParola:
-                startActivity(new Intent(getApplicationContext(), ResetareParolaActivity.class));
+                resetareParolaDialog.show();
                 break;
             case R.id.ivMedic:
                 startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class));
@@ -163,7 +229,10 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             return;
         }
 
-        loading(true);
+        progressDialog = new ProgressDialog(ConectarePacientActivity.this);
+        progressDialog.setMessage("Se verifică credețialele...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
         seteazaPreferinte(email, parola);
 
@@ -184,9 +253,9 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                     // dar daca pun asa cand dau back ma scoate din ap, e ok
                     // dar daca vreau sa revin in ap imi deschide pagina de log in in loc de main
                 } else {
-                    loading(false);
                     Toast.makeText(getApplicationContext(), getString(R.string.err_credentiale), Toast.LENGTH_SHORT).show();
                 }
+                progressDialog.dismiss();
             }
         });
 

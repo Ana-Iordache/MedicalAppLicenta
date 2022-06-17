@@ -30,8 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvMesaj"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:text="@string/mesaj_livrat" />
+            android:drawablePadding="@dimen/_3sdp"
+            android:text="@string/mesaj_livrat"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="italic" />
     </RelativeLayout>
 
 </RelativeLayout>

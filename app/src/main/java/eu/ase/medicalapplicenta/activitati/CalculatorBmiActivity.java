@@ -37,6 +37,8 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
     private static final double GREUTATE_MINIMA = 30.0;
     private static final int INALTIME_MAXIMA = 250;
     private static final int INALTIME_MINIMA = 100;
+    private static final String CM = " cm";
+    private static final String KG = " kg";
     private Toolbar toolbar;
 
     private TextView tvInaltimeCurenta;
@@ -59,6 +61,7 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
     private ImageView ivBmi;
     private TextView tvBmiGrad;
     private TextView tvBmiText;
+    private TextView tvInformatiiBmi;
 
     private FirebaseService firebaseService = new FirebaseService(PACIENTI);
     private FirebaseUser userConectat;
@@ -69,6 +72,8 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
     private int inaltimeCurenta = INALTIME_MINIMA;
     //    private int varstaCurenta;
     private double greutateCurenta = GREUTATE_MINIMA;
+
+    private String text;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -95,9 +100,11 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
         if (intent.hasExtra(MainActivity.PACIENT)) {
             firebaseService.preiaObiectDinFirebase(preiaPacient(), idUserConectat);
         } else {
-            tvInaltimeCurenta.setText(R.string.inaltime_minima);
+            text = INALTIME_MINIMA + CM;
+            tvInaltimeCurenta.setText(text);
             sbInaltime.setProgress(100);
-            tvGreutateCurenta.setText(R.string.greutate_minima);
+            text = DECIMAL_FORMAT.format(GREUTATE_MINIMA) + KG;
+            tvGreutateCurenta.setText(text);
             sbGreutate.setProgress(300);
         }
 
@@ -112,7 +119,8 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 inaltimeCurenta = i;
-                tvInaltimeCurenta.setText(String.valueOf(inaltimeCurenta));
+                text = inaltimeCurenta + CM;
+                tvInaltimeCurenta.setText(text);
                 calculeazaBmi();
             }
 
@@ -133,7 +141,8 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 greutateCurenta = (double) i / 10;
-                tvGreutateCurenta.setText(DECIMAL_FORMAT.format(greutateCurenta));
+                text = DECIMAL_FORMAT.format(greutateCurenta) + KG;
+                tvGreutateCurenta.setText(text);
                 //merge din 2 in 2 nush dc.. si la regima maria tot asa face hmm
                 calculeazaBmi();
             }
@@ -158,21 +167,27 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
         if (bmi < 18.5) {
             tvBmiText.setText(R.string.bmi_subponderal);
             ivBmi.setBackgroundResource(R.drawable.ic_warning);
+            tvInformatiiBmi.setText(getString(R.string.text_subponderal));
         } else if (bmi >= 18.5 && bmi <= 24.9) {
             tvBmiText.setText(R.string.bmi_normoponderal);
             ivBmi.setBackgroundResource(R.drawable.ic_ok_80);
+            tvInformatiiBmi.setText(getString(R.string.text_normoponderal));
         } else if (bmi >= 25.0 && bmi <= 29.9) {
             tvBmiText.setText(R.string.bmi_supraponderal);
             ivBmi.setBackgroundResource(R.drawable.ic_warning);
+            tvInformatiiBmi.setText(getString(R.string.text_supraponderal));
         } else if (bmi >= 30.0 && bmi <= 34.9) {
             tvBmiText.setText(R.string.bmi_obezitate1);
             ivBmi.setBackgroundResource(R.drawable.ic_danger);
+            tvInformatiiBmi.setText(getString(R.string.text_obezitate1));
         } else if (bmi >= 35.5 && bmi <= 39.9) {
             tvBmiText.setText(R.string.bmi_obezitate2);
             ivBmi.setBackgroundResource(R.drawable.ic_danger);
+            tvInformatiiBmi.setText(getString(R.string.text_obezitate2));
         } else {
             tvBmiText.setText(R.string.bmi_obezitate_morbida);
             ivBmi.setBackgroundResource(R.drawable.ic_danger);
+            tvInformatiiBmi.setText(getString(R.string.text_obezitate3));
         }
     }
 
@@ -184,21 +199,25 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
                 pacient = snapshot.getValue(Pacient.class);
                 if (pacient.getInaltime() != 0.0) {
                     int inaltime = (int) (pacient.getInaltime() * 100);
-                    tvInaltimeCurenta.setText(String.valueOf(inaltime));
+                    text = inaltime + CM;
+                    tvInaltimeCurenta.setText(text);
                     sbInaltime.setProgress(inaltime);
                     inaltimeCurenta = inaltime;
                 } else {
-                    tvInaltimeCurenta.setText(R.string.inaltime_minima);
+                    text = INALTIME_MINIMA + CM;
+                    tvInaltimeCurenta.setText(text);
                     sbInaltime.setProgress(100);
                 }
 
 
                 greutateCurenta = pacient.getGreutate();
                 if (pacient.getGreutate() != 0.0) {
-                    tvGreutateCurenta.setText(DECIMAL_FORMAT.format(greutateCurenta));
+                    text = DECIMAL_FORMAT.format(greutateCurenta) + KG;
+                    tvGreutateCurenta.setText(text);
                     sbGreutate.setProgress((int) (greutateCurenta * 10));
                 } else {
-                    tvGreutateCurenta.setText(R.string.greutate_minima);
+                    text = DECIMAL_FORMAT.format(GREUTATE_MINIMA) + KG;
+                    tvGreutateCurenta.setText(text);
                     sbGreutate.setProgress(300);
                 }
 //                greutate = pacient.getGreutate();
@@ -227,6 +246,7 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
         tvInaltimeCurenta = findViewById(R.id.tvInaltimeCurenta);
         tvGreutateCurenta = findViewById(R.id.tvGreutateCurenta);
 //        tvVarstaCurenta = findViewById(R.id.tvVarstaCurenta);
+        tvInformatiiBmi = findViewById(R.id.tvInformatiiBmi);
 
         sbInaltime = findViewById(R.id.sbInaltime);
         sbGreutate = findViewById(R.id.sbGreutate);
@@ -265,28 +285,32 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
             case R.id.minusInaltime:
                 if (inaltimeCurenta > INALTIME_MINIMA) {
                     inaltimeCurenta--;
-                    tvInaltimeCurenta.setText(String.valueOf(inaltimeCurenta));
+                    text = inaltimeCurenta + CM;
+                    tvInaltimeCurenta.setText(text);
                     sbInaltime.setProgress(inaltimeCurenta);
                 }
                 break;
             case R.id.plusInaltime:
                 if (inaltimeCurenta < INALTIME_MAXIMA) {
                     inaltimeCurenta++;
-                    tvInaltimeCurenta.setText(String.valueOf(inaltimeCurenta));
+                    text = inaltimeCurenta + CM;
+                    tvInaltimeCurenta.setText(text);
                     sbInaltime.setProgress(inaltimeCurenta);
                 }
                 break;
             case R.id.minusGreutate:
                 if (greutateCurenta > GREUTATE_MINIMA) {
                     greutateCurenta -= 0.1;
-                    tvGreutateCurenta.setText(DECIMAL_FORMAT.format(greutateCurenta));
+                    text = DECIMAL_FORMAT.format(greutateCurenta) + KG;
+                    tvGreutateCurenta.setText(text);
                     sbGreutate.setProgress((int) (greutateCurenta * 10));
                 }
                 break;
             case R.id.plusGreutate:
                 if (greutateCurenta < GREUTATE_MAXIMA) {
                     greutateCurenta += 0.1;
-                    tvGreutateCurenta.setText(DECIMAL_FORMAT.format(greutateCurenta));
+                    text = DECIMAL_FORMAT.format(greutateCurenta) + KG;
+                    tvGreutateCurenta.setText(text);
                     sbGreutate.setProgress((int) (greutateCurenta * 10));
                 }
                 break;

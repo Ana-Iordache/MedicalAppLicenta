@@ -6,6 +6,7 @@ import static eu.ase.medicalapplicenta.activitati.DocumentePersonaleActivity.DOC
 import static eu.ase.medicalapplicenta.activitati.DocumentePersonaleActivity.EXTENSIE_PDF;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
@@ -18,11 +19,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,14 +46,17 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.adaptori.PacientAdaptor;
+import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class ListaPacientiActivity extends AppCompatActivity implements PacientAdaptor.OnPacientClickListener, View.OnClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String PACIENTI = "Pacienti";
@@ -82,6 +90,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     private String denumirePdfCardSanatate;
     private String denumirePdfBuletin;
 
+    private EditText etCautaPacient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,10 +110,10 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         rwListaPacienti.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         rwListaPacienti.setLayoutManager(layoutManager);
-        seteazaAdaptorPacienti();
+        seteazaAdaptorPacienti(pacienti);
     }
 
-    private void seteazaAdaptorPacienti() {
+    private void seteazaAdaptorPacienti(List<Pacient> pacienti) {
         adapter = new PacientAdaptor(pacienti, this, this);
         rwListaPacienti.setAdapter(adapter);
     }
@@ -118,6 +128,7 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         tvTitlu = findViewById(R.id.tvTitlu);
 
         intent = getIntent();
+        etCautaPacient = findViewById(R.id.etCautaPacient);
     }
 
     private void loading(Boolean seIncarca) {
@@ -145,21 +156,6 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                 } else {
                     firebaseServicePacienti.preiaDateDinFirebase(preiaPacienti());
                 }
-//                Toast.makeText(getApplicationContext(), iduriPacienti.toString(), Toast.LENGTH_SHORT).show();
-//                List<String> list = new ArrayList<>(iduriPacienti);
-//                pacienti.clear();
-//                for (String id : list) {
-//                    firebaseServicePacienti.preiaObiectDinFirebase(preiaPacient(), id);
-//                }
-
-//                try {
-//                    Thread.sleep(2000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-
-//                seteazaAdaptorPacienti();
-//                loading(false);
 
             }
 
@@ -181,9 +177,36 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                         pacienti.add(p);
                 }
 
-                seteazaAdaptorPacienti();
+                seteazaAdaptorPacienti(pacienti);
                 rwListaPacienti.setVisibility(View.VISIBLE);
                 loading(false);
+
+                etCautaPacient.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        String stringCurent = charSequence.toString().toLowerCase();
+                        if (!stringCurent.isEmpty()) {
+                            List<Pacient> pacientiFiltered = pacienti.stream().filter(pacient ->
+                                    pacient.getNume().toLowerCase().contains(stringCurent) ||
+                                            pacient.getPrenume().toLowerCase().contains(stringCurent))
+                                    .collect(Collectors.toList());
+
+                            afiseazaPacienti(pacientiFiltered);
+                        } else {
+                            seteazaAdaptorPacienti(pacienti);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
             }
 
             @Override
@@ -191,6 +214,17 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
 
             }
         };
+    }
+
+    private void afiseazaPacienti(List<Pacient> pacientiFiltered) {
+        if (pacientiFiltered.isEmpty()) {
+            rlNiciunPacient.setVisibility(View.VISIBLE);
+            rwListaPacienti.setVisibility(View.GONE);
+        } else {
+            rlNiciunPacient.setVisibility(View.GONE);
+            rwListaPacienti.setVisibility(View.VISIBLE);
+            seteazaAdaptorPacienti(pacientiFiltered);
+        }
     }
 
 //    private ValueEventListener preiaPacient() {

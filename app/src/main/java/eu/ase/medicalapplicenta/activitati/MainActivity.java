@@ -142,28 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     } else {
                         fabChat.setImageResource(R.drawable.ic_chat);
                     }
-//                    if (conversatie.getMesaje().stream().anyMatch(m -> m.getIdReceptor().equals(idPacient))) {
-//                        mesaje.addAll(conversatie.getMesaje());
-//                    }
-//                    for (Mesaj mesaj : conversatie.getMesaje()) {
-//                        if (mesaj.getIdReceptor().equals(idPacient)) {
-//                            if (!mesaj.isMesajCitit()) {
-//                                fabChat.setImageResource(R.drawable.ic_chat_mesaje_necitite);
-//                            } else {
-//                                fabChat.setImageResource(R.drawable.ic_chat);
-//                            }
-//                        }
-//                    }
-
                 }
 
-//                if (!mesaje.isEmpty()) {
-//                    if ((!mesaje.stream().anyMatch(Mesaj::isMesajCitit))) {
-//                        fabChat.setImageResource(R.drawable.ic_chat_mesaje_necitite);
-//                    } else {
-//                        fabChat.setImageResource(R.drawable.ic_chat);
-//                    }
-//                }
             }
 
             @Override

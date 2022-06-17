@@ -228,7 +228,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:cursorVisible="false"
-                        android:drawableStart="@drawable/ic_calendar"
+                        android:drawableStart="@drawable/ic_data_nasterii"
                         android:drawablePadding="@dimen/_10sdp"
                         android:focusable="true"
                         android:focusableInTouchMode="true"

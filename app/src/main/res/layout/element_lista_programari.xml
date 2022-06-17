@@ -15,7 +15,8 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         app:cardBackgroundColor="@color/custom_light_blue"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/royale_blue"
+                android:textColor="@color/custom_blue"
                 android:textSize="@dimen/_18sdp"
                 android:textStyle="bold" />
 
@@ -52,9 +53,9 @@
                 android:visibility="gone" />
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/llDataOra"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvSpecialitate"
                 android:layout_centerHorizontal="true"
@@ -64,21 +65,30 @@
                     android:id="@+id/tvDataProgramarii"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_50sdp"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="22/10/2022"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    app:drawableStartCompat="@drawable/ic_calendar" />
+                    android:textSize="@dimen/_13sdp"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    app:drawableTint="@color/black" />
 
                 <TextView
                     android:id="@+id/tvOraProgramarii"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_50sdp"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="11:30"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    app:drawableStartCompat="@drawable/ic_timp" />
-            </LinearLayout>
+                    android:textSize="@dimen/_13sdp"
+                    app:drawableStartCompat="@drawable/ic_timp"
+                    app:drawableTint="@color/black" />
+            </RelativeLayout>
 
             <View
                 android:id="@+id/view"

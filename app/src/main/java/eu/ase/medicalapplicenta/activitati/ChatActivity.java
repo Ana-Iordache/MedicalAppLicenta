@@ -107,7 +107,6 @@ public class ChatActivity extends AppCompatActivity {
         } else if (tipUtilizator.equals(HomeMedicActivity.MEDIC)) {
             marcheazaMesajeCititeDeMedic();
         }
-//        firebaseService.preiaDateDinFirebase(marcheazaMesajeCitite()); todo
     }
 
 

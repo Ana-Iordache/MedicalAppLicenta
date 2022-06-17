@@ -68,7 +68,8 @@
                 android:layout_marginTop="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -108,10 +109,11 @@
                 android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -151,10 +153,11 @@
                 android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -194,10 +197,11 @@
                 android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

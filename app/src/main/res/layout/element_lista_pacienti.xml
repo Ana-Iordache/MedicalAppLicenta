@@ -5,31 +5,31 @@
     android:orientation="vertical">
 
     <LinearLayout
-
         android:id="@+id/llDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ciwPozaProfilPacient"
-            android:layout_width="@dimen/_65sdp"
-            android:layout_height="@dimen/_65sdp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:src="@drawable/ic_account" />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/tvNumePacient"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/nume"
                 android:textColor="@color/custom_blue"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />
@@ -46,7 +46,7 @@
 
             <TextView
                 android:id="@+id/tvCnpValoare"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvNumePacient"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -67,7 +67,7 @@
 
             <TextView
                 android:id="@+id/tvUltimaProgramareData"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvCnp"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -84,5 +84,5 @@
         android:layout_height="@dimen/_1sdp"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:background="@color/custom_blue" />
+        android:background="@color/colorDivider" />
 </LinearLayout>

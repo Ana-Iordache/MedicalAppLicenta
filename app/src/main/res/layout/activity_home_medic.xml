@@ -63,11 +63,14 @@
                 android:layout_marginTop="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -83,7 +86,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_pacient" />
 
                     <ImageView
@@ -102,14 +104,17 @@
                 android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -125,7 +130,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_programari" />
 
                     <ImageView
@@ -144,14 +148,17 @@
                 android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -167,7 +174,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_feedback_pacienti" />
 
                     <ImageView
@@ -186,14 +192,17 @@
                 android:layout_height="@dimen/_65sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/custom_light_blue"
-                app:cardCornerRadius="@dimen/_15sdp">
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -209,7 +218,6 @@
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/ic_incasari" />
 
                     <ImageView

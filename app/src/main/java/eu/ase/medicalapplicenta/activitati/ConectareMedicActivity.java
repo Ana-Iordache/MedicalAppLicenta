@@ -1,13 +1,16 @@
 package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -47,6 +50,10 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
 
     private ProgressBar progressBar;
 
+    private AlertDialog resetareParolaDialog;
+
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,69 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         ivPacient.setOnClickListener(this);
 
         preiaPreferinte();
+
+        seteazaDialogResetareParola();
+    }
+
+    private void seteazaDialogResetareParola() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Resetare parolă");
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_resetare_parola, null);
+        TextInputEditText tietEmail = view.findViewById(R.id.tietEmail);
+        AppCompatButton btnReseteazaParola = view.findViewById(R.id.btnReseteazaParola);
+        AppCompatButton btnRenunta = view.findViewById(R.id.btnRenunta);
+
+        btnReseteazaParola.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = tietEmail.getText().toString();
+                if (email.isEmpty()) {
+                    tietEmail.setError(getString(R.string.err_empty_email));
+                    tietEmail.requestFocus();
+                    return;
+                }
+
+                Pattern pattern = Pattern.compile(getString(R.string.pattern_email_medic));
+                Matcher matcher = pattern.matcher(email);
+                if (!matcher.matches()) {
+                    tietEmail.setError(getString(R.string.err_not_valid_email_doctor));
+                    tietEmail.requestFocus();
+                    return;
+                }
+
+                progressDialog = new ProgressDialog(ConectareMedicActivity.this);
+                progressDialog.setMessage("Se trimite emailul...");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+                mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Link-ul de resetare a parolei a fost trimis pe email!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Nu s-a putut trimite link-ul de resetare a parolei!", Toast.LENGTH_LONG).show();
+                        }
+                        progressDialog.dismiss();
+                        resetareParolaDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        btnRenunta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetareParolaDialog.dismiss();
+                tietEmail.clearFocus();
+                tietEmail.setText("");
+            }
+        });
+
+        builder.setView(view);
+        resetareParolaDialog = builder.create();
+        resetareParolaDialog.setCanceledOnTouchOutside(false);
     }
 
     private void preiaPreferinte() {
@@ -102,9 +172,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
                 conecteazaMedic();
                 break;
             case R.id.tvResetareParola:
-                //TODO poate incerc cu un fragment sau alert dialog mai bn
-//                startActivity(new Intent(getApplicationContext(), ResetareParolaActivity.class));
-                Toast.makeText(getApplicationContext(), "tvResetareParola", Toast.LENGTH_SHORT).show();
+                resetareParolaDialog.show();
                 break;
             case R.id.ivPacient:
                 startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
@@ -152,7 +220,10 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         }
         preferinteConectareEditor.commit();
 
-        loading(true);
+        progressDialog = new ProgressDialog(ConectareMedicActivity.this);
+        progressDialog.setMessage("Se verifică credețialele...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
         mAuth.signInWithEmailAndPassword(email, parola).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -170,9 +241,9 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
 
 //                    finish();
                 } else {
-                    loading(false);
                     Toast.makeText(getApplicationContext(), getString(R.string.err_credentiale), Toast.LENGTH_SHORT).show();
                 }
+                progressDialog.dismiss();
             }
         });
     }

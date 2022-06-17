@@ -4,6 +4,7 @@ import static eu.ase.medicalapplicenta.activitati.MainActivity.EMAIL;
 import static eu.ase.medicalapplicenta.activitati.MainActivity.SUBIECT;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,8 +15,10 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,9 +35,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import eu.ase.medicalapplicenta.R;
+import eu.ase.medicalapplicenta.entitati.Conversatie;
 import eu.ase.medicalapplicenta.entitati.Medic;
+import eu.ase.medicalapplicenta.entitati.Mesaj;
+import eu.ase.medicalapplicenta.entitati.Notificare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class HomeMedicActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -64,10 +73,15 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
     private CardView cwIncasari;
 
     private ImageView ivNotificari;
+    private FirebaseService firebaseServiceNotificari = new FirebaseService("Notificari");
+    private List<Notificare> notificari = new ArrayList<>();
 
     private FloatingActionButton fabChat;
+    private FirebaseService firebaseServiceConversatii = new FirebaseService("Conversatii");
+    private List<Mesaj> mesaje = new ArrayList<>();
 
     private String numeComplet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +94,9 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
 
         seteazaToggle();
 
+        verificaNotificariNecitite();
+        verificaMesajeNecitite();
+
         navigationView.setNavigationItemSelectedListener(this);
         rlLogout.setOnClickListener(this);
         cwProgramari.setOnClickListener(this);
@@ -90,6 +107,13 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         fabChat.setOnClickListener(this);
 
         incarcaInfoNavMenu();
+
+        ascundeItemDocumentePersonale();
+    }
+
+    private void ascundeItemDocumentePersonale() {
+        Menu navigationMenu = navigationView.getMenu();
+        navigationMenu.findItem(R.id.item_documente_personale).setVisible(false);
     }
 
     private void seteazaToggle() {
@@ -126,6 +150,69 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         ivNotificari = findViewById(R.id.ivNotificari);
 
         fabChat = findViewById(R.id.fabChat);
+    }
+
+    private void verificaMesajeNecitite() {
+        firebaseServiceConversatii.preiaDateDinFirebase(preiaConversatii());
+    }
+
+    private ValueEventListener preiaConversatii() {
+        mesaje.clear();
+        return new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Conversatie conversatie = dataSnapshot.getValue(Conversatie.class);
+                    List<Mesaj> mesaje = conversatie.getMesaje();
+                    Mesaj ultimulMesaj = mesaje.get(mesaje.size() - 1);
+                    if (ultimulMesaj.getIdReceptor().equals(idMedic) && !ultimulMesaj.isMesajCitit()) {
+                        fabChat.setImageResource(R.drawable.ic_chat_mesaje_necitite);
+                        break;
+                    } else {
+                        fabChat.setImageResource(R.drawable.ic_chat);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+    }
+
+    private void verificaNotificariNecitite() {
+        firebaseServiceNotificari.preiaDateDinFirebase(preiaNotificari());
+    }
+
+    private ValueEventListener preiaNotificari() {
+        notificari.clear();
+        return new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Notificare notificare = dataSnapshot.getValue(Notificare.class);
+                    if (notificare.getIdReceptor().equals(idMedic))
+                        notificari.add(notificare);
+                }
+
+                if (!notificari.isEmpty()) {
+                    if (notificari.stream().anyMatch(notificare -> !notificare.isNotificareCitita())) {
+                        ivNotificari.setImageResource(R.drawable.ic_notificari_necitite);
+                    } else {
+                        ivNotificari.setImageResource(R.drawable.ic_notificari);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
     }
 
     @Override

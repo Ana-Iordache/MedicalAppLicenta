@@ -42,14 +42,16 @@
 
         <TextView
             android:id="@+id/tvInaltime"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/inaltime"
-            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_inaltime"
+            app:drawableTint="@color/black" />
 
         <TextView
             android:id="@+id/tvInaltimeCurenta"
@@ -58,20 +60,21 @@
             android:layout_below="@id/tvInaltime"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
+            android:text="100 cm"
             android:textColor="@color/black"
             android:textSize="@dimen/_16sdp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvInaltime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_toEndOf="@+id/tvInaltimeCurenta"
-            android:text="@string/cm"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/tvInaltime"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:layout_marginStart="@dimen/_10sdp"-->
+        <!--            android:layout_marginTop="@dimen/_6sdp"-->
+        <!--            android:layout_toEndOf="@+id/tvInaltimeCurenta"-->
+        <!--            android:text="@string/cm"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="@dimen/_14sdp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,14 +123,17 @@
 
         <TextView
             android:id="@+id/tvGreutate"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
+            android:drawablePadding="@dimen/_5sdp"
             android:text="@string/greutate"
-            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_greutate"
+            app:drawableTint="@color/black" />
 
         <TextView
             android:id="@+id/tvGreutateCurenta"
@@ -136,20 +142,21 @@
             android:layout_below="@id/tvGreutate"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
+            android:text="30,0 kg"
             android:textColor="@color/black"
             android:textSize="@dimen/_16sdp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGreutate"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_toEndOf="@+id/tvGreutateCurenta"
-            android:text="@string/kg"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/tvGreutate"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:layout_marginStart="@dimen/_10sdp"-->
+        <!--            android:layout_marginTop="@dimen/_6sdp"-->
+        <!--            android:layout_toEndOf="@+id/tvGreutateCurenta"-->
+        <!--            android:text="@string/kg"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="@dimen/_14sdp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -186,127 +193,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/llGreutateVarsta"-->
-    <!--        android:layout_width="@dimen/_300sdp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/ryInaltime"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_marginTop="@dimen/_15sdp"-->
-    <!--        android:orientation="horizontal">-->
-
-    <!--        <RelativeLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginEnd="@dimen/_5sdp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:background="@drawable/background_card">-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/tvGreutate"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_centerHorizontal="true"-->
-    <!--                android:layout_marginTop="@dimen/_5sdp"-->
-    <!--                android:text="@string/greutate"-->
-    <!--                android:textColor="@color/black"-->
-    <!--                android:textSize="@dimen/_16sdp"-->
-    <!--                android:textStyle="bold" />-->
-
-    <!--            <LinearLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_below="@+id/tvGreutate"-->
-    <!--                android:layout_marginTop="@dimen/_5sdp"-->
-    <!--                android:layout_marginBottom="@dimen/_5sdp"-->
-    <!--                android:orientation="horizontal">-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/minusGreutate"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_gravity="center"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:src="@drawable/ic_minus" />-->
-
-    <!--                <TextView-->
-    <!--                    android:id="@+id/tvGreutateCurenta"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:text="50.7"-->
-    <!--                    android:textColor="@color/black"-->
-    <!--                    android:textSize="@dimen/_16sdp" />-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/plusGreutate"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_gravity="center"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:src="@drawable/ic_plus" />-->
-    <!--            </LinearLayout>-->
-
-    <!--        </RelativeLayout>-->
-
-    <!--        <RelativeLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="@dimen/_5sdp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:background="@drawable/background_card">-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/tvVarsta"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_centerHorizontal="true"-->
-    <!--                android:layout_marginTop="@dimen/_5sdp"-->
-    <!--                android:text="@string/varsta"-->
-    <!--                android:textColor="@color/black"-->
-    <!--                android:textSize="@dimen/_16sdp"-->
-    <!--                android:textStyle="bold" />-->
-
-    <!--            <LinearLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_below="@+id/tvVarsta"-->
-    <!--                android:layout_marginTop="@dimen/_5sdp"-->
-    <!--                android:layout_marginBottom="@dimen/_5sdp"-->
-    <!--                android:orientation="horizontal">-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/minusVarsta"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_gravity="center"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:src="@drawable/ic_minus" />-->
-
-    <!--                <TextView-->
-    <!--                    android:id="@+id/tvVarstaCurenta"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:text="21"-->
-    <!--                    android:textColor="@color/black"-->
-    <!--                    android:textSize="@dimen/_16sdp" />-->
-
-    <!--                <ImageView-->
-    <!--                    android:id="@+id/plusVarsta"-->
-    <!--                    android:layout_width="wrap_content"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_gravity="center"-->
-    <!--                    android:layout_weight="1"-->
-    <!--                    android:src="@drawable/ic_plus" />-->
-
-    <!--            </LinearLayout>-->
-    <!--        </RelativeLayout>-->
-
-    <!--    </LinearLayout>-->
-
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -328,7 +214,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_20sdp"
             android:contentDescription="@string/icon_bmi" />
 
         <TextView
@@ -336,7 +221,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="30,3"
             android:textColor="@color/black"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
@@ -347,8 +233,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/bmi_normoponderal"
             android:textColor="@color/black"
             android:textSize="@dimen/_16sdp" />
+
+        <TextView
+            android:id="@+id/tvInformatiiBmi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/text_normoponderal"
+            android:textSize="@dimen/_13sdp" />
     </LinearLayout>
 
 </RelativeLayout>

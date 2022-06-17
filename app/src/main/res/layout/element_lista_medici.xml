@@ -5,74 +5,78 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/llDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ciwPozaProfilMedic"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:src="@drawable/ic_account" />
+
         <LinearLayout
-
-            android:id="@+id/llDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ciwPozaProfilMedic"
-                android:layout_width="@dimen/_65sdp"
-                android:layout_height="@dimen/_65sdp"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:src="@drawable/ic_account" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvNumeMedic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/custom_blue"
-                    android:textSize="@dimen/_17sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvGradProfesional"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvSpecialitate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp"
-                    android:textStyle="italic" />
-            </LinearLayout>
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp">
 
             <TextView
-                android:id="@+id/tvNota"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvNumeMedic"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:textSize="@dimen/_12sdp" />
+                android:text="@string/nume"
+                android:textColor="@color/custom_blue"
+                android:textSize="@dimen/_17sdp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/tvGradProfesional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/grad_profesional"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSpecialitate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/specialitate"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="italic" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tvNota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:textSize="@dimen/_12sdp" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tvNrFeedbackuri"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_centerInParent="true"-->
-        <!--            android:layout_marginStart="5dp"-->
-        <!--            android:layout_marginTop="20dp"-->
-        <!--            android:layout_toEndOf="@+id/llDate"-->
-        <!--            android:text="nr feedback-uri"-->
-        <!--            android:textStyle="italic" />-->
+    </LinearLayout>
+
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/tvNrFeedbackuri"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:layout_marginStart="5dp"-->
+    <!--            android:layout_marginTop="20dp"-->
+    <!--            android:layout_toEndOf="@+id/llDate"-->
+    <!--            android:text="nr feedback-uri"-->
+    <!--            android:textStyle="italic" />-->
 
     <View
         android:id="@+id/view"
@@ -80,7 +84,7 @@
         android:layout_height="@dimen/_1sdp"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:background="@color/custom_blue" />
+        android:background="@color/colorDivider" />
 
     <LinearLayout
         android:id="@+id/llDisponibilitate"

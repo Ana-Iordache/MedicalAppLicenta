@@ -40,8 +40,7 @@
         android:padding="@dimen/_5sdp"
         android:text="@string/card_de_sanatate"
         android:textColor="@color/black"
-        android:textSize="@dimen/_16sdp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/_16sdp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cwCardSanatate"
@@ -108,8 +107,7 @@
         android:padding="@dimen/_5sdp"
         android:text="@string/buletin"
         android:textColor="@color/black"
-        android:textSize="@dimen/_16sdp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/_16sdp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cwBuletin"

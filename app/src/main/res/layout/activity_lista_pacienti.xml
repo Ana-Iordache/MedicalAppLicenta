@@ -31,6 +31,24 @@
         android:layout_height="@dimen/_1sdp"
         android:background="@color/colorDivider" />
 
+    <EditText
+        android:id="@+id/etCautaPacient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/background_edit_text_selector"
+        android:drawableEnd="@drawable/ic_cauta"
+        android:hint="@string/cauta_pacient"
+        android:inputType="textCapWords"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:textSize="@dimen/_14sdp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

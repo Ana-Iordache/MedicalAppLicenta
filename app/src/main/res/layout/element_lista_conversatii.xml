@@ -14,37 +14,53 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ciwPozaProfil"
-            android:layout_width="@dimen/_65sdp"
-            android:layout_height="@dimen/_65sdp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/ic_account" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_5sdp"
             android:layout_toEndOf="@+id/ciwPozaProfil"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:padding="@dimen/_5sdp">
 
             <TextView
                 android:id="@+id/tvNume"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:text="nume"
-                android:textColor="@color/custom_blue"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvUltimulMesaj"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@+id/tvNume"
+                android:gravity="center_vertical"
                 android:text="ultimul mesaj"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="italic" />
-        </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMesajeNecitite"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@+id/tvNume"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/background_buton_mesaje_necitite"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone" />
+        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -52,8 +68,8 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:background="@color/custom_blue" />
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@color/colorDivider" />
 
 </LinearLayout>

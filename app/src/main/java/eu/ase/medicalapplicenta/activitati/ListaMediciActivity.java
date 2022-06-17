@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,9 +20,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,7 +45,8 @@ import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Specialitate;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-public class ListaMediciActivity extends AppCompatActivity implements MedicAdaptor.OnDoctorClickListener {
+@RequiresApi(api = Build.VERSION_CODES.N)
+public class ListaMediciActivity extends AppCompatActivity implements MedicAdaptor.OnDoctorClickListener, AdapterView.OnItemClickListener, TextWatcher {
     public static final String SPECIALITATI = "Specialitati";
     public static final String MEDICI = "Medici";
     public static final String ORE_DISPONIBILE = "oreDisponibile";
@@ -49,6 +54,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     public static final String MEDIC = "medic";
     private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
+
     private Intent intent;// = getIntent();
     private AppCompatButton btnProgramare;
     //    private ListView lwListaMedici;
@@ -58,12 +64,17 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     private RecyclerView rwListaMedici;
     private MedicAdaptor adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private FrameLayout flInfoMedic;
     //    MedicAdaptor.OnDoctorClickListener onDoctorClickListener;
     private AutoCompleteTextView actvSpecialitati;
     private TextView tvTitlu;
+    private EditText etCautaMedic;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    private List<Specialitate> specialitati;
+    private int specialitateSelectata = 0;
+    private List<Medic> mediciFiltered = new ArrayList<>();
+
+    private RelativeLayout rlNiciunMedic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +89,6 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         firebaseServiceSpecialitati.preiaDateDinFirebase(preiaSpecialitati());
         firebaseServiceMedici.preiaDateDinFirebase(preiaMedici());
     }
-
 
     private void seteazaRecyclerView() {
         rwListaMedici.setHasFixedSize(true);
@@ -103,10 +113,11 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         toolbar = findViewById(R.id.toolbar);
         medici = new ArrayList<>();
         rwListaMedici = findViewById(R.id.rwListaMedici);
-        flInfoMedic = findViewById(R.id.flInfoMedic);
         actvSpecialitati = findViewById(R.id.actvSpecialitati);
         tvTitlu = findViewById(R.id.tvTitlu);
         intent = getIntent();
+        etCautaMedic = findViewById(R.id.etCautaMedic);
+        rlNiciunMedic = findViewById(R.id.rlNiciunMedic);
     }
 
     private void loading(Boolean seIncarca) {
@@ -119,7 +130,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Specialitate> specialitati = new ArrayList<>();
+                specialitati = new ArrayList<>();
                 List<String> denumiriSpecialitati = new ArrayList<>();
 
                 denumiriSpecialitati.add(getString(R.string.toate_specialitatile));
@@ -132,21 +143,40 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
                 ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item, denumiriSpecialitati);
                 actvSpecialitati.setAdapter(adapter);
 
-                actvSpecialitati.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        if (i != 0) {
-                            List<Medic> mediciFiltered = medici.stream().
-                                    filter(medic -> medic.getIdSpecialitate().equals(specialitati.get(i - 1).getIdSpecialitate()))
-                                    .collect(Collectors.toList());
+                actvSpecialitati.setOnItemClickListener(ListaMediciActivity.this);
 
-                            seteazaAdaptorMedici(mediciFiltered);
-                        } else {
-                            seteazaAdaptorMedici(medici);
-                        }
-                    }
-                });
+//                actvSpecialitati.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @RequiresApi(api = Build.VERSION_CODES.N)
+//                    @Override
+//                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                        String stringCurent = etCautaMedic.getText().toString();
+//                        if (i != 0) {
+//                            List<Medic> mediciFiltered;
+//                            if (stringCurent.isEmpty()) {
+//                                mediciFiltered = medici.stream().
+//                                        filter(medic -> medic.getIdSpecialitate().equals(specialitati.get(i - 1).getIdSpecialitate()))
+//                                        .collect(Collectors.toList());
+//                            } else { //daca am filtrat deja prin cautare
+//
+//                                mediciFiltered = medici.stream().
+//                                        filter(medic -> medic.getIdSpecialitate().equals(specialitati.get(i - 1).getIdSpecialitate())
+//                                                && medic.getNume().toLowerCase().contains(stringCurent)
+//                                                || medic.getPrenume().toLowerCase().contains(stringCurent))
+//                                        .collect(Collectors.toList());
+//                            }
+//                            seteazaAdaptorMedici(mediciFiltered);
+//                        } else {
+////                            mediciFiltered = mediciFilteredCautare;
+//                            if (stringCurent.isEmpty()) {
+//                                seteazaAdaptorMedici(medici);
+//                            } else {
+//                                seteazaAdaptorMedici(mediciFilteredCautare);
+//                            }
+//                        }
+//                    }
+//                });
+
+                etCautaMedic.addTextChangedListener(ListaMediciActivity.this);
 
             }
 
@@ -187,7 +217,6 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         };
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void seteazaAdaptorMedici(List<Medic> medici) {
         // elimin intai toti medicii al caror cont este sters
         medici.removeAll(medici.stream().filter(Medic::isContSters).collect(Collectors.toList()));
@@ -292,6 +321,103 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
             }
         };
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        String filtruCautare = etCautaMedic.getText().toString();
+        specialitateSelectata = i;
+        if (i != 0) {
+            if (!filtruCautare.isEmpty()) { //dar daca am deja ceva in cautare
+                filtreazaMediciDupaSpecialitateSiNume(specialitati.get(i - 1).getIdSpecialitate(), filtruCautare);
+            } else {
+                filtreazaMediciDupaSpecialitate(specialitati.get(i - 1).getIdSpecialitate());
+            }
+
+            afiseazaMedici();
+
+        } else {
+            if (filtruCautare.isEmpty()) {
+                seteazaAdaptorMedici(medici);
+            } else {
+                filtreazaMediciDupaNume(filtruCautare);
+                afiseazaMedici();
+            }
+        }
+
+    }
+
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String stringCurent = charSequence.toString().toLowerCase();
+        if (!stringCurent.equals("")) {
+//            List<Medic> mediciFiltered;
+
+            if (specialitateSelectata == 0) { //daca selectia din actvSpecialitati e pe primul elem (nu am nicio specialiatte selectata)
+                filtreazaMediciDupaNume(stringCurent);
+            } else { //caut medicii doar de la specialitatea selecatata
+                filtreazaMediciDupaSpecialitateSiNume(specialitati.get(specialitateSelectata - 1).getIdSpecialitate(), stringCurent);
+//                mediciFiltered = medici.stream().
+//                        filter(medic -> medic.getIdSpecialitate().equals(specialitati.get(specialitateSelectata - 1).getIdSpecialitate())
+//                                && (medic.getNume().toLowerCase().contains(stringCurent)
+//                                || medic.getPrenume().toLowerCase().contains(stringCurent)))
+//                        .collect(Collectors.toList());
+            }
+            afiseazaMedici();
+
+        } else {
+            if (specialitateSelectata == 0) {
+                seteazaAdaptorMedici(medici);
+            } else {
+                filtreazaMediciDupaSpecialitate(specialitati.get(specialitateSelectata - 1).getIdSpecialitate());
+                afiseazaMedici();
+            }
+        }
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
+
+    private void afiseazaMedici() {
+        if (mediciFiltered.isEmpty()) {
+            rlNiciunMedic.setVisibility(View.VISIBLE);
+            rwListaMedici.setVisibility(View.GONE);
+        } else {
+            rlNiciunMedic.setVisibility(View.GONE);
+            rwListaMedici.setVisibility(View.VISIBLE);
+            seteazaAdaptorMedici(mediciFiltered);
+        }
+    }
+
+    private void filtreazaMediciDupaSpecialitate(String idSpecialitate) {
+        mediciFiltered = medici.stream().
+                filter(medic -> medic.getIdSpecialitate().equals(idSpecialitate))
+                .collect(Collectors.toList());
+    }
+
+    private void filtreazaMediciDupaNume(String stringCautare) {
+        mediciFiltered = medici.stream()
+                .filter(medic -> medic.getNume().toLowerCase().contains(stringCautare)
+                        || medic.getPrenume().toLowerCase().contains(stringCautare))
+                .collect(Collectors.toList());
+    }
+
+    private void filtreazaMediciDupaSpecialitateSiNume(String idSpecialitate, String stringCautare) {
+        mediciFiltered = medici.stream().
+                filter(medic -> medic.getIdSpecialitate().equals(idSpecialitate)
+                        && (medic.getNume().toLowerCase().contains(stringCautare)
+                        || medic.getPrenume().toLowerCase().contains(stringCautare)))
+                .collect(Collectors.toList());
+    }
+
 
 //    @RequiresApi(api = Build.VERSION_CODES.M)
 //    @Override

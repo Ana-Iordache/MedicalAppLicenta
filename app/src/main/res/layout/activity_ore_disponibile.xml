@@ -46,14 +46,16 @@
         android:id="@+id/rlProgram"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_10sdp">
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/background_edit_text"
+        android:padding="@dimen/_15sdp">
 
         <TextView
             android:id="@+id/tvProgram"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/program"
             android:textColor="@color/black" />
 
@@ -63,7 +65,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvProgram"
-            android:layout_marginStart="@dimen/_15sdp"
             android:divider="@null"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold" />
@@ -88,13 +89,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cursorVisible="false"
-            android:drawableStart="@drawable/ic_calendar"
-            android:drawablePadding="@dimen/_10sdp"
+            android:drawableEnd="@drawable/ic_calendar"
             android:focusable="false"
-            android:hint="@string/data_programarii"
             android:inputType="none"
+            android:padding="@dimen/_10sdp"
             android:text="@string/selectati_data"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_14sdp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -114,20 +114,12 @@
             android:id="@+id/actvInvestigatii"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableStart="@drawable/ic_specialitate"
-            android:drawablePadding="@dimen/_10sdp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="@string/investigatie"
             android:inputType="none"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingTop="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_15sdp"
+            android:padding="@dimen/_10sdp"
             android:text="@string/selectati_investigatia"
-            android:textSize="16sp" />
-
+            android:textSize="@dimen/_14sdp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -52,8 +52,10 @@ public class ChatAdaptor extends RecyclerView.Adapter<ChatAdaptor.ChatViewHolder
                 holder.tvStatusMesaj.setVisibility(View.VISIBLE);
                 if (mesaj.isMesajCitit()) {
                     holder.tvStatusMesaj.setText(context.getString(R.string.mesaj_citit));
+                    holder.tvStatusMesaj.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_mesaj_citit, 0);
                 } else {
                     holder.tvStatusMesaj.setText(context.getString(R.string.mesaj_livrat));
+                    holder.tvStatusMesaj.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_mesaj_livrat, 0);
                 }
             } else {
                 holder.tvStatusMesaj.setVisibility(View.GONE);

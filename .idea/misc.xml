@@ -12,6 +12,7 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/background_butoane_secundare_disabled.xml" value="0.20102564102564102" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/background_butoane_secundare_selector.xml" value="0.20102564102564102" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/background_butoane_selector.xml" value="0.16111111111111112" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/background_buton_mesaje_necitite.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/background_card.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/background_edit_text.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/background_edit_text_selector.xml" value="0.20416666666666666" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_adresa.xml" value="0.1712962962962963" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_attach_file.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_calendar.xml" value="0.165625" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_cauta.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_chat.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_cnp.xml" value="0.1712962962962963" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_data_nasterii.xml" value="0.20416666666666666" />
@@ -46,6 +48,7 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_program.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_sageata_dreapta.xml" value="0.2296875" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_telefon.xml" value="0.1712962962962963" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_timp.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_upload.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_visibility_selector.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/ic_wave_bottom.xml" value="0.20416666666666666" />
@@ -64,7 +67,7 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/drawable/splash_image.xml" value="0.15677083333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_adauga_programare.xml" value="0.16802536231884058" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_admin.xml" value="0.1585144927536232" />
-        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_calculator_bmi.xml" value="0.22" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_calculator_bmi.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_chat.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_chat2.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_conectare_medic.xml" value="0.22" />
@@ -80,8 +83,8 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_inregistrare_medic.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_inregistrare_pacient.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_lista_investigatii.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_lista_medici.xml" value="0.22" />
-        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_lista_pacienti.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_lista_medici.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_lista_pacienti.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_notificari.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/activity_ore_disponibile.xml" value="0.22" />
@@ -95,6 +98,7 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/dialog_feedback_medic.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/dialog_plateste_factura.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/dialog_program_lucru.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/dialog_resetare_parola.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/dialog_schimba_date_autentificare.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/dialog_schimba_email.xml" value="0.5" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/dialog_schimba_parola.xml" value="0.4010416666666667" />
@@ -105,7 +109,7 @@
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_facturi.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_feedback.xml" value="0.22" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_investigatii.xml" value="0.22" />
-        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_medici.xml" value="0.22" />
+        <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_medici.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_medici_conversatii.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_notificari.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/iorda/Desktop/Ana/ANUL III/Licenta/draft/MedicalAppLicenta/app/src/main/res/layout/element_lista_pacienti.xml" value="0.3333333333333333" />

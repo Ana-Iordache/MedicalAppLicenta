@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +46,10 @@ public class NotificariActivity extends AppCompatActivity {
 
     private String tipUtilizator;
 
+    private ValueEventListener notificariCititeListener;
+
+//    private CardView cwNotificare;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,39 @@ public class NotificariActivity extends AppCompatActivity {
         seteazaRecyclerView();
 
         firebaseService.preiaDateDinFirebase(preiaNotificari());
+//        firebaseService.databaseReference.removeEventListener(notificariCititeListener);
+    }
 
+    private void initializeazaAtribute() {
+        toolbar = findViewById(R.id.toolbar);
+        progressBar = findViewById(R.id.progressBar);
+        rlNicioNotificare = findViewById(R.id.rlNicioNotificare);
+        rwNotificari = findViewById(R.id.rwNotificari);
+        notificari = new ArrayList<>();
+//        cwNotificare = findViewById(R.id.cwNotificare);
+    }
+
+    private void marcheazaNotificariCitite() {
+        notificariCititeListener = firebaseService.databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Notificare notificare = dataSnapshot.getValue(Notificare.class);
+                    if (notificare.getIdReceptor().equals(idUtilizator) && !notificare.isNotificareCitita()) {
+//                        cwNotificare.setBackgroundColor(getResources().getColor(R.color.custom_light_blue));
+                        firebaseService.databaseReference
+                                .child(notificare.getIdNotificare())
+                                .child("notificareCitita")
+                                .setValue(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void seteazaTipUtilizator() {
@@ -125,13 +162,6 @@ public class NotificariActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    private void initializeazaAtribute() {
-        toolbar = findViewById(R.id.toolbar);
-        progressBar = findViewById(R.id.progressBar);
-        rlNicioNotificare = findViewById(R.id.rlNicioNotificare);
-        rwNotificari = findViewById(R.id.rwNotificari);
-        notificari = new ArrayList<>();
-    }
 
     private void loading(Boolean seIncarca) {
         if (seIncarca) {
@@ -146,5 +176,12 @@ public class NotificariActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        marcheazaNotificariCitite();
+//        firebaseService.databaseReference.removeEventListener(notificariCititeListener);
     }
 }

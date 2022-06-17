@@ -377,6 +377,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
         builder.setView(view);
         dialogParola = builder.create();
+        dialogParola.setCanceledOnTouchOutside(false);
     }
 
     private void seteazaDialogSchimbaEmail() {
@@ -467,6 +468,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
         builder.setView(view);
         dialogEmail = builder.create();
+        dialogEmail.setCanceledOnTouchOutside(false);
     }
 
     private void seteazaDialogStergeCont() {
@@ -550,6 +552,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
 
         builder.setView(view);
         dialogStergereCont = builder.create();
+        dialogStergereCont.setCanceledOnTouchOutside(false);
     }
 
     private void loading(@NonNull Boolean seIncarca) {

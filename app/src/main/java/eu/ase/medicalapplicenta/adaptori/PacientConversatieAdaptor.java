@@ -1,12 +1,16 @@
 package eu.ase.medicalapplicenta.adaptori;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +28,7 @@ import eu.ase.medicalapplicenta.entitati.Mesaj;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
+// asta e ce apare medicului
 public class PacientConversatieAdaptor extends RecyclerView.Adapter<PacientConversatieAdaptor.PacientConversatieViewHolder> {
     private final List<Pacient> pacienti;
     private final Context context;
@@ -62,24 +67,35 @@ public class PacientConversatieAdaptor extends RecyclerView.Adapter<PacientConve
 
     private ValueEventListener preiaConversatie(String idPacient, PacientConversatieViewHolder holder) {
         return new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Conversatie conversatie = dataSnapshot.getValue(Conversatie.class);
                     Mesaj ultimulMesaj = conversatie.getMesaje().get(conversatie.getMesaje().size() - 1);
-                    String text;
+
+                    String text = ultimulMesaj.getText();
+                    if (text.length() > 40) {
+                        text = text.substring(0, 37) + "...";
+                    }
+                    holder.tvUltimulMesaj.setText(text);
+
                     if (ultimulMesaj.getIdEmitator().equals(idUserConectat) && ultimulMesaj.getIdReceptor().equals(idPacient)) {
-                        text = "Dvs.: " + ultimulMesaj.getText();
-                        if (text.length() > 40) {
-                            text = text.substring(0, 37) + "...";
+                        if (ultimulMesaj.isMesajCitit()) {
+                            holder.tvUltimulMesaj.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mesaj_citit, 0, 0, 0);
+                        } else {
+                            holder.tvUltimulMesaj.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_mesaj_livrat, 0, 0, 0);
                         }
-                        holder.tvUltimulMesaj.setText(text);
                     } else if (ultimulMesaj.getIdEmitator().equals(idPacient) && ultimulMesaj.getIdReceptor().equals(idUserConectat)) {
-                        text = ultimulMesaj.getText();
-                        if (text.length() > 40) {
-                            text = text.substring(0, 37) + "...";
+                        if (!ultimulMesaj.isMesajCitit()) {
+                            holder.tvUltimulMesaj.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD_ITALIC));
+                            int mesajeNecitite = (int) conversatie.getMesaje().stream().filter(mesaj -> !mesaj.isMesajCitit()).count();
+                            holder.btnMesajeNecitite.setVisibility(View.VISIBLE);
+                            holder.btnMesajeNecitite.setText(String.valueOf(mesajeNecitite));
+                        } else {
+                            holder.tvUltimulMesaj.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+                            holder.btnMesajeNecitite.setVisibility(View.GONE);
                         }
-                        holder.tvUltimulMesaj.setText(text);
                     }
 //                    break;
                 }
@@ -101,6 +117,7 @@ public class PacientConversatieAdaptor extends RecyclerView.Adapter<PacientConve
         CircleImageView ciwPozaProfil;
         TextView tvNume;
         TextView tvUltimulMesaj;
+        AppCompatButton btnMesajeNecitite;
 
         PacientAdaptor.OnPacientClickListener onPacientClickListener;
 
@@ -109,6 +126,7 @@ public class PacientConversatieAdaptor extends RecyclerView.Adapter<PacientConve
             ciwPozaProfil = itemView.findViewById(R.id.ciwPozaProfil);
             tvNume = itemView.findViewById(R.id.tvNume);
             tvUltimulMesaj = itemView.findViewById(R.id.tvUltimulMesaj);
+            btnMesajeNecitite = itemView.findViewById(R.id.btnMesajeNecitite);
 
             this.onPacientClickListener = onPacientClickListener;
             itemView.setOnClickListener(this);
