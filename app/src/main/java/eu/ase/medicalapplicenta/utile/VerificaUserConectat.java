@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseUser;
 import eu.ase.medicalapplicenta.activitati.HomeMedicActivity;
 import eu.ase.medicalapplicenta.activitati.MainActivity;
 
-// clasa prin care verific daca user-ul este conectat
 public class VerificaUserConectat extends Application {
     SharedPreferences preferinteConectare;
     Boolean salveazaDateConectare;
@@ -25,16 +24,17 @@ public class VerificaUserConectat extends Application {
         preferinteConectare = getSharedPreferences("salveazaDateConectare", MODE_PRIVATE);
         salveazaDateConectare = preferinteConectare.getBoolean("salveazaDateConectare", false);
         if (!salveazaDateConectare) {
-            if (user != null) //!!!!!daca user-ul nu a bifat sa-si salveze datele, cand iesei din ap il si deconectez
+            if (user != null)
                 mAuth.signOut();
         }
 
-        if (mAuth.getCurrentUser() != null) { //!!!!!aici trb sa iau iar userul curent, pt cazul in care a fost deconectat
+        if (mAuth.getCurrentUser() != null) {
             if (!user.getEmail().contains("clinica-medicala.ro"))
-                startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             else
-                startActivity(new Intent(getApplicationContext(), HomeMedicActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            // FLAG_ACTIVITY_NEW_TASK imi trebuie asta pt accesez o acivitate dintr-o clasa care nu e activitate
+                startActivity(new Intent(getApplicationContext(), HomeMedicActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
 }

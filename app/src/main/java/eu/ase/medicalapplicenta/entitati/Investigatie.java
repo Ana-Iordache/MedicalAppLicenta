@@ -2,7 +2,7 @@ package eu.ase.medicalapplicenta.entitati;
 
 public class Investigatie {
     private String denumire;
-    private double pret; //oare merge si asa sau trb Double neaparat?
+    private double pret;
 
     public Investigatie(){}
 

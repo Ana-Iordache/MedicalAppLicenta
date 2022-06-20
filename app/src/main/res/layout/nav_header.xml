@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/custom_blue">
-    <!--ca sa nu mai taie pe unele ecarne am pus android:fitsSystemWindows="false"
-    in activity main-->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciwPozaProfilUser"
         android:layout_width="@dimen/_80sdp"

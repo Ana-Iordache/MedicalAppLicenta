@@ -9,12 +9,13 @@ public class Programare {
     private String status;
     private Factura factura;
     private Feedback feedback;
+    private String urlReteta;
 
     public Programare() {
     }
 
     public Programare(String idProgramare, String idMedic, String idPacient, String data, String ora, String status,
-                      Factura factura, Feedback feedback) {
+                      Factura factura, Feedback feedback, String urlReteta) {
         this.idProgramare = idProgramare;
         this.idMedic = idMedic;
         this.idPacient = idPacient;
@@ -23,6 +24,7 @@ public class Programare {
         this.status = status;
         this.factura = factura;
         this.feedback = feedback;
+        this.urlReteta = urlReteta;
     }
 
     public String getIdProgramare() {
@@ -89,6 +91,14 @@ public class Programare {
         this.feedback = feedback;
     }
 
+    public String getUrlReteta() {
+        return urlReteta;
+    }
+
+    public void setUrlReteta(String urlReteta) {
+        this.urlReteta = urlReteta;
+    }
+
     @Override
     public String toString() {
         return "Programare{" +
@@ -100,6 +110,7 @@ public class Programare {
                 ", status='" + status + '\'' +
                 ", factura=" + factura +
                 ", feedback=" + feedback +
+                ", urlReteta='" + urlReteta + '\'' +
                 '}';
     }
 }

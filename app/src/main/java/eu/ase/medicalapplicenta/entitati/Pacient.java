@@ -6,22 +6,22 @@ public class Pacient implements Serializable {
     private String idPacient;
     private String nume;
     private String prenume;
-    private Long cnp;
-    private Long nrTelefon;
+    private long cnp;
+    private long nrTelefon;
     private String sex;
     private String adresa;
     private String dataNasterii;
     private String adresaEmail;
     private String urlPozaProfil;
     private String grupaSange;
-    private Double greutate;
-    private Double inaltime;
+    private double greutate;
+    private double inaltime;
     private int varsta;
 
     public Pacient() {
     }
 
-    public Pacient(String idPacient, String nume, String prenume, Long cnp, Long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail, String grupaSange, Double greutate, Double inaltime, int varsta, String urlPozaProfil) {
+    public Pacient(String idPacient, String nume, String prenume, long cnp, long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail, String grupaSange, double greutate, double inaltime, int varsta, String urlPozaProfil) {
         this.idPacient = idPacient;
         this.nume = nume;
         this.prenume = prenume;
@@ -71,19 +71,19 @@ public class Pacient implements Serializable {
         this.prenume = prenume;
     }
 
-    public Long getCnp() {
+    public long getCnp() {
         return cnp;
     }
 
-    public void setCnp(Long cnp) {
+    public void setCnp(long cnp) {
         this.cnp = cnp;
     }
 
-    public Long getNrTelefon() {
+    public long getNrTelefon() {
         return nrTelefon;
     }
 
-    public void setNrTelefon(Long nrTelefon) {
+    public void setNrTelefon(long nrTelefon) {
         this.nrTelefon = nrTelefon;
     }
 
@@ -127,19 +127,19 @@ public class Pacient implements Serializable {
         this.grupaSange = grupaSange;
     }
 
-    public Double getGreutate() {
+    public double getGreutate() {
         return greutate;
     }
 
-    public void setGreutate(Double greutate) {
+    public void setGreutate(double greutate) {
         this.greutate = greutate;
     }
 
-    public Double getInaltime() {
+    public double getInaltime() {
         return inaltime;
     }
 
-    public void setInaltime(Double inaltime) {
+    public void setInaltime(double inaltime) {
         this.inaltime = inaltime;
     }
 

@@ -21,8 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import eu.ase.medicalapplicenta.R;
@@ -45,6 +43,7 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
     private final OnProgramareClickListener onProgramareClickListener;
     private final OnProgramareLongClickListener onProgramareLongClickListener;
     private final OnBtnFeedbackClickListener onBtnFeedbackClickListener;
+    private final OnBtnRetetaClickListener onBtnRetetaClickListener;
 
     private final String tipUser;
 
@@ -52,12 +51,14 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
 
     public ProgramareAdaptor(List<Programare> programari, String tipUser, OnProgramareClickListener onProgramareClickListener,
                              OnProgramareLongClickListener onProgramareLongClickListener,
-                             OnBtnFeedbackClickListener onBtnFeedbackClickListener, Context context) {
+                             OnBtnFeedbackClickListener onBtnFeedbackClickListener,
+                             OnBtnRetetaClickListener onBtnRetetaClickListener, Context context) {
         this.programari = programari;
         this.tipUser = tipUser;
         this.onProgramareClickListener = onProgramareClickListener;
         this.onProgramareLongClickListener = onProgramareLongClickListener;
         this.onBtnFeedbackClickListener = onBtnFeedbackClickListener;
+        this.onBtnRetetaClickListener = onBtnRetetaClickListener;
         this.context = context;
         firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
         firebaseServiceMedici = new FirebaseService(MEDICI);
@@ -68,7 +69,7 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
     @Override
     public ProgramareAdaptorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_lista_programari, parent, false);
-        return new ProgramareAdaptorViewHolder(view, onProgramareClickListener, onProgramareLongClickListener, onBtnFeedbackClickListener);
+        return new ProgramareAdaptorViewHolder(view, onProgramareClickListener, onProgramareLongClickListener, onBtnFeedbackClickListener, onBtnRetetaClickListener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -86,6 +87,7 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
                 holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0);
                 holder.btnFeedback.setEnabled(false);
                 holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
+                holder.btnFeedback.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_star_rate_light_blue, 0);
             } else if (p.getStatus().equals(context.getString(R.string.status_necompletat))) {
                 holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_important, 0, 0, 0);
                 if (tipUser.equals(MEDIC)) {
@@ -94,27 +96,48 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
                     holder.tvStatus.setText("");
                     holder.btnFeedback.setEnabled(false);
                     holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
+                    holder.btnFeedback.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_star_rate_light_blue, 0);
                 }
             } else if (p.getStatus().equals(context.getString(R.string.status_onorata))) {
                 holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok, 0, 0, 0);
                 holder.btnFeedback.setEnabled(true);
                 holder.btnFeedback.setTextColor(context.getColor(R.color.custom_blue));
+                holder.btnFeedback.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_star_rate_blue, 0);
             } else if (p.getStatus().equals(context.getString(R.string.status_noua))) {
                 holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok, 0, 0, 0);
                 holder.btnFeedback.setEnabled(false);
                 holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
+                holder.btnFeedback.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_star_rate_light_blue, 0);
             }
 
             if (p.getFeedback() != null) {
                 holder.btnFeedback.setEnabled(false);
                 holder.btnFeedback.setTextColor(context.getColor(R.color.custom_light_blue));
+                holder.btnFeedback.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_star_rate_light_blue, 0);
             }
 
             if (tipUser.equals(PACIENT)) {
+                if (p.getUrlReteta().equals("")) {
+                    holder.btnReteta.setEnabled(false);
+                    holder.btnReteta.setTextColor(context.getColor(R.color.custom_light_blue));
+                    holder.btnReteta.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_download_light_blue, 0);
+                }
                 seteazaDateMedic(p, holder);
             } else {
                 holder.tvSpecialitate.setVisibility(View.GONE);
                 holder.btnFeedback.setVisibility(View.GONE);
+
+                if (p.getUrlReteta().equals("")) { //daca nu a atatsat inca nicio reteta
+                    holder.btnReteta.setText(context.getString(R.string.ataseaza_reteta));
+                    holder.btnReteta.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_attach_file_blue, 0);
+                }
+
+                if (!p.getStatus().equals(context.getString(R.string.status_onorata))) {
+                    holder.btnReteta.setEnabled(false);
+                    holder.btnReteta.setTextColor(context.getColor(R.color.custom_light_blue));
+                    holder.btnReteta.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_attach_file_light_blue, 0);
+                }
+
                 seteazaNumePacient(p, holder);
             }
         }
@@ -197,6 +220,10 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
         void onBtnFeedbackClick(int position);
     }
 
+    public interface OnBtnRetetaClickListener {
+        void onBtnRetetaClickListener(int position);
+    }
+
     public class ProgramareAdaptorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView tvNume;
         TextView tvSpecialitate;
@@ -204,15 +231,19 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
         TextView tvOraProgramarii;
         TextView tvStatus;
         AppCompatButton btnFeedback;
+        AppCompatButton btnReteta;
         ProgressBar progressBar;
 
         CardView cwProgramare;
         OnProgramareClickListener onProgramareClickListener;
         OnProgramareLongClickListener onProgramareLongClickListener;
         OnBtnFeedbackClickListener onBtnFeedbackClickListener;
+        OnBtnRetetaClickListener onBtnRetetaClickListener;
 
         public ProgramareAdaptorViewHolder(@NonNull View itemView, OnProgramareClickListener onProgramareClickListener,
-                                           OnProgramareLongClickListener onProgramareLongClickListener, OnBtnFeedbackClickListener onBtnFeedbackClickListener) {
+                                           OnProgramareLongClickListener onProgramareLongClickListener,
+                                           OnBtnFeedbackClickListener onBtnFeedbackClickListener,
+                                           OnBtnRetetaClickListener onBtnRetetaClickListener) {
             super(itemView);
             tvNume = itemView.findViewById(R.id.tvNume);
             tvSpecialitate = itemView.findViewById(R.id.tvSpecialitate);
@@ -220,16 +251,19 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
             tvOraProgramarii = itemView.findViewById(R.id.tvOraProgramarii);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnFeedback = itemView.findViewById(R.id.btnFeedback);
+            btnReteta = itemView.findViewById(R.id.btnReteta);
             progressBar = itemView.findViewById(R.id.progressBar);
             cwProgramare = itemView.findViewById(R.id.cwProgramare);
 
             cwProgramare.setOnClickListener(this);
             cwProgramare.setOnLongClickListener(this);
             btnFeedback.setOnClickListener(this);
+            btnReteta.setOnClickListener(this);
 
             this.onProgramareClickListener = onProgramareClickListener;
             this.onProgramareLongClickListener = onProgramareLongClickListener;
             this.onBtnFeedbackClickListener = onBtnFeedbackClickListener;
+            this.onBtnRetetaClickListener = onBtnRetetaClickListener;
         }
 
 
@@ -242,6 +276,9 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
                     break;
                 case R.id.btnFeedback:
                     onBtnFeedbackClickListener.onBtnFeedbackClick(getAdapterPosition());
+                    break;
+                case R.id.btnReteta:
+                    onBtnRetetaClickListener.onBtnRetetaClickListener(getAdapterPosition());
                     break;
             }
         }

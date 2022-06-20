@@ -158,7 +158,7 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.ivDescarcaCardSanatate:
                 if (tvPdfCardSanatate.getText().toString().equals(getString(R.string.niciun_document_atasat))) {
-                    Toast.makeText(getApplicationContext(), "Nu aveti niciun document atasat!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.niciun_document_atasat), Toast.LENGTH_SHORT).show();
                 } else {
                     descarcaDocument(uriCardSanatate, Environment.DIRECTORY_DOWNLOADS, denumirePdfCardSanatate);
                 }
@@ -173,7 +173,7 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.ivDescarcaBuletin:
                 if (tvPdfBuletin.getText().toString().equals(getString(R.string.niciun_document_atasat))) {
-                    Toast.makeText(getApplicationContext(), "Nu aveti niciun document atasat!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.niciun_document_atasat), Toast.LENGTH_SHORT).show();
                 } else {
                     descarcaDocument(uriBuletin, Environment.DIRECTORY_DOWNLOADS, denumirePdfBuletin);
                 }
@@ -182,17 +182,20 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
     }
 
     private void descarcaDocument(Uri uri, String directorDestinatie, String denumireFisier) {
-        DownloadManager downloadManager = (DownloadManager) getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager downloadManager = (DownloadManager) getApplicationContext()
+                .getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(uri);
+        Toast.makeText(getApplicationContext(), "Se descarcă documentul...",
+                Toast.LENGTH_SHORT).show();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalFilesDir(getApplicationContext(), directorDestinatie, denumireFisier);
+        request.setDestinationInExternalFilesDir(getApplicationContext(),
+                directorDestinatie, denumireFisier);
         downloadManager.enqueue(request);
     }
 
     private void incarcaPdf(Uri uriPDF) {
         progressDialog = new ProgressDialog(this);
-//        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setMessage("Se incarca documentul...");
+        progressDialog.setMessage(getString(R.string.pd_incarcare_document));
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
@@ -219,13 +222,7 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getApplicationContext(), "Documentul nu a putut fi incarcat!", Toast.LENGTH_SHORT).show();
                     }
-                })/*.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                int progresCurent = (int) (100 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                progressDialog.setProgress(progresCurent);
-            }
-        })*/;
+                });
     }
 
     private void ataseazaPdf() {

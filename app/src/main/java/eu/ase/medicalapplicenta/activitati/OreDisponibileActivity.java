@@ -279,9 +279,9 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                     cOraSfarsit.setTime(dOraSfarsit);
                     cOraSfarsit.add(Calendar.MINUTE, -20);
 
-                    //cat timp ora de inceput e mai mica decat ora de sfarsit - 20 min
-                    // pt ca ultima programare poate fi de la orasf - 20 min
-                    // ca ora de sfasit inseamna ca atunci se termina programul medicului
+                    /*cat timp ora de inceput e mai mica decat ora de sfarsit - 20 min
+                    pt ca ultima programare poate fi de la orasf - 20 min
+                    ca ora de sfasit inseamna ca atunci se termina programul medicului*/
                     while (cOraInceput.getTime().compareTo(cOraSfarsit.getTime()) <= 0) {
                         oreDisponibile.add(format.format(cOraInceput.getTime()));
                         cOraInceput.add(Calendar.MINUTE, 20);
@@ -300,7 +300,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
             rlNicioOra.setVisibility(View.VISIBLE);
         } else if (!oreDisponibile.isEmpty()) {
             firebaseServiceProgramari.preiaDateDinFirebase(preiaOreDisponibile());
-        } /*else {
+        }
+        /*else {
             rwOreDisponibile.setVisibility(View.GONE);
             tvNicioOra.setText(getString(R.string.nicio_ora));
             rlNicioOra.setVisibility(View.VISIBLE);
@@ -312,13 +313,14 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                programari.clear();
                 oreIndisponibile = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Programare p = dataSnapshot.getValue(Programare.class);
-                    if (p.getIdMedic().equals(medic.getIdMedic()) && p.getData().equals(tietDataProgramarii.getText().toString())
+                    if (p.getIdMedic().equals(medic.getIdMedic()) &&
+                            p.getData().equals(tietDataProgramarii.getText().toString())
                             && p.getStatus().equals(getString(R.string.status_noua))) {
-                        // daca programarea a fost anulata (statusul nu e "noua") atunci trec ora ca fiind disponibila
+                        // daca programarea a fost anulata (statusul nu e "noua")
+                        // atunci trec ora ca fiind disponibila
                         oreIndisponibile.add(p.getOra());
                     }
                 }
@@ -382,7 +384,8 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                                     oreDisponibile.get(position),
                                     "nouă",
                                     factura,
-                                    null);
+                                    null,
+                                    "");
                             String idProgramare = firebaseServiceProgramari.databaseReference.push().getKey();
                             programare.setIdProgramare(idProgramare);
                             factura.setIdFactura(idProgramare);

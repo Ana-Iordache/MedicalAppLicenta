@@ -32,7 +32,8 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
     private final FirebaseService firebaseService;
     private final OnDoctorClickListener onDoctorClickListener;
 
-    public MedicAdaptor(List<Medic> medici, Context context, OnDoctorClickListener onDoctorClickListener) {
+    public MedicAdaptor(List<Medic> medici, Context context,
+                        OnDoctorClickListener onDoctorClickListener) {
         this.medici = medici;
         this.context = context;
         firebaseService = new FirebaseService(SPECIALITATI);
@@ -42,7 +43,8 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
     @NonNull
     @Override
     public MedicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_lista_medici, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_lista_medici,
+                parent, false);
         return new MedicViewHolder(view, onDoctorClickListener);
     }
 
@@ -71,7 +73,6 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         };
     }
 
-    // trimit informatia de click activitatii
     public interface OnDoctorClickListener {
         void onDoctorClick(int position);
     }
@@ -82,7 +83,6 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         TextView tvGradProfesional;
         TextView tvSpecialitate;
         TextView tvNota;
-//        TextView tvNrFeedbackuri;
 
         OnDoctorClickListener onDoctorClickListener;
 
@@ -93,7 +93,6 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
             tvGradProfesional = itemView.findViewById(R.id.tvGradProfesional);
             tvSpecialitate = itemView.findViewById(R.id.tvSpecialitate);
             tvNota = itemView.findViewById(R.id.tvNota);
-//            tvNrFeedbackuri = itemView.findViewById(R.id.tvNrFeedbackuri);
 
             this.onDoctorClickListener = onDoctorClickListener;
             itemView.setOnClickListener(this);
@@ -114,14 +113,11 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
 
             if (medic.getNotaFeedback() == 0.0) {
                 holder.tvNota.setText("");
-//                holder.tvNrFeedbackuri.setText("");
             } else {
                 holder.tvNota.setText(NUMBER_FORMAT.format(medic.getNotaFeedback()));
-//                tvNrFeedbackuri.setText(..); todo
             }
         }
 
-        // cand dau click pe item se apeleaza asta
         @Override
         public void onClick(View view) {
             onDoctorClickListener.onDoctorClick(getAdapterPosition());

@@ -421,25 +421,16 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                             if (task.isSuccessful()) {
                                 String idMedic = mAuth.getCurrentUser().getUid();
 
-                                Medic medic = new Medic(idMedic,
-                                        nume,
-                                        prenume,
-                                        nrTelefon,
-                                        adresaEmail,
-                                        finalIdSpecialitate,
-                                        null,
-                                        0.0,
-                                        gradProfesional,
-                                        "",
-                                        program);
+                                Medic medic = new Medic(idMedic, nume, prenume, nrTelefon, adresaEmail,
+                                        finalIdSpecialitate, null, 0.0, gradProfesional, "", program);
 
                                 firebaseServiceMedici.databaseReference.child(idMedic)
                                         .setValue(medic).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-//                                            medic.setIdMedic(FirebaseAuth.getInstance().getCurrentUser().getUid());//aici
-                                            Toast.makeText(getApplicationContext(), "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
                                             finish();
                                         } else {
                                             Log.e("adaugareMedic", task.getException().getMessage());

@@ -110,19 +110,44 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnFeedback"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvStatus"
-                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
-                android:background="@drawable/background_butoane_secundare_selector"
-                android:text="@string/acorda_feedback"
-                android:textAllCaps="false"
-                android:textColor="@color/custom_blue" />
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_butoane_secundare_selector"
+                    android:drawableEnd="@drawable/ic_star_rate_blue"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:text="@string/acorda_feedback"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_blue" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnReteta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_butoane_secundare_selector"
+                    android:drawableEnd="@drawable/ic_download_blue"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:text="@string/descarca_reteta"
+                    android:textAllCaps="false"
+                    android:textColor="@color/custom_blue" />
+            </LinearLayout>
 
         </RelativeLayout>
 

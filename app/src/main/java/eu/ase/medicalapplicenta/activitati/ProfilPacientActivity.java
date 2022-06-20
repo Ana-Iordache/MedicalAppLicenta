@@ -130,12 +130,6 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    private void seteazaAdaptorGrupeSange() {
-        ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item,
-                getResources().getStringArray(R.array.grupe_sange));
-        actvGrupeSange.setAdapter(adapter);
-    }
-
     private ValueEventListener preiaPacient() {
         return new ValueEventListener() {
             @Override
@@ -193,6 +187,12 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 Log.e("preluarePacient", error.getMessage());
             }
         };
+    }
+
+    private void seteazaAdaptorGrupeSange() {
+        ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item,
+                getResources().getStringArray(R.array.grupe_sange));
+        actvGrupeSange.setAdapter(adapter);
     }
 
     private void seteazaToolbar() {
@@ -350,10 +350,12 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                                         public void onComplete(@NonNull Task<Void> task) {
                                             loading(false);
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(), "Parola a fost actualizată!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Parola a fost actualizată!", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Log.e("schimbareParola", task.getException().getMessage());
-                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Parola nu a fost schimbată!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "A intervenit o eroare. Parola nu a fost schimbată!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
@@ -518,19 +520,20 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                                         public void onComplete(@NonNull Task<Void> task) {
                                             loading(false);
                                             if (task.isSuccessful()) {
-                                                //todo nush cum sa fac cand dau start sa nu mai apara credentialele si cand ies din ap si intru iar sa nu ma mai duca la profil...
-                                                SharedPreferences preferinteConectare = getSharedPreferences("salveazaDateConectare", MODE_PRIVATE);
-                                                SharedPreferences.Editor preferinteConectareEditor = preferinteConectare.edit();
-                                                preferinteConectareEditor.clear();
-                                                preferinteConectareEditor.commit();
+                                                /*/todo nush cum sa fac cand dau start sa nu mai apara credentialele si cand ies din ap si intru iar sa nu ma mai duca la profil...
+//                                                SharedPreferences preferinteConectare = getSharedPreferences("salveazaDateConectare", MODE_PRIVATE);
+//                                                SharedPreferences.Editor preferinteConectareEditor = preferinteConectare.edit();
+//                                                preferinteConectareEditor.clear();
+//                                                preferinteConectareEditor.commit();*/
 
-                                                Toast.makeText(getApplicationContext(), "Contul a fost șters cu succes!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Contul a fost șters cu succes!",
+                                                        Toast.LENGTH_SHORT).show();
                                                 Log.d("stergereCont", "Contul a fost sters.");
                                                 referintaUserConectat.child("contSters").setValue(true);
-//                                                Toast.makeText(getApplicationContext(), "Emailul a fost actualizat!", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Log.e("stergereCont", task.getException().getMessage());
-                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Contul nu a putut fi sters!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "A intervenit o eroare. Contul nu a putut fi sters!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });

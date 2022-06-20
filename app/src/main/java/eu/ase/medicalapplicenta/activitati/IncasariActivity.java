@@ -222,23 +222,6 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            if (!filePath.exists()) {
-//                try {
-//                    filePath.createNewFile();
-//                    FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-//                    workbook.write(fileOutputStream);
-//
-//                    fileOutputStream.flush();
-//                    fileOutputStream.close();
-//
-//                    Toast.makeText(getApplicationContext(), "Datele au fost exportate in Excel!", Toast.LENGTH_SHORT).show();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getApplicationContext(), "A aparut o eroare!", Toast.LENGTH_SHORT).show();
-//                }
-//            } else {
-//                Toast.makeText(getApplicationContext(), "Nope", Toast.LENGTH_SHORT).show();
-//            }
         }
     }
 }

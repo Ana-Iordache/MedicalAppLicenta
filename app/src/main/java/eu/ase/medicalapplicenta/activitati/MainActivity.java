@@ -187,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void seteazaToggle() {
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_toggle, R.string.close_toggle);
-        drawerLayout.addDrawerListener(toggle); // atasam toggle-ul la drawerLayout
-        toggle.syncState(); // sa se roteasca atunci cand inchid/deschid meniul
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     private void seteazaToolbar() {
@@ -226,33 +226,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void incarcaInfoNavMenu() {
-        firebaseService.databaseReference.child(idPacient).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Pacient pacient = snapshot.getValue(Pacient.class);
+        firebaseService.databaseReference.child(idPacient)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Pacient pacient = snapshot.getValue(Pacient.class);
 
-                if (pacient != null) {
-                    String nume = pacient.getNume();
-                    String prenume = pacient.getPrenume();
-                    numeComplet = nume + " " + prenume;
-                    String email = pacient.getAdresaEmail();
-                    String urlPozaProfil = pacient.getUrlPozaProfil();
+                        if (pacient != null) {
+                            String nume = pacient.getNume();
+                            String prenume = pacient.getPrenume();
+                            numeComplet = nume + " " + prenume;
+                            String email = pacient.getAdresaEmail();
+                            String urlPozaProfil = pacient.getUrlPozaProfil();
 
-                    tvNumeUserConectat.setText(numeComplet);
+                            tvNumeUserConectat.setText(numeComplet);
 
-                    tvEmailUserConectat.setText(email);
+                            tvEmailUserConectat.setText(email);
 
-                    if (!urlPozaProfil.equals("")) {
-                        Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilUser);
+                            if (!urlPozaProfil.equals("")) {
+                                Glide.with(getApplicationContext()).load(urlPozaProfil).into(ciwPozaProfilUser);
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("preluarePacient", error.getMessage());
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("preluarePacient", error.getMessage());
+                    }
+                });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -314,7 +315,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL});
                 intent.putExtra(Intent.EXTRA_SUBJECT, SUBIECT);
-                intent.putExtra(Intent.EXTRA_TEXT, "Nume pacient: " + numeComplet + "\nFeedback: ");
+                intent.putExtra(Intent.EXTRA_TEXT, "Nume pacient: " +
+                        numeComplet + "\nFeedback: ");
                 startActivity(intent);
                 break;
             case R.id.item_despre_noi:

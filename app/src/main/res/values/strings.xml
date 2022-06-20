@@ -244,4 +244,8 @@
     <string name="cauta_pacient">Caută pacient...</string>
     <string name="cauta_medic">Caută medic...</string>
     <string name="reseteaza_parola">Resetează parola</string>
+    <string name="ataseaza_reteta">Atașează rețetă</string>
+    <string name="descarca_reteta">Descarcă rețetă</string>
+    <string name="pd_incarcare_document">Se încarcă documentul...</string>
+    <string name="general">General</string>
 </resources>

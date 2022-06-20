@@ -209,7 +209,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
                     sbInaltime.setProgress(100);
                 }
 
-
                 greutateCurenta = pacient.getGreutate();
                 if (pacient.getGreutate() != 0.0) {
                     text = DECIMAL_FORMAT.format(greutateCurenta) + KG;

@@ -1,22 +1,34 @@
 package eu.ase.medicalapplicenta.activitati;
 
+import static eu.ase.medicalapplicenta.activitati.ListaMediciActivity.MEDIC;
+import static eu.ase.medicalapplicenta.activitati.MainActivity.PACIENT;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,12 +38,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -57,17 +74,23 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 public class ProgramariActivity extends AppCompatActivity implements View.OnClickListener,
         ProgramareAdaptor.OnProgramareClickListener,
         ProgramareAdaptor.OnProgramareLongClickListener,
-        ProgramareAdaptor.OnBtnFeedbackClickListener {
+        ProgramareAdaptor.OnBtnFeedbackClickListener,
+        ProgramareAdaptor.OnBtnRetetaClickListener {
     public static final String PROGRAMARI = "Programari";
     public static final String MEDICI = "Medici";
     public static final String NOTIFICARI = "Notificari";
     public static final String ADAUGA_PROGRAMARE = "adaugaProgramare";
+    public static final int REQUEST_CODE_INTENT = 200;
+    public static final int REQUEST_CODE_READ_EXTERNAL_STORAGE = 100;
+    public static final String DOCUMENTE_PACIENTI = "documente pacienti";
+    public static final String RETETE = "retete";
     private static final DateTimeFormatter FORMAT_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#.00");
     private static final DateFormat FORMAT_ORA = new SimpleDateFormat("HH:mm", Locale.US);
     private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
     private final FirebaseService firebaseServiceNotificari = new FirebaseService(NOTIFICARI);
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     //    private final DatabaseReference referintaDb = firebaseService.databaseReference;
     private final String idUtilizator = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -99,6 +122,11 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     private RadioGroup rgNote;
     //    private EditText etRecenzie;
     private TextInputEditText tietRecenzie;
+
+    private Uri uriPDF;
+    private ProgressDialog progressDialog;
+
+    private Uri urlReteta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,8 +237,8 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
 
     private void seteazaTipUtilizator() {
         Intent intent = getIntent();
-        if (intent.hasExtra(MainActivity.PACIENT)) {
-            tipUtilizator = intent.getStringExtra(MainActivity.PACIENT);
+        if (intent.hasExtra(PACIENT)) {
+            tipUtilizator = intent.getStringExtra(PACIENT);
         } else {
             fabAdaugaProgramare.setVisibility(View.GONE);
             tipUtilizator = intent.getStringExtra(HomeMedicActivity.MEDIC);
@@ -227,7 +255,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     private void seteazaAdaptor() {
         adaptor = new ProgramareAdaptor(programari, tipUtilizator,
                 ProgramariActivity.this, ProgramariActivity.this,
-                ProgramariActivity.this, getApplicationContext());
+                ProgramariActivity.this, ProgramariActivity.this, getApplicationContext());
         rwProgramari.setAdapter(adaptor);
     }
 
@@ -308,7 +336,6 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                         try {
                             String dataOra = p.getData() + " " + p.getOra();
                             Date dataProgramarii = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).parse(dataOra);
-                            //todo poate mai fac frumos..
                             if (rbViitoare.isChecked()) {
                                 if (dataProgramarii.after(dataCurenta) && p.getStatus().equals(getString(R.string.status_noua))) {
                                     programari.add(p);
@@ -411,7 +438,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                             String idReceptor = "";
                             if (tipUtilizator.equals(HomeMedicActivity.MEDIC)) {
                                 idReceptor = programare.getIdPacient();
-                            } else if (tipUtilizator.equals(MainActivity.PACIENT)) {
+                            } else if (tipUtilizator.equals(PACIENT)) {
                                 idReceptor = programare.getIdMedic();
                             }
 
@@ -444,6 +471,115 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         dialogFeedback.show();
     }
 
+    @Override
+    public void onBtnRetetaClickListener(int position) {
+        Programare programare = programari.get(position);
+        if (tipUtilizator.equals(PACIENT)) {
+            String denumirePdfReteta = "reteta" + programare.getIdProgramare() + ".pdf";
+            Uri urlReteta = Uri.parse(programare.getUrlReteta());
+            descarcaReteta(urlReteta, Environment.DIRECTORY_DOWNLOADS, denumirePdfReteta);
+        } else if (tipUtilizator.equals(MEDIC)) {
+            if (programare.getUrlReteta().equals("")) {
+                if (uriPDF == null) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        ataseazaPdf();
+                    } else {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                    }
+                } else {
+                    incarcaPdf(uriPDF, programare);
+                }
+            } else {
+                String denumirePdfReteta = "reteta" + programare.getIdProgramare() + ".pdf";
+                Uri urlReteta = Uri.parse(programare.getUrlReteta());
+                descarcaReteta(urlReteta, Environment.DIRECTORY_DOWNLOADS, denumirePdfReteta);
+//                StorageReference referintaReteta = storageReference.child(DOCUMENTE_PACIENTI).child(programare.getIdPacient()).child(RETETE).child(programare.getIdProgramare());
+//                Uri urlReteta;
+//                referintaReteta.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                    @Override
+//                    public void onSuccess(Uri uri) {
+//                        urlReteta = uri;
+//                        descarcaReteta(urlReteta, Environment.DIRECTORY_DOWNLOADS, denumirePdfReteta);
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(getApplicationContext(), "Nu s-a putut descarca reteta!", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+            }
+        }
+    }
+
+    private void descarcaReteta(Uri uri, String directorDestinatie, String denumireFisier) {
+        DownloadManager downloadManager = (DownloadManager) getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        Toast.makeText(getApplicationContext(), "Se descarcă rețeta...", Toast.LENGTH_SHORT).show();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(getApplicationContext(), directorDestinatie, denumireFisier);
+        downloadManager.enqueue(request);
+    }
+
+    private void incarcaPdf(Uri uriPDF, Programare programare) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.pd_incarcare_document));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        StorageReference referintaReteta = FirebaseStorage.getInstance().getReference().child(DOCUMENTE_PACIENTI).child(programare.getIdPacient()).child(RETETE).child(programare.getIdProgramare());
+        referintaReteta.putFile(uriPDF)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        referintaReteta.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                urlReteta = uri;
+                                firebaseServiceProgramari.databaseReference.child(programare.getIdProgramare()).child("urlReteta").setValue(urlReteta.toString());
+                                Toast.makeText(getApplicationContext(), "Rețeta a fost încărcată cu succes!", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Rețeta nu a putut fi încărcată!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        progressDialog.dismiss();
+    }
+
+    private void ataseazaPdf() {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, REQUEST_CODE_INTENT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_INTENT && resultCode == RESULT_OK && data != null) {
+            uriPDF = data.getData();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_READ_EXTERNAL_STORAGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            ataseazaPdf();
+        }
+    }
+
     private void reseteazaInput() {
         rgNote.clearCheck();
         tvNota.setError(null);
@@ -451,4 +587,5 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         tietRecenzie.setError(null);
         tietRecenzie.clearFocus();
     }
+
 }
