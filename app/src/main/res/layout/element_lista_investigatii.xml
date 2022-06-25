@@ -10,7 +10,7 @@
         android:id="@+id/tvDenumire"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/royale_blue"
+        android:textColor="@color/custom_blue"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />
 

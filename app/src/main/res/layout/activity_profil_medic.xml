@@ -262,6 +262,7 @@
                     android:drawableStart="@drawable/ic_program"
                     android:drawablePadding="@dimen/_10sdp"
                     android:enabled="false"
+                    android:focusable="false"
                     android:hint="@string/program_lucru"
                     android:inputType="none"
                     android:textSize="16sp" />

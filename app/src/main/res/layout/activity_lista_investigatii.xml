@@ -38,7 +38,6 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
         android:theme="@style/TextInputLayoutStyle"
         app:boxCornerRadiusBottomEnd="0dp"
         app:boxCornerRadiusBottomStart="@dimen/_10sdp"
@@ -57,6 +56,24 @@
             android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/etCautaInvestigatie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@drawable/background_edit_text_selector"
+        android:drawableEnd="@drawable/ic_cauta"
+        android:focusable="false"
+        android:hint="@string/cauta_investigatie"
+        android:inputType="textCapWords"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:textSize="@dimen/_14sdp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -112,5 +129,32 @@
             android:textSize="@dimen/_13sdp" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlNicioInvestigatie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/icon_indisponibil"
+            android:src="@drawable/ic_unavailable" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/nicio_investigatie"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

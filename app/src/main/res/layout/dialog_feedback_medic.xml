@@ -32,7 +32,8 @@
         android:orientation="horizontal"
         android:padding="@dimen/_5sdp">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -43,7 +44,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -54,7 +56,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -65,7 +68,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -76,7 +80,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -87,7 +92,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -98,7 +104,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -109,7 +116,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -120,7 +128,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_1sdp"
@@ -131,7 +140,8 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/rb10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -141,22 +151,6 @@
             android:textAlignment="center"
             android:textColor="@drawable/radio_button_nota_text_selector" />
     </RadioGroup>
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/etRecenzie"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/rgNote"-->
-    <!--        android:layout_marginStart="@dimen/_5sdp"-->
-    <!--        android:layout_marginTop="@dimen/_10sdp"-->
-    <!--        android:layout_marginEnd="@dimen/_5sdp"-->
-    <!--        android:background="@drawable/background_edit_text_selector"-->
-    <!--        android:hint="@string/recenzie"-->
-    <!--        android:padding="@dimen/_10sdp"-->
-    <!--        android:textColor="@color/black"-->
-    <!--        android:textSize="@dimen/_13sdp"-->
-    <!--        app:counterEnabled="true"-->
-    <!--        app:counterMaxLength="200" />-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilRecenzie"

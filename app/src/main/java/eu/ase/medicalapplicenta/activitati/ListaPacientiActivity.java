@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -71,7 +72,6 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     private HashSet<String> iduriPacienti;
     private List<Pacient> pacienti;
 
-    //    private ListView lv;
     private RecyclerView rwListaPacienti;
     private PacientAdaptor adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -91,6 +91,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     private String denumirePdfBuletin;
 
     private EditText etCautaPacient;
+
+    private List<Pacient> pacientiFiltered = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +122,6 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
 
     private void initializeazaAtribute() {
         toolbar = findViewById(R.id.toolbar);
-//        lv = findViewById(R.id.lv);
         rwListaPacienti = findViewById(R.id.rwListaPacienti);
         progressBar = findViewById(R.id.progressBar);
         rlNiciunPacient = findViewById(R.id.rlNiciunPacient);
@@ -191,13 +192,15 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                         String stringCurent = charSequence.toString().toLowerCase();
                         if (!stringCurent.isEmpty()) {
-                            List<Pacient> pacientiFiltered = pacienti.stream().filter(pacient ->
+                            pacientiFiltered = pacienti.stream().filter(pacient ->
                                     pacient.getNume().toLowerCase().contains(stringCurent) ||
-                                            pacient.getPrenume().toLowerCase().contains(stringCurent))
+                                            pacient.getPrenume().toLowerCase().contains(stringCurent) ||
+                                            String.valueOf(pacient.getCnp()).contains(stringCurent))
                                     .collect(Collectors.toList());
 
                             afiseazaPacienti(pacientiFiltered);
                         } else {
+                            pacientiFiltered.clear();
                             seteazaAdaptorPacienti(pacienti);
                         }
                     }
@@ -227,22 +230,6 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         }
     }
 
-//    private ValueEventListener preiaPacient() {
-//        return new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Pacient p = snapshot.getValue(Pacient.class);
-////                Toast.makeText(getApplicationContext(), p.toString(), Toast.LENGTH_SHORT).show();
-//                pacienti.add(p);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        };
-//    }
-
     private void seteazaToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -250,6 +237,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         if (intent.hasExtra(HomeMedicActivity.VIZUALIZARE_FEEDBACK)) {
             tvTitlu.setText(getString(R.string.feedback_pacienti));
+        } else if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
+            tvTitlu.setText(getString(R.string.title_conversatie_noua));
         }
     }
 
@@ -271,7 +260,12 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
 
     @Override
     public void onPacientClick(int position) {
-        Pacient pacient = pacienti.get(position);
+        Pacient pacient;
+        if (pacientiFiltered.isEmpty()) {
+            pacient = pacienti.get(position);
+        } else {
+            pacient = pacientiFiltered.get(position);
+        }
 
         referintaBuletin = FirebaseStorage.getInstance().getReference().child(DOCUMENTE_PACIENTI)
                 .child(pacient.getIdPacient()).child(BULETIN);
@@ -331,6 +325,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                             " " + pacient.getPrenume() + EXTENSIE_PDF;
                     btnCardSanatate.setEnabled(true);
                     btnCardSanatate.setTextColor(getResources().getColor(R.color.custom_blue));
+                    btnCardSanatate.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                            R.drawable.ic_download_blue, 0);
                     uriCardSanatate = uri;
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -338,6 +334,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                 public void onFailure(@NonNull Exception e) {
                     btnCardSanatate.setEnabled(false);
                     btnCardSanatate.setTextColor(getResources().getColor(R.color.custom_light_blue));
+                    btnCardSanatate.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                            R.drawable.ic_download_light_blue, 0);
                 }
             });
 
@@ -348,6 +346,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                             + EXTENSIE_PDF;
                     btnBuletin.setEnabled(true);
                     btnBuletin.setTextColor(getResources().getColor(R.color.custom_blue));
+                    btnBuletin.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                            R.drawable.ic_download_blue, 0);
                     uriBuletin = uri;
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -355,6 +355,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                 public void onFailure(@NonNull Exception e) {
                     btnBuletin.setEnabled(false);
                     btnBuletin.setTextColor(getResources().getColor(R.color.custom_light_blue));
+                    btnBuletin.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                            R.drawable.ic_download_light_blue, 0);
                 }
             });
 
@@ -385,6 +387,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
     private void descarcaDocument(Uri uri, String directorDestinatie, String denumireFisier) {
         DownloadManager downloadManager = (DownloadManager) getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(uri);
+        Toast.makeText(getApplicationContext(), R.string.descarcare_document,
+                Toast.LENGTH_SHORT).show();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalFilesDir(getApplicationContext(), directorDestinatie, denumireFisier);
         downloadManager.enqueue(request);

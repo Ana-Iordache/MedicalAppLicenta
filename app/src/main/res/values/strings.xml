@@ -30,8 +30,6 @@
         <item>vineri</item>
     </string-array>
     <string-array name="ani">
-        <item>2019</item>
-        <item>2020</item>
         <item>2021</item>
         <item>2022</item>
     </string-array>
@@ -241,11 +239,15 @@
     <string name="text_obezitate2">Obezitatea de grad 2 este considerată severă și pune viața pacientului în pericol. Printre cele mai grave riscuri se numără: hipertensiunea, colesterol mărit, diabet, afecțiuni cardiace, infarct. Obezitatea severă trebuie tratată cu ajutorul unei echipe de specialiști, alcatuită atât din medic generalist, medic nutriționist, antrenor de fitness, cât și medic gastroenterolog și psiholog. În anumite cazuri, chirurgia bariatrică poate reprezenta o metodă de tratament.</string>
     <string name="text_obezitate3">Obezitatea de grad 3, denumită și obezitate morbidă, este o problemă de sănătate gravă. Calitatea vieții pacienților care suferă de obezitate morbidă este afectată, fiind expuși unor riscuri precum diabetul, hipertensiunea, refluxul gastroesofagian, pietrele la vezica biliara, afectiunile cardiace sau cancerul. Obezitatea morbidă poate fi tratată prin schimbarea radicală a stilului de viață și alimentației cu ajutorul unui specialist sau prin intervenție chirurgicală.</string>
     <string name="niciun_medic">Nu s-a găsit niciun medic.</string>
-    <string name="cauta_pacient">Caută pacient...</string>
-    <string name="cauta_medic">Caută medic...</string>
+    <string name="cauta_pacient">Caută pacient…</string>
+    <string name="cauta_medic">Caută medic…</string>
     <string name="reseteaza_parola">Resetează parola</string>
     <string name="ataseaza_reteta">Atașează rețetă</string>
     <string name="descarca_reteta">Descarcă rețetă</string>
-    <string name="pd_incarcare_document">Se încarcă documentul...</string>
+    <string name="pd_incarcare_document">Se încarcă documentul…</string>
     <string name="general">General</string>
+    <string name="cauta_investigatie">Caută investigație…</string>
+    <string name="nicio_investigatie">Nu s-a găsit nicio investigație</string>
+    <string name="title_selectati_medicul">Selectați medicul</string>
+    <string name="descarcare_document">Se descarcă documentul…</string>
 </resources>

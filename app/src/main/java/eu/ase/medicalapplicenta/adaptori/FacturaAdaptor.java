@@ -56,6 +56,11 @@ public class FacturaAdaptor extends RecyclerView.Adapter<FacturaAdaptor.FacturaA
                 holder.ivNeachitata.setVisibility(View.VISIBLE);
                 holder.btnPlata.setEnabled(true);
                 holder.btnPlata.setTextColor(context.getColor(R.color.custom_blue));
+            } else if (f.getStatus().equals(context.getString(R.string.status_anulata))) {
+                holder.ivAchitata.setVisibility(View.GONE);
+                holder.ivNeachitata.setVisibility(View.GONE);
+                holder.btnPlata.setEnabled(false);
+                holder.btnPlata.setTextColor(context.getColor(R.color.custom_light_blue));
             }
         }
     }

@@ -10,12 +10,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +44,6 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
     private ImageView ivPacient;
 
     private FirebaseAuth mAuth;
-
-    private ProgressBar progressBar;
 
     private AlertDialog resetareParolaDialog;
 
@@ -107,9 +102,11 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Link-ul de resetare a parolei a fost trimis pe email!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),
+                                    "Link-ul de resetare a parolei a fost trimis pe email!", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getApplicationContext(), "Nu s-a putut trimite link-ul de resetare a parolei!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),
+                                    "Nu s-a putut trimite link-ul de resetare a parolei!", Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                         resetareParolaDialog.dismiss();
@@ -156,8 +153,6 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
 
         ivPacient = findViewById(R.id.ivPacient);
 
-        progressBar = findViewById(R.id.progressBar);
-
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -182,7 +177,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
     }
 
     private void conecteazaMedic() {
-        String email = tietLoginEmailMedic.getText().toString().trim(); //trim in cazul in care pune space
+        String email = tietLoginEmailMedic.getText().toString().trim();
         String parola = tietLoginParolaMedic.getText().toString().trim();
 
         if (email.isEmpty()) {
@@ -248,10 +243,5 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         });
     }
 
-    private void loading(Boolean seIncarca) {
-        if (seIncarca) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else progressBar.setVisibility(View.GONE);
-    }
 }
 //todo daca ultima data a fost conectat un medic, ar trb sa ramana pagina de pornire ConectareMedicActivity

@@ -587,6 +587,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             String prenume = tietPrenumePacient.getText().toString().trim();
             String grupaSange = actvGrupeSange.getText().toString();
             long nrTelefon = Long.parseLong("4" + tietNrTelefonPacient.getText().toString().trim());
+            String adresa = tietAdresa.getText().toString().trim();
 
             double greutate;
             if (tietGreutate.getText().toString().isEmpty()) {
@@ -604,8 +605,9 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                 inaltime = Double.parseDouble(tietInaltime.getText().toString().trim());
             }
 
-            if (nume.equals(pacient.getNume()) && prenume.equals(pacient.getPrenume()) && grupaSange.equals(pacient.getGrupaSange())
-                    && nrTelefon == pacient.getNrTelefon() && greutate == pacient.getGreutate()
+            if (nume.equals(pacient.getNume()) && prenume.equals(pacient.getPrenume()) &&
+                    grupaSange.equals(pacient.getGrupaSange()) && nrTelefon == pacient.getNrTelefon()
+                    && adresa.equals(pacient.getAdresa()) && greutate == pacient.getGreutate()
                     && inaltime == pacient.getInaltime() && uri == null) {
 
                 seteazaAccesibilitatea(false);
@@ -621,6 +623,12 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
             referintaUserConectat.child("nrTelefon").setValue(nrTelefon);
             referintaUserConectat.child("greutate").setValue(greutate);
             referintaUserConectat.child("inaltime").setValue(inaltime);
+            if (adresa.equals("")) {
+                referintaUserConectat.child("adresa").setValue(getString(R.string.nespecificat));
+                tietAdresa.setText(getString(R.string.nespecificat));
+            } else {
+                referintaUserConectat.child("adresa").setValue(adresa);
+            }
 
             if (uri != null) {
                 incarcaPoza();
@@ -638,27 +646,27 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         Pattern pattern;
         Matcher matcher;
 
-        if (tietNumePacient.getText().toString().isEmpty()) {
+        if (tietNumePacient.getText().toString().trim().isEmpty()) {
             tietNumePacient.setError(getString(R.string.err_empty_nume));
             tietNumePacient.requestFocus();
             return false;
         }
 
-        if (tietPrenumePacient.getText().toString().isEmpty()) {
+        if (tietPrenumePacient.getText().toString().trim().isEmpty()) {
             tietPrenumePacient.setError(getString(R.string.err_empty_prenume));
             tietPrenumePacient.requestFocus();
             return false;
         }
 
 
-        if (tietNrTelefonPacient.getText().toString().isEmpty()) {
+        if (tietNrTelefonPacient.getText().toString().trim().isEmpty()) {
             tietNrTelefonPacient.setError(getString(R.string.err_empty_telefon));
             tietNrTelefonPacient.requestFocus();
             return false;
         }
 
         pattern = Pattern.compile(getString(R.string.pattern_numar_telefon));
-        matcher = pattern.matcher(tietNrTelefonPacient.getText().toString());
+        matcher = pattern.matcher(tietNrTelefonPacient.getText().toString().trim());
         if (!matcher.matches()) {
             tietNrTelefonPacient.setError(getString(R.string.err_not_valid_telefon));
             tietNrTelefonPacient.requestFocus();
@@ -754,7 +762,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         tietNumePacient.setEnabled(b);
         tietPrenumePacient.setEnabled(b);
         tietAdresa.setEnabled(b);
-////        actvGrupeSange.setEnabled(b);  todo hmmmm
+        actvGrupeSange.setEnabled(b);
 //        actvGrupeSange.setDropDownHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         tietNrTelefonPacient.setEnabled(b);
         tietGreutate.setEnabled(b);

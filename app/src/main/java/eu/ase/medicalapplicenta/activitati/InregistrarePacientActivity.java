@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -20,7 +21,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -73,7 +73,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
     private TextInputEditText tietGreutate;
     private TextInputEditText tietInaltime;
 
-    //    private Spinner spGrupaSange;
     private AutoCompleteTextView actvGrupeSange;
 
     private TextInputEditText tietEmailPacient;
@@ -82,8 +81,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
     private AppCompatButton btnInregistrarePacient;
 
-    private ProgressBar progressBar;
-//    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     private Uri uri;
 
@@ -132,7 +130,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
         btnInregistrarePacient = findViewById(R.id.btnInregistrarePacient);
 
-        progressBar = findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -234,13 +231,14 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                 inaltime = Double.parseDouble(tietInaltime.getText().toString().trim());
             }
 
-            loading(true);
-//        progressDialog.setMessage("Se creeaza contul...");
-//        progressDialog.setCanceledOnTouchOutside(false);
-//        progressDialog.show();
 
             int finalVarsta = varsta;
             String finalSex = sex;
+
+            progressDialog = new ProgressDialog(InregistrarePacientActivity.this);
+            progressDialog.setMessage("Se creează contul...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
 
             mAuth.createUserWithEmailAndPassword(adresaEmail, parola)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -269,13 +267,15 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
                                             finish();
+                                            mAuth.signOut();
                                         } else {
                                             Log.e("adaugarePacient", task.getException().getMessage());
                                         }
-                                        loading(false);
 
+                                        progressDialog.dismiss();
                                     }
                                 });
 
@@ -285,7 +285,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
 
                             } else {
                                 Log.e("inregistrarePacient", task.getException().getMessage());
-                                loading(false);
                             }
                         }
                     });
@@ -406,7 +405,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             return false;
         }
 
-        if (tietDataNasterii.getText().toString().equals(getString(R.string.selectati_data))) {
+        if (tietDataNasterii.getText().toString().isEmpty()) {
             tietDataNasterii.setError(getString(R.string.err_empty_data_nasterii));
             tietDataNasterii.requestFocus();
             return false;
@@ -525,9 +524,4 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         datePickerDialog.show();
     }
 
-    private void loading(Boolean seIncarca) {
-        if (seIncarca) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else progressBar.setVisibility(View.GONE);
-    }
 }

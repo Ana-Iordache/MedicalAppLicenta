@@ -86,8 +86,8 @@
 
             <ImageView
                 android:id="@+id/minusInaltime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/icon_plus"
@@ -102,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/plusInaltime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/icon_minus"
@@ -168,8 +168,8 @@
 
             <ImageView
                 android:id="@+id/minusGreutate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/icon_minus"
@@ -184,8 +184,8 @@
 
             <ImageView
                 android:id="@+id/plusGreutate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/icon_plus"

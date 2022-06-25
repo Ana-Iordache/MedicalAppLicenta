@@ -1,22 +1,28 @@
 package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.adaptori.InvestigatieAdaptor;
@@ -36,7 +43,6 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
     public static final String SPECIALITATI = "Specialitati";
     private final FirebaseService firebaseService = new FirebaseService(SPECIALITATI);
 
-    //    private Spinner spnSpecialitati;
     private AutoCompleteTextView actvSpecialitati;
     private ProgressBar progressBar;
 
@@ -50,6 +56,9 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
 
     private AdapterView.OnItemSelectedListener onItemSelectedListener;
+
+    private EditText etCautaInvestigatie;
+    private RelativeLayout rlNicioInvestigatie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +92,12 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
     private void initializeazaAtribute() {
         progressBar = findViewById(R.id.progressBar);
         toolbar = findViewById(R.id.toolbar);
-//        spnSpecialitati = findViewById(R.id.spnSpecialitati);
         actvSpecialitati = findViewById(R.id.actvSpecialitati);
         llSelectatiSpecialitatea = findViewById(R.id.llSelectatiSpecialitatea);
         rwListaInvestigatii = findViewById(R.id.rwListaInvestigatii);
         investigatii = new ArrayList<>();
+        etCautaInvestigatie = findViewById(R.id.etCautaInvestigatie);
+        rlNicioInvestigatie = findViewById(R.id.rlNicioInvestigatie);
     }
 
     private ValueEventListener preiaSpecialitati() {
@@ -97,7 +107,6 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Specialitate> specialitati = new ArrayList<>();
                 List<String> denumiriSpecialitati = new ArrayList<>();
-//                denumiriSpecialitati.add("Selectati specialitatea");
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Specialitate s = dataSnapshot.getValue(Specialitate.class);
                     specialitati.add(s);
@@ -112,16 +121,50 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
                 actvSpecialitati.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        etCautaInvestigatie.setFocusable(true);
+                        etCautaInvestigatie.setFocusableInTouchMode(true);
+                        etCautaInvestigatie.setText("");
+                        rlNicioInvestigatie.setVisibility(View.GONE);
                         for (Specialitate s : specialitati)
                             if (actvSpecialitati.getText().toString().equals(s.getDenumire())) {
                                 investigatii = s.getInvestigatii();
-                                investigatieAdaptor = new InvestigatieAdaptor(investigatii, getApplicationContext());
-                                rwListaInvestigatii.setAdapter(investigatieAdaptor);
+                                seteazaAdaptor(investigatii);
 
                                 rwListaInvestigatii.setVisibility(View.VISIBLE);
                                 llSelectatiSpecialitatea.setVisibility(View.GONE);
                                 break;
                             }
+                    }
+                });
+
+                etCautaInvestigatie.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        String textCautare = charSequence.toString().toLowerCase();
+                        List<Investigatie> investigatiiiFiltered = investigatii.stream()
+                                .filter(inv -> inv.getDenumire().toLowerCase().contains(textCautare))
+                                .collect(Collectors.toList());
+
+                        if (investigatiiiFiltered.isEmpty()) {
+                            rlNicioInvestigatie.setVisibility(View.VISIBLE);
+                            rwListaInvestigatii.setVisibility(View.GONE);
+                        } else {
+                            rlNicioInvestigatie.setVisibility(View.GONE);
+                            rwListaInvestigatii.setVisibility(View.VISIBLE);
+                            seteazaAdaptor(investigatiiiFiltered);
+                        }
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
                     }
                 });
             }
@@ -131,6 +174,11 @@ public class ListaInvestigatiiActivity extends AppCompatActivity {
                 Log.e("preluareSpecialitati", error.getMessage());
             }
         };
+    }
+
+    private void seteazaAdaptor(List<Investigatie> investigatii) {
+        investigatieAdaptor = new InvestigatieAdaptor(investigatii, getApplicationContext());
+        rwListaInvestigatii.setAdapter(investigatieAdaptor);
     }
 
     @Override

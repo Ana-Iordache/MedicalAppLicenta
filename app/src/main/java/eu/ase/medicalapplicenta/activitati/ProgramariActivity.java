@@ -33,6 +33,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,8 +51,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -85,25 +84,20 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     public static final String DOCUMENTE_PACIENTI = "documente pacienti";
     public static final String RETETE = "retete";
     private static final DateTimeFormatter FORMAT_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    private static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#.00");
-    private static final DateFormat FORMAT_ORA = new SimpleDateFormat("HH:mm", Locale.US);
     private final FirebaseService firebaseServiceProgramari = new FirebaseService(PROGRAMARI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
     private final FirebaseService firebaseServiceNotificari = new FirebaseService(NOTIFICARI);
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    //    private final DatabaseReference referintaDb = firebaseService.databaseReference;
     private final String idUtilizator = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final String dataNotificare = formatter.format(LocalDate.now());
     public String tipUtilizator;
-    //    ListView lv;
     private FloatingActionButton fabAdaugaProgramare;
     private AppCompatRadioButton rbIstoric;
     private AppCompatRadioButton rbViitoare;
     private List<Programare> programari;
 
     private Date dataCurenta;
-//    private Calendar oraCurenta = Calendar.getInstance();
 
     private RecyclerView rwProgramari;
     private ProgramareAdaptor adaptor;
@@ -120,13 +114,14 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     private TextView tvNota;
     private Programare programare;
     private RadioGroup rgNote;
-    //    private EditText etRecenzie;
     private TextInputEditText tietRecenzie;
 
     private Uri uriPDF;
     private ProgressDialog progressDialog;
 
     private Uri urlReteta;
+
+    private int nota;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,13 +149,13 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Acordă feedback medicului");
 
-        View view = getLayoutInflater().inflate(R.layout.dialog_feedback_medic, null);
-        rgNote = view.findViewById(R.id.rgNote);
+        View viewDialog = getLayoutInflater().inflate(R.layout.dialog_feedback_medic, null);
+        rgNote = viewDialog.findViewById(R.id.rgNote);
 
-        tietRecenzie = view.findViewById(R.id.tietRecenzie);
-        AppCompatButton btnTrimite = view.findViewById(R.id.btnTrimite);
-        AppCompatButton btnRenunta = view.findViewById(R.id.btnRenunta);
-        tvNota = view.findViewById(R.id.tvNota);
+        tietRecenzie = viewDialog.findViewById(R.id.tietRecenzie);
+        AppCompatButton btnTrimite = viewDialog.findViewById(R.id.btnTrimite);
+        AppCompatButton btnRenunta = viewDialog.findViewById(R.id.btnRenunta);
+        tvNota = viewDialog.findViewById(R.id.tvNota);
 
         rgNote.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -180,13 +175,15 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         btnTrimite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int nota = rgNote.getCheckedRadioButtonId(); //todo sa vad care-i faza ca uneori imi mai pune o cifra inainte de nota aleasa
-                Toast.makeText(getApplicationContext(), String.valueOf(nota), Toast.LENGTH_SHORT).show();
-                if (nota == -1) {
+                int idNotaSelectata = rgNote.getCheckedRadioButtonId();
+                if (idNotaSelectata == -1) {
                     tvNota.setError("Alegeți o notă!");
                     tvNota.requestFocus();
                     return;
                 }
+
+                RadioButton rbNota = viewDialog.findViewById(idNotaSelectata);
+                nota = Integer.parseInt(rbNota.getText().toString());
 
                 String recenzie = tietRecenzie.getText().toString();
                 if (recenzie.isEmpty()) {
@@ -196,7 +193,10 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 Feedback feedback = new Feedback(nota, recenzie);
-                firebaseServiceProgramari.databaseReference.child(programare.getIdProgramare()).child("feedback").setValue(feedback);
+                firebaseServiceProgramari.databaseReference
+                        .child(programare.getIdProgramare())
+                        .child("feedback")
+                        .setValue(feedback);
                 firebaseServiceMedici.preiaObiectDinFirebase(preiaMedic(), programare.getIdMedic());
 
 //                double notaFeedback = 0.0;
@@ -209,8 +209,9 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        builder.setView(view);
+        builder.setView(viewDialog);
         dialogFeedback = builder.create();
+        dialogFeedback.setCanceledOnTouchOutside(false);
     }
 
     private ValueEventListener preiaMedic() {
@@ -221,7 +222,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                 if (medic.getNoteFeedback() == null) {
                     medic.setNoteFeedback(new ArrayList<>());
                 }
-                medic.getNoteFeedback().add(rgNote.getCheckedRadioButtonId());
+                medic.getNoteFeedback().add(nota);
                 medic.setNotaFeedback(medic.getNoteFeedback().stream().mapToInt(i -> i).average().orElse(0.0));
 
                 firebaseServiceMedici.databaseReference.child(medic.getIdMedic()).setValue(medic);
@@ -273,7 +274,8 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         rbViitoare = findViewById(R.id.rbViitoare);
 
         try {
-            dataCurenta = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).parse(FORMAT_DATA.format(LocalDateTime.now()));
+            dataCurenta = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US)
+                    .parse(FORMAT_DATA.format(LocalDateTime.now()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -329,7 +331,6 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 programari = new ArrayList<>();
-//                programari.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Programare p = dataSnapshot.getValue(Programare.class);
                     if (p.getIdPacient().equals(idUtilizator) || p.getIdMedic().equals(idUtilizator)) {
@@ -406,6 +407,14 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                                     .child(programare.getIdProgramare())
                                     .child("status")
                                     .setValue(statusSelectat);
+
+                            if (statusSelectat.equals(statusuri[1])) {
+                                firebaseServiceProgramari.databaseReference
+                                        .child(programare.getIdProgramare())
+                                        .child("factura")
+                                        .child("status")
+                                        .setValue(getString(R.string.status_anulata));
+                            }
                             dialogInterface.dismiss();
                         }
                     });
@@ -435,6 +444,12 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                                     .child("status")
                                     .setValue(getString(R.string.status_anulata));
 
+                            firebaseServiceProgramari.databaseReference
+                                    .child(programare.getIdProgramare())
+                                    .child("factura")
+                                    .child("status")
+                                    .setValue(getString(R.string.status_anulata));
+
                             String idReceptor = "";
                             if (tipUtilizator.equals(HomeMedicActivity.MEDIC)) {
                                 idReceptor = programare.getIdPacient();
@@ -460,6 +475,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                     })
                     .create();
             dialog.show();
+            dialog.setCanceledOnTouchOutside(false);
         }
 
     }
@@ -493,31 +509,19 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                 String denumirePdfReteta = "reteta" + programare.getIdProgramare() + ".pdf";
                 Uri urlReteta = Uri.parse(programare.getUrlReteta());
                 descarcaReteta(urlReteta, Environment.DIRECTORY_DOWNLOADS, denumirePdfReteta);
-//                StorageReference referintaReteta = storageReference.child(DOCUMENTE_PACIENTI).child(programare.getIdPacient()).child(RETETE).child(programare.getIdProgramare());
-//                Uri urlReteta;
-//                referintaReteta.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        urlReteta = uri;
-//                        descarcaReteta(urlReteta, Environment.DIRECTORY_DOWNLOADS, denumirePdfReteta);
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(getApplicationContext(), "Nu s-a putut descarca reteta!", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-
             }
         }
     }
 
     private void descarcaReteta(Uri uri, String directorDestinatie, String denumireFisier) {
-        DownloadManager downloadManager = (DownloadManager) getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager downloadManager = (DownloadManager) getApplicationContext()
+                .getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(uri);
-        Toast.makeText(getApplicationContext(), "Se descarcă rețeta...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Se descarcă rețeta...",
+                Toast.LENGTH_SHORT).show();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalFilesDir(getApplicationContext(), directorDestinatie, denumireFisier);
+        request.setDestinationInExternalFilesDir(getApplicationContext(),
+                directorDestinatie, denumireFisier);
         downloadManager.enqueue(request);
     }
 
@@ -527,7 +531,11 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        StorageReference referintaReteta = FirebaseStorage.getInstance().getReference().child(DOCUMENTE_PACIENTI).child(programare.getIdPacient()).child(RETETE).child(programare.getIdProgramare());
+        StorageReference referintaReteta = FirebaseStorage.getInstance().getReference()
+                .child(DOCUMENTE_PACIENTI)
+                .child(programare.getIdPacient())
+                .child(RETETE)
+                .child(programare.getIdProgramare());
         referintaReteta.putFile(uriPDF)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -536,8 +544,12 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                             @Override
                             public void onSuccess(Uri uri) {
                                 urlReteta = uri;
-                                firebaseServiceProgramari.databaseReference.child(programare.getIdProgramare()).child("urlReteta").setValue(urlReteta.toString());
-                                Toast.makeText(getApplicationContext(), "Rețeta a fost încărcată cu succes!", Toast.LENGTH_SHORT).show();
+                                firebaseServiceProgramari.databaseReference
+                                        .child(programare.getIdProgramare())
+                                        .child("urlReteta")
+                                        .setValue(urlReteta.toString());
+                                Toast.makeText(getApplicationContext(),
+                                        "Rețeta a fost încărcată cu succes!", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -550,7 +562,8 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Rețeta nu a putut fi încărcată!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                "Rețeta nu a putut fi încărcată!", Toast.LENGTH_SHORT).show();
                     }
                 });
 

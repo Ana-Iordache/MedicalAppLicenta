@@ -7,24 +7,6 @@
     android:background="@color/custom_light_blue"
     tools:context=".activitati.InregistrarePacientActivity">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:translationZ="@dimen/_90sdp"
-        android:visibility="gone" />
-
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:elevation="@dimen/_10sdp"-->
-    <!--        app:cardBackgroundColor="@color/custom_light_blue"-->
-    <!--        app:cardCornerRadius="@dimen/_10sdp"-->
-    <!--        app:cardElevation="@dimen/_5sdp">-->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -81,6 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:text="@string/atentionare"
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="italic" />
@@ -231,7 +214,6 @@
                         android:drawableStart="@drawable/ic_data_nasterii"
                         android:drawablePadding="@dimen/_10sdp"
                         android:focusable="true"
-                        android:focusableInTouchMode="true"
                         android:hint="@string/data_nasterii_mandatory"
                         android:inputType="none"
                         android:textColor="@color/black"
@@ -417,7 +399,5 @@
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-
-    <!--    </androidx.cardview.widget.CardView>-->
 
 </RelativeLayout>

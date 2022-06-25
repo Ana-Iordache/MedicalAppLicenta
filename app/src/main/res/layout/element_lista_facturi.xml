@@ -81,18 +81,26 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/ivBani"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@+id/ll"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:src="@drawable/ic_bani" />
 
             <TextView
+                android:id="@+id/tvVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:drawablePadding="@dimen/_9sdp"
+                android:layout_toEndOf="@+id/ivBani"
                 android:text="@string/valoare"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                app:drawableStartCompat="@drawable/ic_bani" />
+                android:textSize="@dimen/_16sdp" />
 
             <TextView
                 android:id="@+id/tvValoare"

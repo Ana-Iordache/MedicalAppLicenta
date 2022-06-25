@@ -40,7 +40,7 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:theme="@style/TextInputLayoutStyle"
         app:boxCornerRadiusBottomEnd="0dp"
         app:boxCornerRadiusBottomStart="@dimen/_10sdp"
@@ -55,12 +55,8 @@
             android:drawablePadding="@dimen/_10sdp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="An"
             android:inputType="none"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingTop="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_15sdp"
+            android:padding="@dimen/_10sdp"
             android:text="2022"
             android:textSize="16sp" />
 

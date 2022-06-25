@@ -19,10 +19,7 @@ import eu.ase.medicalapplicenta.activitati.InregistrarePacientActivity;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 
 public class FirebaseService {
-    private static final String PACIENTI = "Pacienti";
-    private static final String FIREBASE_TAG = "evenimentFirebase";
     public DatabaseReference databaseReference;
-    private Context context;
 
     public FirebaseService(String enitate) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -40,38 +37,4 @@ public class FirebaseService {
             databaseReference.child(uid).addListenerForSingleValueEvent(eventListener);
         }
     }
-
-//    public FirebaseService(Context context){
-//        this.context = context;
-//    }
-
-
-//    public void adaugaPacient(Pacient pacient) {
-//        if(pacient!=null){
-////            databaseReference.addValueEventListener(new ValueEventListener() {
-////                @Override
-////                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//////                    pacient.setIdPacient(databaseReference.push().getKey());
-//////                    databaseReference.child(pacient.getIdPacient()).setValue(pacient);
-////                    databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-////                            .setValue(pacient);
-////                    Log.i(FIREBASE_TAG, "Pacientul a fost adaugat in baza de date!");
-////                }
-////
-////                @Override
-////                public void onCancelled(@NonNull DatabaseError error) {
-////                    Log.w(FIREBASE_TAG, "Pacientul NU a fost adaugat in baza de date!");
-////                }
-////            });
-//            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                    .setValue(pacient).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if(task.isSuccessful()){
-//                        Toast.makeText(context, "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
-//        }
-//    }
 }

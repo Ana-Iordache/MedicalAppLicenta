@@ -21,17 +21,6 @@ public class Medic implements Serializable {
     public Medic() {
     }
 
-//    public Medic(String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, double notaFeedback, String gradProfesional, String urlPozaProfil) {
-//        this.nume = nume;
-//        this.prenume = prenume;
-//        this.nrTelefon = nrTelefon;
-//        this.adresaEmail = adresaEmail;
-//        this.idSpecialitate = idSpecialitate;
-//        this.notaFeedback = notaFeedback;
-//        this.gradProfesional = gradProfesional;
-//        this.urlPozaProfil = urlPozaProfil;
-//    }
-
     public Medic(String idMedic, String nume, String prenume, long nrTelefon, String adresaEmail, String idSpecialitate, List<Integer> noteFeedback, double notaFeedback, String gradProfesional, String urlPozaProfil, List<ZiDeLucru> program) {
         this.idMedic = idMedic;
         this.nume = nume;

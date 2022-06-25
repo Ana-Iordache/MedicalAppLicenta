@@ -209,8 +209,8 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
                     sbInaltime.setProgress(100);
                 }
 
-                greutateCurenta = pacient.getGreutate();
                 if (pacient.getGreutate() != 0.0) {
+                    greutateCurenta = pacient.getGreutate();
                     text = DECIMAL_FORMAT.format(greutateCurenta) + KG;
                     tvGreutateCurenta.setText(text);
                     sbGreutate.setProgress((int) (greutateCurenta * 10));
@@ -219,10 +219,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
                     tvGreutateCurenta.setText(text);
                     sbGreutate.setProgress(300);
                 }
-//                greutate = pacient.getGreutate();
-
-//                tvVarstaCurenta.setText(String.valueOf(pacient.getVarsta()));
-//                varstaCurenta = pacient.getVarsta();
             }
 
             @Override

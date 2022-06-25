@@ -185,7 +185,7 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
         DownloadManager downloadManager = (DownloadManager) getApplicationContext()
                 .getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(uri);
-        Toast.makeText(getApplicationContext(), "Se descarcă documentul...",
+        Toast.makeText(getApplicationContext(), R.string.descarcare_document,
                 Toast.LENGTH_SHORT).show();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalFilesDir(getApplicationContext(),

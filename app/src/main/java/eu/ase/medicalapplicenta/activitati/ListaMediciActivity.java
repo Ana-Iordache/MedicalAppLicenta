@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,21 +51,18 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     public static final String SPECIALITATI = "Specialitati";
     public static final String MEDICI = "Medici";
     public static final String ORE_DISPONIBILE = "oreDisponibile";
-    public static final String INFORMATII_MEDIC = "informatiiMedic";
     public static final String MEDIC = "medic";
     private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
 
-    private Intent intent;// = getIntent();
+    private Intent intent;
     private AppCompatButton btnProgramare;
-    //    private ListView lwListaMedici;
     private Toolbar toolbar;
     private ProgressBar progressBar;
     private List<Medic> medici;
     private RecyclerView rwListaMedici;
     private MedicAdaptor adapter;
     private RecyclerView.LayoutManager layoutManager;
-    //    MedicAdaptor.OnDoctorClickListener onDoctorClickListener;
     private AutoCompleteTextView actvSpecialitati;
     private TextView tvTitlu;
     private EditText etCautaMedic;
@@ -75,6 +73,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
 
     private RelativeLayout rlNiciunMedic;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +97,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         rwListaMedici.setAdapter(adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void seteazaToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -105,6 +105,8 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
             tvTitlu.setText(R.string.title_conversatie_noua);
+        } else if (intent.hasExtra(ProgramariActivity.ADAUGA_PROGRAMARE)) {
+            tvTitlu.setText(R.string.title_selectati_medicul);
         }
     }
 
@@ -145,37 +147,6 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
 
                 actvSpecialitati.setOnItemClickListener(ListaMediciActivity.this);
 
-//                actvSpecialitati.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @RequiresApi(api = Build.VERSION_CODES.N)
-//                    @Override
-//                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                        String stringCurent = etCautaMedic.getText().toString();
-//                        if (i != 0) {
-//                            List<Medic> mediciFiltered;
-//                            if (stringCurent.isEmpty()) {
-//                                mediciFiltered = medici.stream().
-//                                        filter(medic -> medic.getIdSpecialitate().equals(specialitati.get(i - 1).getIdSpecialitate()))
-//                                        .collect(Collectors.toList());
-//                            } else { //daca am filtrat deja prin cautare
-//
-//                                mediciFiltered = medici.stream().
-//                                        filter(medic -> medic.getIdSpecialitate().equals(specialitati.get(i - 1).getIdSpecialitate())
-//                                                && medic.getNume().toLowerCase().contains(stringCurent)
-//                                                || medic.getPrenume().toLowerCase().contains(stringCurent))
-//                                        .collect(Collectors.toList());
-//                            }
-//                            seteazaAdaptorMedici(mediciFiltered);
-//                        } else {
-////                            mediciFiltered = mediciFilteredCautare;
-//                            if (stringCurent.isEmpty()) {
-//                                seteazaAdaptorMedici(medici);
-//                            } else {
-//                                seteazaAdaptorMedici(mediciFilteredCautare);
-//                            }
-//                        }
-//                    }
-//                });
-
                 etCautaMedic.addTextChangedListener(ListaMediciActivity.this);
 
             }
@@ -200,14 +171,8 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
                 }
 
                 seteazaAdaptorMedici(medici);
-//                adapter.notifyDataSetChanged(); nu cred ca trb
-
-//                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rwListaMedici.getContext(), DividerItemDecoration.VERTICAL);
-//                rwListaMedici.addItemDecoration(dividerItemDecoration);
 
                 loading(false);
-//                MedicAdaptor adapter = new MedicAdaptor(getApplicationContext(), R.layout.element_lista_medici, medici, getLayoutInflater());
-//                lwListaMedici.setAdapter(adapter);
             }
 
             @Override
@@ -242,7 +207,12 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onDoctorClick(int position) {
-        Medic medic = medici.get(position);
+        Medic medic;
+        if (mediciFiltered.isEmpty()) {
+            medic = medici.get(position);
+        } else {
+            medic = mediciFiltered.get(position);
+        }
         if (intent.hasExtra(ProgramariActivity.ADAUGA_PROGRAMARE)) {
             startActivity(new Intent(getApplicationContext(), OreDisponibileActivity.class).putExtra(ORE_DISPONIBILE, medic));
         } else if (intent.hasExtra(MainActivity.VIZUALIZARE_MEDICI)) {
@@ -362,15 +332,11 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
                 filtreazaMediciDupaNume(stringCurent);
             } else { //caut medicii doar de la specialitatea selecatata
                 filtreazaMediciDupaSpecialitateSiNume(specialitati.get(specialitateSelectata - 1).getIdSpecialitate(), stringCurent);
-//                mediciFiltered = medici.stream().
-//                        filter(medic -> medic.getIdSpecialitate().equals(specialitati.get(specialitateSelectata - 1).getIdSpecialitate())
-//                                && (medic.getNume().toLowerCase().contains(stringCurent)
-//                                || medic.getPrenume().toLowerCase().contains(stringCurent)))
-//                        .collect(Collectors.toList());
             }
             afiseazaMedici();
 
         } else {
+            mediciFiltered.clear();
             if (specialitateSelectata == 0) {
                 seteazaAdaptorMedici(medici);
             } else {
@@ -418,12 +384,4 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
                 .collect(Collectors.toList());
     }
 
-
-//    @RequiresApi(api = Build.VERSION_CODES.M)
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        btnProgramare.setBackgroundDrawable(getDrawable(R.drawable.background_butoane_secundare));
-//        btnProgramare.setTextColor(getColor(R.color.custom_blue));
-//    }
 }

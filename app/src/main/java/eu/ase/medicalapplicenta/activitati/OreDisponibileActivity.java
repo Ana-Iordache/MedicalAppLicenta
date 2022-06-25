@@ -13,6 +13,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.icu.util.LocaleData;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -218,7 +219,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
     private void afiseazaCalendar() {
         final Calendar calendar = Calendar.getInstance();
 
-        if (!tietDataProgramarii.getText().toString().equals("Selectati data")) {
+        if (!tietDataProgramarii.getText().toString().equals(getString(R.string.selectati_data))) {
             try {
                 Date dataSelectata = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(tietDataProgramarii.getText().toString());
                 calendar.setTime(dataSelectata);
@@ -254,6 +255,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         datePickerDialog.getDatePicker().setMaxDate(dataMaxima.getTimeInMillis());
 
         datePickerDialog.show();
+        datePickerDialog.setCanceledOnTouchOutside(false);
     }
 
     private void afiseazaOreDisponibile(String dataString) {
@@ -357,7 +359,6 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                     .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(getApplicationContext(), "Programarea nu a fost trimisa!", Toast.LENGTH_SHORT).show();
                             dialogInterface.cancel();
                         }
                     })
@@ -371,6 +372,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                                     .orElseThrow(Resources.NotFoundException::new);
                             double valoare = investigatie.getPret();
 
+//                            LocalDate dataProgramarii = LocalDate.parse(tietDataProgramarii.getText().toString(), formatter);
 
                             Factura factura = new Factura(null,
                                     valoare,
@@ -403,7 +405,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                             notificare.setIdNotificare(idNotificare);
                             firebaseServiceNotificari.databaseReference.child(idNotificare).setValue(notificare);
 
-                            Toast.makeText(getApplicationContext(), "Programarea a fost trimisa!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Programarea a fost trimisă!", Toast.LENGTH_SHORT).show();
                             dialogInterface.cancel();
 
                             finish();
@@ -411,7 +413,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
                         }
                     }).create();
             dialog.show();
-
+            dialog.setCanceledOnTouchOutside(false);
         } else {
             actvInvestigatii.setError(getString(R.string.err_empty_investigatie));
             actvInvestigatii.requestFocus();

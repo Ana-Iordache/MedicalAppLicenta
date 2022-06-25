@@ -12,10 +12,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +39,6 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
     private TextView tvCreareCont;
     private TextView tvResetareParola;
-
-    private ProgressBar progressBar;
 
     private CheckBox cbRamaiAutentificat;
     private SharedPreferences preferinteConectare;
@@ -162,8 +158,6 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         tvCreareCont = findViewById(R.id.tvCreareCont);
         tvResetareParola = findViewById(R.id.tvResetareParola);
 
-        progressBar = findViewById(R.id.progressBar);
-
         cbRamaiAutentificat = findViewById(R.id.cbRamaiAutentificat);
 
         tvSuntMedic = findViewById(R.id.tvSuntMedic);
@@ -273,13 +267,6 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         }
         preferinteConectareEditor.commit();
     }
-
-    private void loading(Boolean seIncarca) {
-        if (seIncarca) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else progressBar.setVisibility(View.GONE);
-    }
-
 
     @Override
     public void onBackPressed() {

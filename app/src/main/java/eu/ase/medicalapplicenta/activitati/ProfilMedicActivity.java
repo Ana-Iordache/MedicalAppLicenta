@@ -168,9 +168,6 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
         });
 
         firebaseServiceMedic.preiaObiectDinFirebase(preiaMedic(), idUserConectat);
-
-
-//        referintaUserConectat.addListenerForSingleValueEvent();
     }
 
     private void seteazaDialogProgramLucru() {
@@ -203,6 +200,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
         builder.setView(view);
         dialogProgram = builder.create();
+        dialogProgram.setCanceledOnTouchOutside(false);
     }
 
     private void seteazaDialogSchimbaParola() {
@@ -222,6 +220,18 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 dialogParola.dismiss();
+
+                tietParolaActuala.clearFocus();
+                tietParolaActuala.setText("");
+                tietParolaActuala.setError(null);
+
+                tietParolaNoua.clearFocus();
+                tietParolaNoua.setText("");
+                tietParolaNoua.setError(null);
+
+                tietConfirmareParolaNoua.clearFocus();
+                tietConfirmareParolaNoua.setText("");
+                tietConfirmareParolaNoua.setError(null);
             }
         });
 
@@ -278,20 +288,29 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                                         public void onComplete(@NonNull Task<Void> task) {
                                             loading(false);
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(), "Parola a fost actualizată!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Parola a fost actualizată!", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Log.e("schimbareParola", task.getException().getMessage());
-                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Parola nu a fost schimbată!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "A intervenit o eroare. Parola nu a fost schimbată!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
 
-
-                                    tietParolaActuala.setText("");
-                                    tietParolaNoua.setText("");
-                                    tietConfirmareParolaNoua.setText("");
-
                                     dialogParola.dismiss();
+
+                                    tietParolaActuala.clearFocus();
+                                    tietParolaActuala.setText("");
+                                    tietParolaActuala.setError(null);
+
+                                    tietParolaNoua.clearFocus();
+                                    tietParolaNoua.setText("");
+                                    tietParolaNoua.setError(null);
+
+                                    tietConfirmareParolaNoua.clearFocus();
+                                    tietConfirmareParolaNoua.setText("");
+                                    tietConfirmareParolaNoua.setError(null);
                                 } else {
                                     loading(false);
                                     Log.e("reautentificareUser", task.getException().getMessage());
@@ -305,6 +324,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
         builder.setView(view);
         dialogParola = builder.create();
+        dialogParola.setCanceledOnTouchOutside(false);
     }
 
     private void seteazaDialogSchimbaEmail() {
@@ -324,6 +344,14 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 dialogEmail.dismiss();
+
+                tietEmail.clearFocus();
+                tietEmail.setText("");
+                tietEmail.setError(null);
+
+                tietParola.clearFocus();
+                tietParola.setText("");
+                tietParola.setError(null);
             }
         });
 
@@ -370,20 +398,27 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                                         public void onComplete(@NonNull Task<Void> task) {
                                             loading(false);
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(), "Emailul a fost actualizat!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Emailul a fost actualizat!", Toast.LENGTH_SHORT).show();
                                                 tietEmailMedic.setText(email);
                                                 referintaUserConectat.child("adresaEmail").setValue(email);
                                             } else {
                                                 Log.e("schimbareEmail", task.getException().getMessage());
-                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Emailul nu a fost schimbat!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "A intervenit o eroare. Emailul nu a fost schimbat!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
 
-                                    tietEmail.setText("");
-                                    tietParola.setText("");
-
                                     dialogEmail.dismiss();
+
+                                    tietEmail.clearFocus();
+                                    tietEmail.setText("");
+                                    tietEmail.setError(null);
+
+                                    tietParola.clearFocus();
+                                    tietParola.setText("");
+                                    tietParola.setError(null);
                                 } else {
                                     loading(false);
                                     Log.e("reautentificareUser", task.getException().getMessage());
@@ -397,6 +432,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
         builder.setView(view);
         dialogEmail = builder.create();
+        dialogEmail.setCanceledOnTouchOutside(false);
     }
 
     private void seteazaDialogStergeCont() {
@@ -447,18 +483,20 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                                             loading(false);
                                             if (task.isSuccessful()) {
                                                 //todo nush cum sa fac cand dau start sa nu mai apara credentialele si cand ies din ap si intru iar sa nu ma mai duca la profil...
-                                                SharedPreferences preferinteConectare = getSharedPreferences("salveazaDateConectare", MODE_PRIVATE);
+                                                SharedPreferences preferinteConectare = getSharedPreferences("salveazaDateConectare",
+                                                        MODE_PRIVATE);
                                                 SharedPreferences.Editor preferinteConectareEditor = preferinteConectare.edit();
                                                 preferinteConectareEditor.clear();
                                                 preferinteConectareEditor.commit();
 
-                                                Toast.makeText(getApplicationContext(), "Contul a fost șters cu succes!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Contul a fost șters cu succes!",
+                                                        Toast.LENGTH_SHORT).show();
                                                 Log.d("stergereCont", "Contul a fost sters.");
                                                 referintaUserConectat.child("contSters").setValue(true);
-//                                                Toast.makeText(getApplicationContext(), "Emailul a fost actualizat!", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Log.e("stergereCont", task.getException().getMessage());
-                                                Toast.makeText(getApplicationContext(), "A intervenit o eroare. Contul nu a putut fi sters!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "A intervenit o eroare. Contul nu a putut fi șters!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
@@ -480,6 +518,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
         builder.setView(view);
         dialogStergereCont = builder.create();
+        dialogStergereCont.setCanceledOnTouchOutside(false);
     }
 
     private void loading(@NonNull Boolean seIncarca) {
@@ -510,7 +549,6 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                     String prenume = medic.getPrenume();
                     long nrTelefon = medic.getNrTelefon();
                     String adresaEmail = medic.getAdresaEmail();
-//                    String idSpecialitate = medic.getIdSpecialitate();
                     double notaFeedback = medic.getNotaFeedback();
                     String gradProfesional = medic.getGradProfesional();
                     String urlPozaProfil = medic.getUrlPozaProfil();
@@ -535,7 +573,11 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                     else tietNrTelefonMedic.setText("");
 
                     tietEmailMedic.setText(adresaEmail);
-                    tietNota.setText(MedicAdaptor.NUMBER_FORMAT.format(notaFeedback));
+                    if (notaFeedback != 0) {
+                        tietNota.setText(MedicAdaptor.NUMBER_FORMAT.format(notaFeedback));
+                    } else {
+                        tietNota.setText("-");
+                    }
 
                     ArrayAdapter<String> adapter = (ArrayAdapter<String>) actvGradeProfesionale.getAdapter();
                     for (int i = 0; i < adapter.getCount(); i++) {
@@ -600,7 +642,6 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -616,9 +657,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                     specialitati.add(s);
                 }
                 denumiriSpecialitati = new ArrayList<>();
-//                denumiriSpecialitati.add("Selectati specialitatea");
                 int poz = 0;
-//                Toast.makeText(getApplicationContext(), String.valueOf(idSpecialitate),Toast.LENGTH_SHORT).show(); e null..
                 for (int i = 0; i < specialitati.size(); i++) {
                     if (specialitati.get(i).getIdSpecialitate().equals(medic.getIdSpecialitate())) {
                         poz = i;
@@ -715,28 +754,13 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                 afiseazaTimePicker(tietOraSfarsit, getString(R.string.ora_de_sfarsit));
                 break;
             case R.id.btnAdauga:
-//                adaugaZiDeLucru();
-//                if (actvZileDeLucru.getText().toString().isEmpty()) {
-//                    actvZileDeLucru.setError("Selectați ziua!");
+//                if (program.stream().anyMatch(zi -> zi.getZi().equals(actvZileDeLucru.getText().toString()))) {
+//                    actvZileDeLucru.setError("Ziua de " + actvZileDeLucru.getText().toString() + " există deja în program!");
 //                    actvZileDeLucru.requestFocus();
 //                    return;
 //                }
 
-                if (program.stream().anyMatch(zi -> zi.getZi().equals(actvZileDeLucru.getText().toString()))) {
-                    actvZileDeLucru.setError("Ziua de " + actvZileDeLucru.getText().toString() + " există deja în program!");
-                    actvZileDeLucru.requestFocus();
-                    return;
-                }
-//                for (ZiDeLucru zi : program) {
-//                    if (zi.getZi().equals(actvZileDeLucru.getText().toString())) {
-//                        actvZileDeLucru.setError("Ziua de " + zi.getZi() + " există deja în program!");
-//                        actvZileDeLucru.requestFocus();
-//                        return;
-//                    }
-//                }
-
                 if (tietOraInceput.getText().toString().isEmpty()) {
-                    //todo
                     //ca sa apara si textul trb sa-i pun din xml focusable pe true
                     //dar asa imi apare tastatura la primuk click pe tiet uof
                     tietOraInceput.setError("Selectați ora de început!");
@@ -779,6 +803,10 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
 
         tietOraSfarsit.setText("");
         tietOraSfarsit.setError(null);
+
+        btnAdauga.setVisibility(View.VISIBLE);
+        btnAdauga.setEnabled(false);
+        btnElimina.setVisibility(View.GONE);
     }
 
 
@@ -841,7 +869,6 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
             String gradProfesional = actvGradeProfesionale.getText().toString();
 
             String specialitate = actvSpecialitati.getText().toString();
-            //todo something is fishy....cred ca am rezolvat
             String idSpecialitate = "";
             for (Specialitate s : specialitati) {
                 if (s.getDenumire().equals(specialitate)) {
@@ -850,15 +877,13 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                 }
             }
 
-
-            //todo un progress bar pana cand se actualizeaza si in bd datele
             if (nume.equals(medic.getNume()) && prenume.equals(medic.getPrenume())
                     && nrTelefon == medic.getNrTelefon() && gradProfesional.equals(medic.getGradProfesional())
                     && idSpecialitate.equals(medic.getIdSpecialitate()) && uri == null
                     && program == medic.getProgram()) {
 
                 btnRenunta.callOnClick();
-                Toast.makeText(getApplicationContext(), "Informatiile nu au fost modificate!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Informațiile nu au fost modificate!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -900,7 +925,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
         upload.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Nu s-a putut incarca poza!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -928,7 +953,6 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                                     }
                                 }
                             });
-//                            finish();
                         }
                     });
                 }

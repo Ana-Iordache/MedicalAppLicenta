@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -20,7 +22,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -59,7 +60,6 @@ import eu.ase.medicalapplicenta.entitati.Specialitate;
 import eu.ase.medicalapplicenta.entitati.ZiDeLucru;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-//todo sa testez iar ca merge
 public class InregistrareMedicActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String SPECIALITATI = "Specialitati";
     public static final String MEDICI = "Medici";
@@ -92,12 +92,13 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
     private TextInputEditText tietOraInceput;
     private TextInputEditText tietOraSfarsit;
     private AppCompatButton btnAdauga;
+    private AppCompatButton btnElimina;
     private AppCompatButton btnRenunta;
     private AutoCompleteTextView actvZileDeLucru;
 
-    private List<ZiDeLucru> program;
+    private List<ZiDeLucru> program = new ArrayList<>();
 
-    private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,26 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         actvSpecialitati.setOnClickListener(this);
         tietProgramLucru.setOnClickListener(this);
         actvZileDeLucru.setOnClickListener(this);
+
+        actvZileDeLucru.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (program.isEmpty()) {
+                    btnAdauga.setEnabled(true);
+                } else {
+                    for (ZiDeLucru zi : program) {
+                        if (zi.getZi().equals(actvZileDeLucru.getText().toString())) {
+                            btnAdauga.setVisibility(View.GONE);
+                            btnElimina.setVisibility(View.VISIBLE);
+                            break;
+                        }
+                        btnElimina.setVisibility(View.GONE);
+                        btnAdauga.setVisibility(View.VISIBLE);
+                        btnAdauga.setEnabled(true);
+                    }
+                }
+            }
+        });
     }
 
     private void seteazaDialogProgramLucru() {
@@ -128,6 +149,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         tietOraInceput = view.findViewById(R.id.tietOraInceput);
         tietOraSfarsit = view.findViewById(R.id.tietOraSfarsit);
         btnAdauga = view.findViewById(R.id.btnAdauga);
+        btnElimina = view.findViewById(R.id.btnElimina);
         btnRenunta = view.findViewById(R.id.btnRenunta);
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.dropdown_item,
@@ -145,9 +167,11 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         tietOraSfarsit.setOnClickListener(this);
         btnAdauga.setOnClickListener(this);
         btnRenunta.setOnClickListener(this);
+        btnElimina.setOnClickListener(this);
 
         builder.setView(view);
         dialogProgram = builder.create();
+        dialogProgram.setCanceledOnTouchOutside(false);
     }
 
 
@@ -166,8 +190,6 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
 
         specialitati = new ArrayList<>();
         program = new ArrayList<>();
-
-//        spnSpecialitate = findViewById(R.id.spnSpecialitate);
 
         btnInregistrareMedic = findViewById(R.id.btnInregistrareMedic);
 
@@ -209,28 +231,43 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                 tietOraSfarsit.setError(null);
                 afiseazaTimePicker(tietOraSfarsit, getString(R.string.ora_de_sfarsit));
                 break;
+            case R.id.btnElimina:
+                AlertDialog dialog = new AlertDialog.Builder(InregistrareMedicActivity.this)
+                        .setTitle("Confirmare ștergere zi din program")
+                        .setMessage("Ștergeți ziua de " + actvZileDeLucru.getText().toString() + " din program?")
+                        .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                program.removeIf(zi -> zi.getZi().equals(actvZileDeLucru.getText().toString()));
+                                StringBuilder programString = new StringBuilder();
+                                for (int j = 0; j < program.size(); j++) {
+                                    programString.append(program.get(j).toString());
+                                    if (j != program.size() - 1) {
+                                        programString.append("\n");
+                                    }
+                                }
+                                tietProgramLucru.setText(programString.toString());
+                                dialogInterface.cancel();
+                                dialogProgram.dismiss();
+                                golesteInputuri();
+                            }
+                        }).create();
+                dialog.show();
+                break;
             case R.id.btnAdauga:
-//                if (actvZileDeLucru.getText().toString().isEmpty()) {
-//                    actvZileDeLucru.setError("Selectați ziua!");
+//                if (program.stream().anyMatch(zi -> zi.getZi().equals(actvZileDeLucru.getText().toString()))) {
+//                    actvZileDeLucru.setError("Ziua de " + actvZileDeLucru.getText().toString() + " există deja în program!");
 //                    actvZileDeLucru.requestFocus();
 //                    return;
 //                }
 
-                if(program.stream().anyMatch(zi->zi.getZi().equals(actvZileDeLucru.getText().toString()))){
-                    actvZileDeLucru.setError("Ziua de " + actvZileDeLucru.getText().toString() + " există deja în program!");
-                    actvZileDeLucru.requestFocus();
-                    return;
-                }
-//                for (ZiDeLucru zi : program) {
-//                    if (zi.getZi().equals(actvZileDeLucru.getText().toString())) {
-//                        actvZileDeLucru.setError("Ziua de " + zi.getZi() + " există deja în program!");
-//                        actvZileDeLucru.requestFocus();
-//                        return;
-//                    }
-//                }
-
                 if (tietOraInceput.getText().toString().isEmpty()) {
-                    //todo
                     //ca sa apara si textul trb sa-i pun din xml focusable pe true
                     //dar asa imi apare tastatura la primuk click pe tiet uof
                     tietOraInceput.setError("Selectați ora de început!");
@@ -248,7 +285,6 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                         tietOraSfarsit.getText().toString());
 
                 program.add(ziDeLucru);
-
 
                 StringBuilder programString = new StringBuilder();
                 for (int i = 0; i < program.size(); i++) {
@@ -272,8 +308,16 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         actvZileDeLucru.setText("");
         actvZileDeLucru.clearFocus();
         actvZileDeLucru.setError(null);
+
         tietOraInceput.setText("");
+        tietOraInceput.setError(null);
+
         tietOraSfarsit.setText("");
+        tietOraSfarsit.setError(null);
+
+        btnAdauga.setVisibility(View.VISIBLE);
+        btnAdauga.setEnabled(false);
+        btnElimina.setVisibility(View.GONE);
     }
 
 
@@ -307,69 +351,6 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         return "0" + i;
     }
 
-//    private void afiseazaDialog() {
-//        String[] zile = getResources().getStringArray(R.array.zile_saptamana);
-//        boolean[] zileBifate = new boolean[zile.length];
-//        List<Integer> pozitii = new ArrayList<>();
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(InregistrareMedicActivity.this);
-//        dialog.setTitle("Program de lucru")
-//                .setMultiChoiceItems(zile, zileBifate, new DialogInterface.OnMultiChoiceClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-//                        if (b) {
-//                            pozitii.add(i);
-//                            Calendar calendar = Calendar.getInstance();
-//                            int ora = calendar.get(Calendar.HOUR);
-//                            int minut = calendar.get(Calendar.MINUTE);
-//
-//                            TimePickerDialog oraInceput = new TimePickerDialog(InregistrareMedicActivity.this, new TimePickerDialog.OnTimeSetListener() {
-//                                @Override
-//                                public void onTimeSet(TimePicker timePicker, int ora, int minut) {
-//                                    String timp = ora + ":" + minut;
-//                                    Toast.makeText(getApplicationContext(), timp, Toast.LENGTH_SHORT).show();
-//                                }
-//                            }, ora, minut, true);
-//                            oraInceput.setTitle("Ora inceput");
-//                            oraInceput.show();
-//
-//                            TimePickerDialog oraSfarsit = new TimePickerDialog(InregistrareMedicActivity.this, new TimePickerDialog.OnTimeSetListener() {
-//                                @Override
-//                                public void onTimeSet(TimePicker timePicker, int ora, int minut) {
-//                                    String timp = ora + ":" + minut;
-//                                    Toast.makeText(getApplicationContext(), timp, Toast.LENGTH_SHORT).show();
-//                                }
-//                            }, ora, minut, true);
-//                            oraSfarsit.setTitle("Ora sfarsit");
-//                            oraSfarsit.show();
-//
-//                        } else {
-//                            pozitii.remove(i);
-//                        }
-//                    }
-//                })
-//                .setNegativeButton("Anulează", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                })
-//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        StringBuilder item = new StringBuilder();
-//                        for (int j = 0; j < pozitii.size(); j++) {
-//                            item.append(zile[pozitii.get(j)]);
-//                            if (j != pozitii.size() - 1) {
-//                                item.append("\n");
-//                            }
-//                        }
-//                        tietProgramLucru.setText(item.toString());
-//                    }
-//                })
-//                .create()
-//                .show();
-//    }
-
     private void alegePozaProfil() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -388,18 +369,15 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
 
     private void inregistreazaMedic() {
         if (inputValid()) {
-            String nume = tietNumeMedic.getText().toString();
-            String prenume = tietPrenumeMedic.getText().toString();
+            String nume = tietNumeMedic.getText().toString().trim();
+            String prenume = tietPrenumeMedic.getText().toString().trim();
 
             long nrTelefon;
             if (!tietNrTelefonMedic.getText().toString().isEmpty())
-                nrTelefon = Long.parseLong(tietNrTelefonMedic.getText().toString());
+                nrTelefon = Long.parseLong("4" + tietNrTelefonMedic.getText().toString().trim());
             else nrTelefon = 0;
 
             String gradProfesional = actvGradeProfesionale.getText().toString();
-//            if (spnGradProfesional.getSelectedItemPosition() == 0) {
-//                gradProfesional = "Nespecificat";
-//            } else gradProfesional = spnGradProfesional.getSelectedItem().toString();
 
             String specialitate = actvSpecialitati.getText().toString();
             String idSpecialitate = "";
@@ -410,10 +388,16 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                 }
             }
 
-            String adresaEmail = tietEmailMedic.getText().toString();
-            String parola = tietParolaMedic.getText().toString();
+            String adresaEmail = tietEmailMedic.getText().toString().trim();
+            String parola = tietParolaMedic.getText().toString().trim();
 
             String finalIdSpecialitate = idSpecialitate;
+
+            progressDialog = new ProgressDialog(InregistrareMedicActivity.this);
+            progressDialog.setMessage("Se creează contul...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             mAuth.createUserWithEmailAndPassword(adresaEmail, parola)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -432,6 +416,8 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                                             Toast.makeText(getApplicationContext(),
                                                     "Contul a fost creat cu succes!", Toast.LENGTH_SHORT).show();
                                             finish();
+
+                                            mAuth.signOut();
                                         } else {
                                             Log.e("adaugareMedic", task.getException().getMessage());
                                         }
@@ -443,13 +429,13 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                             } else {
                                 Log.e("creareContMedic", task.getException().getMessage());
                             }
+                            progressDialog.dismiss();
                         }
                     });
 
         }
     }
 
-    //todo poate fac o clasa ca sa apelez funtia asta cand am nevoie
     private void incarcaPoza() {
         StorageReference caleFisier = FirebaseStorage.getInstance().getReference()
                 .child("poze de profil").child(mAuth.getCurrentUser().getUid());
@@ -467,7 +453,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         upload.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Nu s-a putut incarca poza!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -488,7 +474,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                                 @Override
                                 public void onComplete(@NonNull Task task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(), "Poza a fost incarcata cu succes!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Poza de profil a fost încărcată cu succes!", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -525,9 +511,6 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         }
 
         if (actvSpecialitati.getText().toString().isEmpty()) {
-            //android:focusable="true"
-            //android:focusableInTouchMode="true"
-            //in xml ca sa apara si textul (pt text view)
             actvSpecialitati.setError(getString(R.string.err_empty_specialitate));
             actvSpecialitati.requestFocus();
             return false;
@@ -591,7 +574,6 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                 }
 
                 List<String> denumiriSpecialitati = new ArrayList<>();
-//                denumiriSpecialitati.add("Selectati specialitatea");
                 for (Specialitate s : specialitati) {
                     denumiriSpecialitati.add(s.getDenumire());
                 }

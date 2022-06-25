@@ -17,11 +17,14 @@ public class Pacient implements Serializable {
     private double greutate;
     private double inaltime;
     private int varsta;
+    private boolean contSters;
 
     public Pacient() {
     }
 
-    public Pacient(String idPacient, String nume, String prenume, long cnp, long nrTelefon, String sex, String adresa, String dataNasterii, String adresaEmail, String grupaSange, double greutate, double inaltime, int varsta, String urlPozaProfil) {
+    public Pacient(String idPacient, String nume, String prenume, long cnp, long nrTelefon, String sex,
+                   String adresa, String dataNasterii, String adresaEmail, String grupaSange, double greutate,
+                   double inaltime, int varsta, String urlPozaProfil) {
         this.idPacient = idPacient;
         this.nume = nume;
         this.prenume = prenume;
@@ -36,6 +39,7 @@ public class Pacient implements Serializable {
         this.inaltime = inaltime;
         this.varsta = varsta;
         this.urlPozaProfil = urlPozaProfil;
+        this.contSters = false;
     }
 
     public String getIdPacient() {
@@ -151,6 +155,14 @@ public class Pacient implements Serializable {
         this.varsta = varsta;
     }
 
+    public boolean isContSters() {
+        return contSters;
+    }
+
+    public void setContSters(boolean contSters) {
+        this.contSters = contSters;
+    }
+
     @Override
     public String toString() {
         return "Pacient{" +
@@ -168,6 +180,7 @@ public class Pacient implements Serializable {
                 ", greutate=" + greutate +
                 ", inaltime=" + inaltime +
                 ", varsta=" + varsta +
+                ", contSters=" + contSters +
                 '}';
     }
 }

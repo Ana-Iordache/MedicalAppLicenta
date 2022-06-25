@@ -30,46 +30,62 @@
         android:layout_height="@dimen/_1sdp"
         android:background="@color/colorDivider" />
 
-    <TextView
-        android:id="@+id/tvMedic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:gravity="center"
-        android:text="Nume"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_15sdp"
-        android:textStyle="bold" />
-
-    <RelativeLayout
-        android:id="@+id/rlProgram"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/background_edit_text"
-        android:padding="@dimen/_15sdp">
+        app:cardBackgroundColor="@color/colorDivider"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp">
 
-        <TextView
-            android:id="@+id/tvProgram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/program"
-            android:textColor="@color/black" />
-
-
-        <ListView
-            android:id="@+id/lvProgram"
+        <RelativeLayout
+            android:id="@+id/rlProgram"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvProgram"
-            android:divider="@null"
-            android:textSize="@dimen/_20sdp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:padding="@dimen/_15sdp">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tvMedic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="Nume"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/tvMedic"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tvProgram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view2"
+                android:text="@string/program"
+                android:textColor="@color/black" />
+
+            <ListView
+                android:id="@+id/lvProgram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProgram"
+                android:divider="@null"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -139,8 +155,7 @@
         android:paddingEnd="@dimen/_5sdp"
         android:text="@string/ore_disponibile"
         android:textColor="@color/black"
-        android:textSize="@dimen/_15sdp"
-        android:textStyle="italic" />
+        android:textSize="@dimen/_15sdp" />
 
     <ProgressBar
         android:id="@+id/progressBar"

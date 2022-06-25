@@ -33,24 +33,6 @@
         android:layout_below="@+id/topView"
         android:background="@drawable/ic_wave_top" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:translationZ="@dimen/_90sdp"
-        android:visibility="gone" />
-
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:elevation="@dimen/_10sdp"-->
-    <!--        app:cardBackgroundColor="@color/custom_light_blue"-->
-    <!--        app:cardCornerRadius="@dimen/_10sdp"-->
-    <!--        app:cardElevation="@dimen/_5sdp">-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -184,12 +166,10 @@
             android:focusable="true"
             android:text="Admin"
             android:textColor="#000"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
     </RelativeLayout>
-    <!--    </androidx.cardview.widget.CardView>-->
-
 
     <TextView
         android:id="@+id/tvCreareCont"

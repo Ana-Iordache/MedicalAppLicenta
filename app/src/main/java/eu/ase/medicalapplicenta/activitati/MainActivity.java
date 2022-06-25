@@ -317,7 +317,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra(Intent.EXTRA_SUBJECT, SUBIECT);
                 intent.putExtra(Intent.EXTRA_TEXT, "Nume pacient: " +
                         numeComplet + "\nFeedback: ");
-                startActivity(intent);
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),
+                            "Nu aveti niciun serviciu de email disponibil!",
+                            Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.item_despre_noi:
                 startActivity(new Intent(getApplicationContext(), DespreNoiActivity.class));
