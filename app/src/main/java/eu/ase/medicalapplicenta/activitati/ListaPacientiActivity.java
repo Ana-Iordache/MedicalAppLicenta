@@ -314,8 +314,16 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
             tvAdresa.setText(pacient.getAdresa());
             tvDataNasterii.setText(pacient.getDataNasterii());
             tvGrupaSange.setText(pacient.getGrupaSange());
-            tvGreutate.setText(String.valueOf(pacient.getGreutate()));
-            tvInaltime.setText(String.valueOf(pacient.getInaltime()));
+            if (pacient.getGreutate() != 0.0) {
+                tvGreutate.setText(String.valueOf(pacient.getGreutate()));
+            } else {
+                tvGreutate.setText("-");
+            }
+            if (pacient.getInaltime() != 0.0) {
+                tvInaltime.setText(String.valueOf(pacient.getInaltime()));
+            } else {
+                tvInaltime.setText("-");
+            }
             tvEmail.setText(pacient.getAdresaEmail());
 
             referintaCardSanatate.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

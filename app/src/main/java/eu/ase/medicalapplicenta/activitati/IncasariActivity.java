@@ -184,8 +184,10 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if (view.getId() == R.id.btnExportaDate) {
             String denumireSheet = "Incasari" + anSelectat;
-            HSSFSheet sheet = workbook.createSheet(denumireSheet);
-
+            HSSFSheet sheet = workbook.getSheet(denumireSheet);
+            if (sheet == null) {
+                sheet = workbook.createSheet(denumireSheet);
+            }
             HSSFRow row = sheet.createRow(0);
 
             HSSFCell cell = row.createCell(0);
@@ -217,7 +219,7 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
 
                 fileOutputStream.flush();
                 fileOutputStream.close();
-                Toast.makeText(getApplicationContext(), "Date exporate: /Spatiu de stocare intern/Documents" + denumireFisier,
+                Toast.makeText(getApplicationContext(), "Date exportate: /Spatiu de stocare intern/Documents" + denumireFisier,
                         Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -49,12 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String NOTIFICARI = "Notificari";
     public static final String EMAIL = "iordacheana19@stud.ase.ro";
     public static final String SUBIECT = "Feedback aplicatie medicala";
-    private static final String NUMAR_CALL_CENTER = "0219268";
-    //todo sa pun un progress bar sau ceva pana se incarca datele de la profil
-    private Toolbar toolbar; // ca sa atasez toolbarul in pagina
+    private static final String NUMAR_CALL_CENTER = "0219876";
+    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle toggle; // ca sa atasez meniul de tip "burger"
-    private NavigationView navigationView; // ca sa gestionez optiunile din meniu
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
 
     private RelativeLayout rlLogout;
 
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView cwFacturi;
 
     private FloatingActionButton fabCallCenter;
-    //    private FloatingActionButton fabNotificari;
     private ImageView ivNotificari;
     private FloatingActionButton fabChat;
 
@@ -96,15 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         seteazaToggle();
 
-//        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
-//        try {
-//            Date date = dateFormat.parse("28/04/2022 20:01");
-//            Timer timer = new Timer();
-//            timer.schedule(new NotificareTimeTask(new Notificare(null, "titlu", "idEmitator", "idReceptor", "dataProgramarii", "oraProgramarii", "data", false)), date);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
         verificaNotificariNecitite();
         verificaMesajeNecitite();
 
@@ -115,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cwProgramari.setOnClickListener(this);
         cwFacturi.setOnClickListener(this);
         fabCallCenter.setOnClickListener(this);
-//        fabNotificari.setOnClickListener(this);
         ivNotificari.setOnClickListener(this);
         fabChat.setOnClickListener(this);
 
@@ -281,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", NUMAR_CALL_CENTER, null)));
                 break;
             case R.id.ivNotificari:
-//                notificari.stream().filter(n -> !n.isNotificareCitita()).forEach(n -> n.setNotificareCitita(true));
+                ivNotificari.setImageResource(R.drawable.ic_notificari);
                 startActivity(new Intent(getApplicationContext(), NotificariActivity.class).putExtra(PACIENT, "pacient"));
                 break;
             case R.id.fabChat:
@@ -295,14 +283,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // gestionez ce se intampla atunci cand dau click pe fiecare optiune din meniu
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_profil:
                 startActivity(new Intent(getApplicationContext(), ProfilPacientActivity.class));
-//                Toast.makeText(getApplicationContext(), "Profil", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_bmi:
                 startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(PACIENT, "pacient"));

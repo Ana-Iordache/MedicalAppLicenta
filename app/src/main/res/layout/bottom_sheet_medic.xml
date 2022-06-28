@@ -178,21 +178,48 @@
 
     </RelativeLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnProgramare"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/rlEmail"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/background_butoane_secundare"
-        android:gravity="center"
-        android:text="@string/programeaza"
-        android:textAllCaps="false"
-        android:textColor="@color/custom_blue"
-        android:textSize="@dimen/_15sdp" />
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnProgramare"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:background="@drawable/background_butoane"
+            android:drawableEnd="@drawable/ic_calendar_white"
+            android:gravity="center"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:text="@string/programeaza"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContact"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:background="@drawable/background_butoane_secundare"
+            android:drawableEnd="@drawable/ic_chat_blue"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:text="Contactează"
+            android:textAllCaps="false"
+            android:textColor="@color/custom_blue"
+            android:textSize="@dimen/_15sdp" />
+    </LinearLayout>
 
 </RelativeLayout>

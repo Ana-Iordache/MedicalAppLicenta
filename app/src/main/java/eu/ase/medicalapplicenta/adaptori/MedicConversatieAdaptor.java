@@ -79,8 +79,8 @@ public class MedicConversatieAdaptor extends RecyclerView.Adapter<MedicConversat
 
                     if (ultimulMesaj.getIdEmitator().equals(idUserConectat) && ultimulMesaj.getIdReceptor().equals(idMedic)) {
                         text = ultimulMesaj.getText();
-                        if (text.length() > 40) {
-                            text = text.substring(0, 37) + "...";
+                        if (text.length() > 35) {
+                            text = text.substring(0, 32) + "...";
                         }
                         holder.tvUltimulMesaj.setText(text);
                         if (ultimulMesaj.isMesajCitit()) {
@@ -90,8 +90,8 @@ public class MedicConversatieAdaptor extends RecyclerView.Adapter<MedicConversat
                         }
                     } else if (ultimulMesaj.getIdEmitator().equals(idMedic) && ultimulMesaj.getIdReceptor().equals(idUserConectat)) {
                         text = ultimulMesaj.getText();
-                        if (text.length() > 40) {
-                            text = text.substring(0, 37) + "...";
+                        if (text.length() > 35) {
+                            text = text.substring(0, 32) + "...";
                         }
                         holder.tvUltimulMesaj.setText(text);
                         if (!ultimulMesaj.isMesajCitit()) {

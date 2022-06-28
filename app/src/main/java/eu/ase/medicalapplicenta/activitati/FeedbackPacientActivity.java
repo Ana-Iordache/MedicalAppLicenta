@@ -1,12 +1,14 @@
 package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +46,7 @@ public class FeedbackPacientActivity extends AppCompatActivity {
     private RelativeLayout rlNiciunFeedback;
     private ProgressBar progressBar;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,10 +117,11 @@ public class FeedbackPacientActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        String numePacient = pacient.getNume() + " " + pacient.getPrenume();
-        tvTitlu.setText(numePacient);
+        String titlu = "Feedback " + pacient.getNume() + " " + pacient.getPrenume();
+        tvTitlu.setText(titlu);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initializeazaAtribute() {
         toolbar = findViewById(R.id.toolbar);
         tvTitlu = findViewById(R.id.tvTitlu);

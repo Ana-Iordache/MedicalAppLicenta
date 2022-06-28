@@ -1,19 +1,28 @@
 package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -23,16 +32,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.adaptori.FacturaAdaptor;
@@ -41,7 +58,14 @@ import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor.OnBtnPlataClickListener {
+//    public static final int REQUEST_CODE_PAYPAL = 500;
+//    public static final String CLIENT_ID_PAYPAL = "ARKg_wK_PVka1gDkXGMprZ35nLNJfz5ZalPsHz0i5tm2365NVOUqsUxFqbJzPlv5ZsTMVw3LYWdTKS9S";
+//    private static PayPalConfiguration configuration = new PayPalConfiguration()
+//            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+//            .clientId(CLIENT_ID_PAYPAL);
+
     public static final String PROGRAMARI = "Programari";
+
     private final String idPacient = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private Toolbar toolbar;
 
@@ -60,6 +84,7 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
     private AppCompatButton btnAdauga;
 
     private Factura factura;
+    private AutoCompleteTextView actvStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +100,47 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
         seteazaDialogPlatesteFactura();
 
         firebaseService.preiaDateDinFirebase(preiaFacturi());
+
+        seteazaAdaptorStatus();
+
+        actvStatus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+                    List<Factura> facturiFiltered = facturi.stream()
+                            .filter(f -> f.getStatus().startsWith(actvStatus.getText().toString().toLowerCase().substring(0, 4)))
+                            .collect(Collectors.toList());
+                    if (!facturiFiltered.isEmpty()) {
+                        ryNicioFactura.setVisibility(View.GONE);
+                        seteazaAdaptorFacturi(facturiFiltered);
+                        rwFacturi.setVisibility(View.VISIBLE);
+                    } else {
+                        ryNicioFactura.setVisibility(View.VISIBLE);
+                        rwFacturi.setVisibility(View.GONE);
+                    }
+                } else {
+                    if (!facturi.isEmpty()) {
+                        ryNicioFactura.setVisibility(View.GONE);
+                        seteazaAdaptorFacturi(facturi);
+                        rwFacturi.setVisibility(View.VISIBLE);
+                    } else {
+                        ryNicioFactura.setVisibility(View.VISIBLE);
+                        rwFacturi.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
+//        Intent intent = new Intent(this, PayPalService.class);
+//        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configuration);
+//        startService(intent);
+    }
+
+    private void seteazaAdaptorStatus() {
+        ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(),
+                R.layout.dropdown_item, getResources().getStringArray(R.array.statusuri_facturi));
+        actvStatus.setAdapter(adapter);
     }
 
     private void seteazaDialogPlatesteFactura() {
@@ -133,27 +199,10 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
                     tietDataExpirarii.setText(stringCurent);
                     tietDataExpirarii.setSelection(stringCurent.length());
                 }
-//                if (start == 1 && start + count == 2 && !charSequence.toString().contains("/")) {
-//                    tietDataExpirarii.setText(charSequence.toString() + "/");
-//                } else if (start == 3 && start - before == 2 && charSequence.toString().contains("/")) {
-//                    tietDataExpirarii.setText(charSequence.toString().replace("/", ""));
-//                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-//                        if (editable.length() > 0 && (editable.length() % 3) == 0) {
-//                            final char c = editable.charAt(editable.length() - 1);
-//                            if ('/' == c) {
-//                                editable.delete(editable.length() - 1, editable.length());
-//                            }
-//                        }
-//                        if (editable.length() > 0 && (editable.length() % 3) == 0) {
-//                            char c = editable.charAt(editable.length() - 1);
-//                            if (Character.isDigit(c) && TextUtils.split(editable.toString(), String.valueOf("/")).length <= 2) {
-//                                editable.insert(editable.length() - 1, String.valueOf("/"));
-//                            }
-//                        }
             }
         });
 
@@ -269,6 +318,8 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
 
         facturi = new ArrayList<>();
         rwFacturi = findViewById(R.id.rwFacturi);
+
+        actvStatus = findViewById(R.id.actvStatus);
     }
 
     private ValueEventListener preiaFacturi() {
@@ -285,9 +336,9 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
                 }
 
                 if (!facturi.isEmpty()) {
+                    Collections.reverse(facturi);
                     ryNicioFactura.setVisibility(View.GONE);
-                    adaptor = new FacturaAdaptor(facturi, FacturiActivity.this, FacturiActivity.this);
-                    rwFacturi.setAdapter(adaptor);
+                    seteazaAdaptorFacturi(facturi);
                     rwFacturi.setVisibility(View.VISIBLE);
                 } else {
                     rwFacturi.setVisibility(View.GONE);
@@ -302,6 +353,11 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
                 Log.e("preluareFacturi", error.getMessage());
             }
         };
+    }
+
+    private void seteazaAdaptorFacturi(List<Factura> facturi) {
+        adaptor = new FacturaAdaptor(facturi, FacturiActivity.this, FacturiActivity.this);
+        rwFacturi.setAdapter(adaptor);
     }
 
     @Override
@@ -326,10 +382,47 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
     }
 
     @Override
-    public void onBtnPlataClick(int position) { //todo
+    public void onBtnPlataClick(int position) {
         factura = facturi.get(position);
         String text = getString(R.string.plateste) + " " + factura.getValoare() + " RON";
         btnAdauga.setText(text);
         dialogPlata.show();
+
+//        double sumaDePlata = factura.getValoare();
+//        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(String.valueOf(sumaDePlata)), "EUR",
+//                "Plătește factura", PayPalPayment.PAYMENT_INTENT_SALE);
+//        Intent intent = new Intent(this, PaymentActivity.class);
+//        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configuration);
+//        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+//        startActivityForResult(intent, REQUEST_CODE_PAYPAL);
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_CODE_PAYPAL) {
+//            if (resultCode == RESULT_OK) {
+//                PaymentConfirmation confirmare = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+//                if (confirmare != null) {
+//                    try {
+//                        Log.i("PayPalJSON", confirmare.toJSONObject().toString(4));
+//                        Log.i("PayPalPayment", confirmare.getPayment().toJSONObject().toString(4));
+//                        Toast.makeText(getApplicationContext(), "Plata a fost efectuată cu succes!", Toast.LENGTH_SHORT).show();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            } else if (resultCode == Activity.RESULT_CANCELED) {
+//                Toast.makeText(getApplicationContext(), "Plata a fost anulată!", Toast.LENGTH_SHORT).show();
+//            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+//                Toast.makeText(getApplicationContext(), "Plata invalidă!", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
+
+//    @Override
+//    protected void onDestroy() {
+//        stopService(new Intent(this, PayPalService.class));
+//        super.onDestroy();
+//    }
 }

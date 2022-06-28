@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Mesaj;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
+
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class ChatActivity extends AppCompatActivity {
     private final FirebaseService firebaseService = new FirebaseService("Conversatii");
@@ -61,6 +64,7 @@ public class ChatActivity extends AppCompatActivity {
     private String tipUtilizator;
 
     private ValueEventListener mesajeCititeListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +125,11 @@ public class ChatActivity extends AppCompatActivity {
 
     private void seteazaAdaptor() {
         adaptor = new ChatAdaptor(mesaje, this);
+        if (!mesaje.isEmpty()) {
+            rwMesaje.smoothScrollToPosition(mesaje.size() - 1);
+        }
         rwMesaje.setAdapter(adaptor);
+
     }
 
     private void marcheazaMesajeCititeDeMedic() {
@@ -274,10 +282,18 @@ public class ChatActivity extends AppCompatActivity {
         fabTrimiteMesaj = findViewById(R.id.fabTrimiteMesaj);
         etMesaj = findViewById(R.id.etMesaj);
 
+        etMesaj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mesaje.isEmpty()) {
+                    rwMesaje.smoothScrollToPosition(mesaje.size() - 1);
+                }
+            }
+        });
+
         etMesaj.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -295,6 +311,10 @@ public class ChatActivity extends AppCompatActivity {
         intent = getIntent();
         if (intent.hasExtra(ListaMediciActivity.MEDIC)) {
             medic = (Medic) intent.getSerializableExtra(ListaMediciActivity.MEDIC);
+            idMedic = medic.getIdMedic();
+            tipUtilizator = MainActivity.PACIENT;
+        } else if (intent.hasExtra(ListaMediciActivity.INFO_MEDIC)) {
+            medic = (Medic) intent.getSerializableExtra(ListaMediciActivity.INFO_MEDIC);
             idMedic = medic.getIdMedic();
             tipUtilizator = MainActivity.PACIENT;
         } else {
@@ -324,6 +344,8 @@ public class ChatActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         firebaseService.databaseReference.removeEventListener(mesajeCititeListener);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        if (intent.hasExtra(ListaMediciActivity.MEDIC) || intent.hasExtra(ListaPacientiActivity.PACIENT)) {
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
     }
 }

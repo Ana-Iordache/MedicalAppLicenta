@@ -101,8 +101,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         ciwPozaProfilPacient.setOnClickListener(this);
         tietDataNasterii.setOnClickListener(this);
         btnInregistrarePacient.setOnClickListener(this);
-
-//        progressDialog = new ProgressDialog(this);//todo hmmmm nu merge parca
     }
 
     private void seteazaAdaptorGrupeSange() {
@@ -235,7 +233,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             int finalVarsta = varsta;
             String finalSex = sex;
 
-            progressDialog = new ProgressDialog(InregistrarePacientActivity.this);
+            progressDialog = new ProgressDialog(InregistrarePacientActivity.this, R.style.ProgressDialogStyle);
             progressDialog.setMessage("Se creează contul...");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -321,7 +319,7 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
         upload.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Nu s-a putut incarca poza!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza de profil!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -342,20 +340,18 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
                                 @Override
                                 public void onComplete(@NonNull Task task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(), "Poza a fost incarcata cu succes!", Toast.LENGTH_SHORT).show();
+                                        Log.i("incarcarePoza", "Poza a fost incarcata cu succes!");
                                     } else {
-                                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(getApplicationContext(), "Poza de profil nu a putut fi incarcata!", Toast.LENGTH_SHORT).show();
+                                        Log.e("incarcarePoza", task.getException().getMessage());
                                     }
                                 }
                             });
-//                            finish();
                         }
                     });
                 }
             }
         });
-//                                progressDialog.dismiss();
 
     }
 

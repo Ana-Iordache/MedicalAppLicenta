@@ -31,11 +31,40 @@
         android:layout_below="@+id/toolbar"
         android:background="@color/colorDivider" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilStatus"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:theme="@style/TextInputLayoutStyle"
+        app:boxCornerRadiusBottomEnd="0dp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="0dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/actvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_10sdp"
+            android:focusable="false"
+            android:inputType="none"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/toate"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <RelativeLayout
         android:id="@+id/ryNicioFactura"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/view"
+        android:layout_below="@+id/tilStatus"
         android:visibility="gone">
 
         <ImageView
@@ -51,7 +80,7 @@
             android:layout_below="@+id/imageView"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Nu s-au găsit facturi"
+            android:text="@string/nicio_factura"
             android:textColor="@color/black"
             android:textSize="@dimen/_15sdp" />
     </RelativeLayout>
@@ -60,7 +89,7 @@
         android:id="@+id/rwFacturi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/tilStatus"
         android:visibility="gone" />
 
     <ProgressBar

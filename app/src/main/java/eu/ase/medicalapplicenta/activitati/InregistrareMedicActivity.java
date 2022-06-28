@@ -393,7 +393,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
 
             String finalIdSpecialitate = idSpecialitate;
 
-            progressDialog = new ProgressDialog(InregistrareMedicActivity.this);
+            progressDialog = new ProgressDialog(InregistrareMedicActivity.this, R.style.ProgressDialogStyle);
             progressDialog.setMessage("Se creează contul...");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -453,7 +453,7 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
         upload.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza de profil!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -474,14 +474,13 @@ public class InregistrareMedicActivity extends AppCompatActivity implements View
                                 @Override
                                 public void onComplete(@NonNull Task task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(), "Poza de profil a fost încărcată cu succes!", Toast.LENGTH_SHORT).show();
+                                        Log.i("incarcarePoza", "Poza a fost incarcata cu succes!");
                                     } else {
-                                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza de profil!", Toast.LENGTH_SHORT).show();
+                                        Log.e("incarcarePoza", task.getException().getMessage());
                                     }
                                 }
                             });
-//                            finish();
                         }
                     });
                 }

@@ -163,28 +163,28 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
         double inaltimeMetri = (float) inaltimeCurenta / 100;
 
         double bmi = greutateCurenta / (inaltimeMetri * inaltimeMetri);
-        tvBmiGrad.setText(DECIMAL_FORMAT.format(bmi));
+        tvBmiGrad.setText(DECIMAL_FORMAT.format(Math.floor(bmi * 10) / 10));
         if (bmi < 18.5) {
             tvBmiText.setText(R.string.bmi_subponderal);
             ivBmi.setBackgroundResource(R.drawable.ic_warning);
             tvInformatiiBmi.setText(getString(R.string.text_subponderal));
-        } else if (bmi >= 18.5 && bmi <= 24.9) {
+        } else if (bmi >= 18.5 && bmi < 25.0) {
             tvBmiText.setText(R.string.bmi_normoponderal);
             ivBmi.setBackgroundResource(R.drawable.ic_ok_80);
             tvInformatiiBmi.setText(getString(R.string.text_normoponderal));
-        } else if (bmi >= 25.0 && bmi <= 29.9) {
+        } else if (bmi >= 25.0 && bmi < 30.0) {
             tvBmiText.setText(R.string.bmi_supraponderal);
             ivBmi.setBackgroundResource(R.drawable.ic_warning);
             tvInformatiiBmi.setText(getString(R.string.text_supraponderal));
-        } else if (bmi >= 30.0 && bmi <= 34.9) {
+        } else if (bmi >= 30.0 && bmi < 35.0) {
             tvBmiText.setText(R.string.bmi_obezitate1);
             ivBmi.setBackgroundResource(R.drawable.ic_danger);
             tvInformatiiBmi.setText(getString(R.string.text_obezitate1));
-        } else if (bmi >= 35.5 && bmi <= 39.9) {
+        } else if (bmi >= 35.5 && bmi < 40.0) {
             tvBmiText.setText(R.string.bmi_obezitate2);
             ivBmi.setBackgroundResource(R.drawable.ic_danger);
             tvInformatiiBmi.setText(getString(R.string.text_obezitate2));
-        } else {
+        } else if (bmi >= 40.0) {
             tvBmiText.setText(R.string.bmi_obezitate_morbida);
             ivBmi.setBackgroundResource(R.drawable.ic_danger);
             tvInformatiiBmi.setText(getString(R.string.text_obezitate3));

@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 import eu.ase.medicalapplicenta.R;
 
 public class ConectarePacientActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String CREDETIALE = "credetiale";
     private TextView tv;
     private TextView tvSuntMedic;
     private ImageView ivMedic;
@@ -51,6 +52,8 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
     private ProgressDialog progressDialog;
 
+    private String[] credentiale = new String[]{"", ""};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 
         initializeazaAtribute();
 
-        //todo maybe
+        //todo de sters
         tv = findViewById(R.id.tv);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +107,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                     return;
                 }
 
-                progressDialog = new ProgressDialog(ConectarePacientActivity.this);
+                progressDialog = new ProgressDialog(ConectarePacientActivity.this, R.style.ProgressDialogStyle);
                 progressDialog.setMessage("Se trimite emailul...");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
@@ -180,7 +183,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
                 resetareParolaDialog.show();
                 break;
             case R.id.ivMedic:
-                startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class));
+                startActivity(new Intent(getApplicationContext(), ConectareMedicActivity.class).putExtra(CREDETIALE, credentiale));
                 finish();
                 break;
         }
@@ -196,17 +199,21 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             return;
         }
 
+        credentiale[0] = email;
+
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             tietLoginEmailPacient.setError(getString(R.string.err_not_valid_email));
             tietLoginEmailPacient.requestFocus();
             return;
         }
 
-        //TODO poate am cum sa trimit emailul si parola deja introduse aici atunci cand apasa pe sunt medic
         Pattern pattern = Pattern.compile(getString(R.string.pattern_email_medic));
         Matcher matcher = pattern.matcher(email);
         if (matcher.matches()) {
-            tvSuntMedic.setError(getString(R.string.err_conectare_medic));
+            tietLoginEmailPacient.setError(getString(R.string.err_conectare_medic));
+            tietLoginEmailPacient.requestFocus();
+
+            tvSuntMedic.setError("");
             tvSuntMedic.requestFocus();
             return;
         }
@@ -217,13 +224,15 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
             return;
         }
 
+        credentiale[1] = parola;
+
         if (parola.length() < 6) {
             tietLoginParolaPacient.setError(getString(R.string.err_not_valid_parola));
             tietLoginParolaPacient.requestFocus();
             return;
         }
 
-        progressDialog = new ProgressDialog(ConectarePacientActivity.this);
+        progressDialog = new ProgressDialog(ConectarePacientActivity.this, R.style.ProgressDialogStyle);
         progressDialog.setMessage("Se verifică credețialele...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();

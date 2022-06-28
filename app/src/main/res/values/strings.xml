@@ -33,6 +33,12 @@
         <item>2021</item>
         <item>2022</item>
     </string-array>
+    <string-array name="statusuri_facturi">
+        <item>Toate</item>
+        <item>Achitate</item>
+        <item>Neachitate</item>
+        <item>Anulate</item>
+    </string-array>
     <string name="pattern_email_medic">^([A-Za-z0-9._]+)(@clinica-medicala\\.ro)$</string>
     <string name="pattern_numar_telefon">^07[2-8][0-9]{7}$</string>
     <string name="pattern_cnp">^[1-9]\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])(0[1-9]|[1-4]\\d|5[0-2]|99)(00[1-9]|0[1-9]\\d|[1-9]\\d\\d)\\d$</string>
@@ -250,4 +256,7 @@
     <string name="nicio_investigatie">Nu s-a găsit nicio investigație</string>
     <string name="title_selectati_medicul">Selectați medicul</string>
     <string name="descarcare_document">Se descarcă documentul…</string>
+    <string name="nicio_factura">Nu s-au găsit facturi</string>
+    <string name="toate">Toate</string>
+    <string name="_2022">2022</string>
 </resources>

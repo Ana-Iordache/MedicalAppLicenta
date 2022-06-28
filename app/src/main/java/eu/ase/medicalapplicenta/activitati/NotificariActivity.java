@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import eu.ase.medicalapplicenta.R;
@@ -124,6 +125,7 @@ public class NotificariActivity extends AppCompatActivity {
                 }
 
                 if (!notificari.isEmpty()) {
+                    Collections.reverse(notificari);
                     rlNicioNotificare.setVisibility(View.GONE);
                     seteazaAdaptor();
                     rwNotificari.setVisibility(View.VISIBLE);

@@ -57,6 +57,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -360,6 +361,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 if (!programari.isEmpty()) {
+                    Collections.reverse(programari);
                     ryNicioProgramare.setVisibility(View.GONE);
                     seteazaAdaptor();
                     rwProgramari.setVisibility(View.VISIBLE);

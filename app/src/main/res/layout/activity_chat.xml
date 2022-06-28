@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="@dimen/_15sdp" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rlMesaj"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_below="@+id/toolbar" />
 
     <RelativeLayout
         android:id="@+id/rlMesaj"

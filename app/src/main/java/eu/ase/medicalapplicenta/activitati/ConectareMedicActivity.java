@@ -49,6 +49,8 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
 
     private ProgressDialog progressDialog;
 
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,14 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         ivPacient.setOnClickListener(this);
 
         preiaPreferinte();
+
+        if (intent.hasExtra(ConectarePacientActivity.CREDETIALE)) {
+            String[] credentiale = intent.getStringArrayExtra(ConectarePacientActivity.CREDETIALE);
+            if (!credentiale[0].equals("")) {
+                tietLoginEmailMedic.setText(credentiale[0]);
+                tietLoginParolaMedic.setText(credentiale[1]);
+            }
+        }
 
         seteazaDialogResetareParola();
     }
@@ -93,7 +103,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
                     return;
                 }
 
-                progressDialog = new ProgressDialog(ConectareMedicActivity.this);
+                progressDialog = new ProgressDialog(ConectareMedicActivity.this, R.style.ProgressDialogStyle);
                 progressDialog.setMessage("Se trimite emailul...");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
@@ -154,6 +164,8 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         ivPacient = findViewById(R.id.ivPacient);
 
         mAuth = FirebaseAuth.getInstance();
+
+        intent = getIntent();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -215,7 +227,7 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
         }
         preferinteConectareEditor.commit();
 
-        progressDialog = new ProgressDialog(ConectareMedicActivity.this);
+        progressDialog = new ProgressDialog(ConectareMedicActivity.this, R.style.ProgressDialogStyle);
         progressDialog.setMessage("Se verifică credețialele...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -244,4 +256,4 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
     }
 
 }
-//todo daca ultima data a fost conectat un medic, ar trb sa ramana pagina de pornire ConectareMedicActivity
+// todo daca ultima data a fost conectat un medic, ar trb sa ramana pagina de pornire ConectareMedicActivity

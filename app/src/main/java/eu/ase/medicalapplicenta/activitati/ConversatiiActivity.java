@@ -1,6 +1,7 @@
 package eu.ase.medicalapplicenta.activitati;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +35,7 @@ import eu.ase.medicalapplicenta.entitati.Medic;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class ConversatiiActivity extends AppCompatActivity implements View.OnClickListener, MedicAdaptor.OnDoctorClickListener, PacientAdaptor.OnPacientClickListener {
     public static final String CONVERSATIE_NOUA = "conversatieNoua";
 

@@ -77,7 +77,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/pacienti"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -121,7 +120,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/programari"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -165,7 +163,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/feedback_pacienti"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -209,7 +206,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/incasari"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -261,8 +257,13 @@
             android:id="@+id/rlLogout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorBackground">
+            android:layout_gravity="bottom">
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorDivider" />
 
             <TextView
                 android:id="@+id/logout"

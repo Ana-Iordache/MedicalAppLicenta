@@ -272,6 +272,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.ivNotificari:
+                ivNotificari.setImageResource(R.drawable.ic_notificari);
                 startActivity(new Intent(getApplicationContext(), NotificariActivity.class).putExtra(MEDIC, "medic"));
                 break;
             case R.id.fabChat:

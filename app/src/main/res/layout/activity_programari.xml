@@ -34,12 +34,6 @@
         android:layout_height="@dimen/_1sdp"
         android:layout_below="@+id/toolbar"
         android:background="@color/colorDivider" />
-    <!--    <View-->
-    <!--        android:id="@+id/view"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="@dimen/_1sdp"-->
-    <!--        android:layout_below="@+id/toolbar"-->
-    <!--        android:background="@color/colorDivider" />-->
 
     <RadioGroup
         android:id="@+id/toggleButtonGroup"

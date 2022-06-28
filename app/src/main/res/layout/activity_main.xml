@@ -14,8 +14,6 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <!--punem dimensiunea default cu actionBarSize
-        Toolbar simplu e din alt pachet, trb sa-l folosesc pe asta!!-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -82,7 +80,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/medici"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -126,7 +123,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/investigatii_si_preturi"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -170,7 +166,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/programari"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -214,7 +209,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="@string/facturi"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_18sdp" />
@@ -298,8 +292,13 @@
             android:id="@+id/rlLogout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorBackground">
+            android:layout_gravity="bottom">
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorDivider" />
 
             <TextView
                 android:id="@+id/logout"

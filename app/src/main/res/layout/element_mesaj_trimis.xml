@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/_60sdp"
             android:background="@drawable/background_mesaj_trimis"
             android:paddingStart="@dimen/_15sdp"
             android:paddingTop="@dimen/_8sdp"

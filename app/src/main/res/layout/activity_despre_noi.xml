@@ -31,12 +31,129 @@
         android:background="@color/colorDivider" />
 
     <TextView
+        android:id="@+id/tv1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/view"
-        android:padding="@dimen/_10sdp"
-        android:text="@string/lorem_ipsum"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Cine suntem noi?"
+        android:textColor="@color/custom_blue"
+        android:textSize="@dimen/_16sdp" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv1"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Noi suntem cei ce stau la dispoziția tuturor pacienților și cei care fac tot posibilul astfel încât fiecare dintre aceștia să primească ajutorul de care au nevoie, de la o simplă întrebare până la necesitățile medicale. Suntem cei care, împreună cu tine, căutăm și găsim cele mai potrivite soluții astfel încât să fii bine. Noi, de la recepționiști, asistenți, personalul clinicii și toate cadrele medicale, cooperăm și ne punem umăr la umăr pentru ca toți cei care ne trec pragul să benefeicieze de cele mai calitative servicii medicale. Noi suntem echipa [denumire clinică]."
         android:textColor="@color/black"
-        android:textSize="@dimen/_13sdp" />
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv2"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Despre aplicație"
+        android:textColor="@color/custom_blue"
+        android:textSize="@dimen/_16sdp" />
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv3"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Fie că ești pacient sau medic, în cadrul acestei clinici punem la dispoziție posibilitatea de a gestiona mult mai eficient informațiile esențiale de care ai nevoie. Prin intermediul aplicației noastre ai acces la funcționalități ce ușurează interacțiunea dintre medic și pacient în cadrul clinicii, astfel formând o comunitate. De aceea, punem la dispoziție mai jos termenii și condițiile utilizării aplicației."
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="italic" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cwTermeniConditii"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv4"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:cardBackgroundColor="@color/colorDivider"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Termeni și condiții"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_sageata_dreapta"
+                app:tint="@color/default_grey" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cwVersiuneAplicatie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cwTermeniConditii"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:cardBackgroundColor="@color/colorDivider"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Versiune aplicație"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="1.0"
+                android:textStyle="italic" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

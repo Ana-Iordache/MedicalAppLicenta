@@ -30,174 +30,171 @@
         android:layout_below="@+id/toolbar"
         android:background="@color/colorDivider" />
 
-    <RelativeLayout
-        android:id="@+id/ryInaltime"
-        android:layout_width="@dimen/_300sdp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cw"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/background_card"
-        android:padding="@dimen/_10sdp">
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:cardBackgroundColor="@color/colorDivider"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp">
 
-        <TextView
-            android:id="@+id/tvInaltime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:text="@string/inaltime"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_inaltime"
-            app:drawableTint="@color/black" />
-
-        <TextView
-            android:id="@+id/tvInaltimeCurenta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvInaltime"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:text="100 cm"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp" />
-
-        <!--        <TextView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@+id/tvInaltime"-->
-        <!--            android:layout_centerHorizontal="true"-->
-        <!--            android:layout_marginStart="@dimen/_10sdp"-->
-        <!--            android:layout_marginTop="@dimen/_6sdp"-->
-        <!--            android:layout_toEndOf="@+id/tvInaltimeCurenta"-->
-        <!--            android:text="@string/cm"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textSize="@dimen/_14sdp" />-->
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/ryInaltime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvInaltimeCurenta"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/minusInaltime"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:contentDescription="@string/icon_plus"
-                android:src="@drawable/ic_minus" />
-
-            <SeekBar
-                android:id="@+id/sbInaltime"
-                android:layout_width="@dimen/_250sdp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/plusInaltime"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:contentDescription="@string/icon_minus"
-                android:src="@drawable/ic_plus" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlGreutate"
-        android:layout_width="@dimen/_300sdp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ryInaltime"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/background_card"
-        android:padding="@dimen/_10sdp">
-
-        <TextView
-            android:id="@+id/tvGreutate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:drawablePadding="@dimen/_5sdp"
-            android:text="@string/greutate"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_greutate"
-            app:drawableTint="@color/black" />
+            android:padding="@dimen/_10sdp">
 
-        <TextView
-            android:id="@+id/tvGreutateCurenta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvGreutate"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:text="30,0 kg"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp" />
-
-        <!--        <TextView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@+id/tvGreutate"-->
-        <!--            android:layout_centerHorizontal="true"-->
-        <!--            android:layout_marginStart="@dimen/_10sdp"-->
-        <!--            android:layout_marginTop="@dimen/_6sdp"-->
-        <!--            android:layout_toEndOf="@+id/tvGreutateCurenta"-->
-        <!--            android:text="@string/kg"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textSize="@dimen/_14sdp" />-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGreutateCurenta"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/minusGreutate"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:contentDescription="@string/icon_minus"
-                android:src="@drawable/ic_minus" />
-
-            <SeekBar
-                android:id="@+id/sbGreutate"
-                android:layout_width="@dimen/_250sdp"
+            <TextView
+                android:id="@+id/tvInaltime"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/inaltime"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_inaltime"
+                app:drawableTint="@color/black" />
 
-            <ImageView
-                android:id="@+id/plusGreutate"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:contentDescription="@string/icon_plus"
-                android:src="@drawable/ic_plus" />
-        </LinearLayout>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tvInaltimeCurenta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvInaltime"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="100 cm"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
+
+            <LinearLayout
+                android:id="@+id/llInaltime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvInaltimeCurenta"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/minusInaltime"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/icon_plus"
+                    android:src="@drawable/ic_minus" />
+
+                <SeekBar
+                    android:id="@+id/sbInaltime"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/plusInaltime"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/icon_minus"
+                    android:src="@drawable/ic_plus" />
+            </LinearLayout>
+            <!--    </RelativeLayout>-->
+
+            <!--    <RelativeLayout-->
+            <!--        android:id="@+id/rlGreutate"-->
+            <!--        android:layout_width="@dimen/_300sdp"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:layout_below="@+id/ryInaltime"-->
+            <!--        android:layout_centerHorizontal="true"-->
+            <!--        android:layout_marginTop="@dimen/_10sdp"-->
+            <!--        android:background="@drawable/background_card"-->
+            <!--        android:padding="@dimen/_10sdp">-->
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/llInaltime"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tvGreutate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:text="@string/greutate"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_greutate"
+                app:drawableTint="@color/black" />
+
+            <TextView
+                android:id="@+id/tvGreutateCurenta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvGreutate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="30,0 kg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvGreutateCurenta"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/minusGreutate"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/icon_minus"
+                    android:src="@drawable/ic_minus" />
+
+                <SeekBar
+                    android:id="@+id/sbGreutate"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/plusGreutate"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/icon_plus"
+                    android:src="@drawable/ic_plus" />
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:layout_below="@+id/rlGreutate"
+        android:layout_below="@+id/cw"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@color/colorDivider" />
@@ -241,8 +238,9 @@
             android:id="@+id/tvInformatiiBmi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:padding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center"
             android:text="@string/text_normoponderal"
             android:textSize="@dimen/_13sdp" />
     </LinearLayout>

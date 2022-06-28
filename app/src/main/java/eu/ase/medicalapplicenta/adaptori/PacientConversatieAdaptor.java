@@ -75,11 +75,11 @@ public class PacientConversatieAdaptor extends RecyclerView.Adapter<PacientConve
                     Mesaj ultimulMesaj = conversatie.getMesaje().get(conversatie.getMesaje().size() - 1);
 
                     String text;
-                    
+
                     if (ultimulMesaj.getIdEmitator().equals(idUserConectat) && ultimulMesaj.getIdReceptor().equals(idPacient)) {
                         text = ultimulMesaj.getText();
-                        if (text.length() > 40) {
-                            text = text.substring(0, 37) + "...";
+                        if (text.length() > 35) {
+                            text = text.substring(0, 32) + "...";
                         }
                         holder.tvUltimulMesaj.setText(text);
                         if (ultimulMesaj.isMesajCitit()) {
@@ -89,8 +89,8 @@ public class PacientConversatieAdaptor extends RecyclerView.Adapter<PacientConve
                         }
                     } else if (ultimulMesaj.getIdEmitator().equals(idPacient) && ultimulMesaj.getIdReceptor().equals(idUserConectat)) {
                         text = ultimulMesaj.getText();
-                        if (text.length() > 40) {
-                            text = text.substring(0, 37) + "...";
+                        if (text.length() > 35) {
+                            text = text.substring(0, 32) + "...";
                         }
                         holder.tvUltimulMesaj.setText(text);
                         if (!ultimulMesaj.isMesajCitit()) {

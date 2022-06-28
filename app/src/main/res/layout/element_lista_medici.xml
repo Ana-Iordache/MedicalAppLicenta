@@ -20,7 +20,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:src="@drawable/ic_account" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             android:layout_marginTop="@dimen/_5sdp"
@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/tvNumeMedic"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nume"
                 android:textColor="@color/custom_blue"
@@ -38,9 +38,20 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvNota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_toEndOf="@+id/tvNumeMedic"
+                android:text="10"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
                 android:id="@+id/tvGradProfesional"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvNumeMedic"
                 android:text="@string/grad_profesional"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
@@ -50,33 +61,14 @@
                 android:id="@+id/tvSpecialitate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvGradProfesional"
                 android:text="@string/specialitate"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="italic" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvNota"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:textSize="@dimen/_12sdp" />
+        </RelativeLayout>
 
     </LinearLayout>
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/tvNrFeedbackuri"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_centerInParent="true"-->
-    <!--            android:layout_marginStart="5dp"-->
-    <!--            android:layout_marginTop="20dp"-->
-    <!--            android:layout_toEndOf="@+id/llDate"-->
-    <!--            android:text="nr feedback-uri"-->
-    <!--            android:textStyle="italic" />-->
 
     <View
         android:id="@+id/view"

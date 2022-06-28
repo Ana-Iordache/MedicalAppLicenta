@@ -925,7 +925,7 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
         upload.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a putut încărca poza de profil!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -946,10 +946,10 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 public void onComplete(@NonNull Task task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(), "Poza a fost incarcata cu succes!", Toast.LENGTH_SHORT).show();
+                                        Log.i("incarcarePoza", "Poza a fost incarcata cu succes!");
                                     } else {
-                                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(getApplicationContext(), "Poza de profil nu a putut fi incarcata!", Toast.LENGTH_SHORT).show();
+                                        Log.e("incarcarePoza", task.getException().getMessage());
                                     }
                                 }
                             });

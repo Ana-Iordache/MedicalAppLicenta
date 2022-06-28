@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/custom_blue">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciwPozaProfilUser"
         android:layout_width="@dimen/_80sdp"
@@ -17,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ciwPozaProfilUser"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_3sdp"/>
+        android:layout_marginTop="@dimen/_3sdp"
+        android:textColor="@color/colorDivider" />
 
     <TextView
         android:id="@+id/tvEmailUserConectat"
@@ -26,6 +28,6 @@
         android:layout_below="@+id/tvNumeUserConectat"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_3sdp"
-        android:layout_marginBottom="@dimen/_5sdp"/>
-
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:textColor="@color/colorDivider" />
 </RelativeLayout>

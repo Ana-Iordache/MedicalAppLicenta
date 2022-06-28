@@ -52,6 +52,7 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
     public static final String MEDICI = "Medici";
     public static final String ORE_DISPONIBILE = "oreDisponibile";
     public static final String MEDIC = "medic";
+    public static final String INFO_MEDIC = "infoMedic";
     private final FirebaseService firebaseServiceSpecialitati = new FirebaseService(SPECIALITATI);
     private final FirebaseService firebaseServiceMedici = new FirebaseService(MEDICI);
 
@@ -235,9 +236,15 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
             btnProgramare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    btnProgramare.setBackgroundDrawable(getDrawable(R.drawable.background_butoane));
-//                    btnProgramare.setTextColor(getColor(R.color.white));
                     startActivity(new Intent(getApplicationContext(), OreDisponibileActivity.class).putExtra(ORE_DISPONIBILE, medic));
+                }
+            });
+
+            AppCompatButton btnContact = view.findViewById(R.id.btnContact);
+            btnContact.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), ChatActivity.class).putExtra(INFO_MEDIC, medic));
                 }
             });
 

@@ -57,10 +57,8 @@
             android:focusableInTouchMode="true"
             android:inputType="none"
             android:padding="@dimen/_10sdp"
-            android:text="2022"
+            android:text="@string/_2022"
             android:textSize="16sp" />
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
@@ -69,8 +67,9 @@
         android:layout_height="@dimen/_400sdp"
         android:layout_below="@+id/tilAni"
         android:layout_margin="@dimen/_5sdp"
-        app:cardBackgroundColor="@color/custom_light_blue"
-        app:cardCornerRadius="@dimen/_15sdp">
+        app:cardBackgroundColor="@color/colorBackground"
+        app:cardCornerRadius="@dimen/_15sdp"
+        app:cardElevation="@dimen/_5sdp">
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"
