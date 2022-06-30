@@ -31,6 +31,25 @@
         android:layout_height="@dimen/_1sdp"
         android:background="@color/colorDivider" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMediaNotelor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/background_butoane_secundare_selector"
+        android:drawableEnd="@drawable/ic_pie_chart_blue"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="@string/vizualizeaza_graficul_notelor"
+        android:textAllCaps="false"
+        android:textColor="@color/custom_blue"
+        android:textSize="16sp"
+        android:visibility="gone"/>
+
     <EditText
         android:id="@+id/etCautaPacient"
         android:layout_width="match_parent"

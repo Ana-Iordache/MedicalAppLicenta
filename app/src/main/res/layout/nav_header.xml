@@ -19,7 +19,7 @@
         android:layout_below="@+id/ciwPozaProfilUser"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_3sdp"
-        android:textColor="@color/colorDivider" />
+        android:textColor="@color/custom_light_blue" />
 
     <TextView
         android:id="@+id/tvEmailUserConectat"
@@ -29,5 +29,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_3sdp"
         android:layout_marginBottom="@dimen/_5sdp"
-        android:textColor="@color/colorDivider" />
+        android:textColor="@color/custom_light_blue" />
 </RelativeLayout>

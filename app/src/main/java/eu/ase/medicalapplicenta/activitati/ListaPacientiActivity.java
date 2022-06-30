@@ -94,6 +94,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
 
     private List<Pacient> pacientiFiltered = new ArrayList<>();
 
+    private AppCompatButton btnMediaNotelor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +104,15 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         initializeazaAtribute();
 
         seteazaToolbar();
+
+        if (intent.hasExtra(HomeMedicActivity.VIZUALIZARE_FEEDBACK)) {
+            btnMediaNotelor.setVisibility(View.VISIBLE);
+            tvTitlu.setText(getString(R.string.feedback_pacienti));
+        } else if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
+            tvTitlu.setText(getString(R.string.title_conversatie_noua));
+        }
+
+        btnMediaNotelor.setOnClickListener(this);
 
         seteazaRecyclerView();
 
@@ -130,6 +141,8 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
 
         intent = getIntent();
         etCautaPacient = findViewById(R.id.etCautaPacient);
+
+        btnMediaNotelor = findViewById(R.id.btnMediaNotelor);
     }
 
     private void loading(Boolean seIncarca) {
@@ -154,8 +167,14 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                 if (iduriPacienti.isEmpty()) {
                     loading(false);
                     rlNiciunPacient.setVisibility(View.VISIBLE);
+                    btnMediaNotelor.setEnabled(false);
+                    btnMediaNotelor.setTextColor(getResources().getColor(R.color.custom_light_blue));
+                    btnMediaNotelor.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pie_chart_light_blue, 0);
                 } else {
                     firebaseServicePacienti.preiaDateDinFirebase(preiaPacienti());
+                    btnMediaNotelor.setEnabled(true);
+                    btnMediaNotelor.setTextColor(getResources().getColor(R.color.custom_blue));
+                    btnMediaNotelor.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pie_chart_blue, 0);
                 }
 
             }
@@ -235,13 +254,7 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        if (intent.hasExtra(HomeMedicActivity.VIZUALIZARE_FEEDBACK)) {
-            tvTitlu.setText(getString(R.string.feedback_pacienti));
-        } else if (intent.hasExtra(ConversatiiActivity.CONVERSATIE_NOUA)) {
-            tvTitlu.setText(getString(R.string.title_conversatie_noua));
-        }
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -388,6 +401,10 @@ public class ListaPacientiActivity extends AppCompatActivity implements PacientA
                 break;
             case R.id.btnBuletin:
                 descarcaDocument(uriBuletin, Environment.DIRECTORY_DOWNLOADS, denumirePdfBuletin);
+                break;
+            case R.id.btnMediaNotelor:
+                startActivity(new Intent(getApplicationContext(), PieChartNoteActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
     }

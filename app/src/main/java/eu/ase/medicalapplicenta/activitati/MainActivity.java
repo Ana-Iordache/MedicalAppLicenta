@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
@@ -289,12 +290,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.item_profil:
                 startActivity(new Intent(getApplicationContext(), ProfilPacientActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.item_bmi:
                 startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(PACIENT, "pacient"));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.item_documente_personale:
                 startActivity(new Intent(getApplicationContext(), DocumentePersonaleActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.item_feedback_aplicatie:
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -310,9 +314,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             "Nu aveti niciun serviciu de email disponibil!",
                             Toast.LENGTH_SHORT).show();
                 }
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.item_despre_noi:
                 startActivity(new Intent(getApplicationContext(), DespreNoiActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
         return true;

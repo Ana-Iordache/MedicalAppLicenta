@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -292,9 +294,11 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
         switch (item.getItemId()) {
             case R.id.item_profil:
                 startActivity(new Intent(getApplicationContext(), ProfilMedicActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.item_bmi:
                 startActivity(new Intent(getApplicationContext(), CalculatorBmiActivity.class).putExtra(MEDIC, "medic"));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
 //            case R.id.item_log_out:
 //                FirebaseAuth.getInstance().signOut();
@@ -312,11 +316,11 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Nu aveti niciun serviciu de email disponibil!", Toast.LENGTH_SHORT).show();
                 }
-
-
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.item_despre_noi:
                 startActivity(new Intent(getApplicationContext(), DespreNoiActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
         return true;

@@ -3,7 +3,7 @@
     package="eu.ase.medicalapplicenta">
 
     <uses-permission android:name="android.permission.INTERNET" />
-     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -14,7 +14,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MedicalAppLicenta">
+        android:theme="@style/Theme.MedicalAppLicenta"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activitati.PlatiLunareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitati.IncasariPacientiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitati.PieChartNoteActivity"
+            android:exported="false" />
         <activity
             android:name=".activitati.DocumentePersonaleActivity"
             android:exported="false" />

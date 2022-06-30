@@ -13,6 +13,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.stripe.android.paymentsheet.PaymentSheet;
+
 import java.util.List;
 
 import eu.ase.medicalapplicenta.R;
@@ -94,6 +96,7 @@ public class FacturaAdaptor extends RecyclerView.Adapter<FacturaAdaptor.FacturaA
             ivNeachitata = itemView.findViewById(R.id.ivNeachitata);
             ivAchitata = itemView.findViewById(R.id.ivAchitata);
             btnPlata = itemView.findViewById(R.id.btnPlata);
+
             btnPlata.setOnClickListener(this);
 
             this.onBtnPlataClickListener = onBtnPlataClickListener;

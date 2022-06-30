@@ -58,6 +58,8 @@ public class PacientAdaptor extends RecyclerView.Adapter<PacientAdaptor.PacientV
         if (pacient != null) {
             if (!pacient.getUrlPozaProfil().equals("")) {
                 Glide.with(context).load(pacient.getUrlPozaProfil()).into(holder.ciwPozaProfilPacient);
+            } else {
+                Glide.with(context).load(R.drawable.ic_account).into(holder.ciwPozaProfilPacient);
             }
 
             String numeComplet = pacient.getNume() + " " + pacient.getPrenume();

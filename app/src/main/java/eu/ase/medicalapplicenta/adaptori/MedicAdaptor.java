@@ -99,8 +99,11 @@ public class MedicAdaptor extends RecyclerView.Adapter<MedicAdaptor.MedicViewHol
         }
 
         void seteazaDateMedic(Medic medic, MedicViewHolder holder) {
-            if (!medic.getUrlPozaProfil().equals(""))
+            if (!medic.getUrlPozaProfil().equals("")) {
                 Glide.with(context).load(medic.getUrlPozaProfil()).into(holder.ciwPozaProfilMedic);
+            } else {
+                Glide.with(context).load(R.drawable.ic_account).into(holder.ciwPozaProfilMedic);
+            }
 
             String numeComplet = "Dr. " + medic.getNume() + " " + medic.getPrenume();
             holder.tvNumeMedic.setText(numeComplet);

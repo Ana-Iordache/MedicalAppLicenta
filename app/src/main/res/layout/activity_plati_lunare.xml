@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activitati.IncasariActivity">
+    tools:context=".activitati.PlatiLunareActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/title_incasari_lunare"
+            android:text="@string/title_plati_lunare"
             android:textColor="@color/black"
             android:textSize="25sp" />
     </androidx.appcompat.widget.Toolbar>
@@ -90,21 +89,6 @@
         android:text="@string/exporta_date"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16sp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnIncasariPacient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnExportaDate"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:background="@drawable/background_butoane_secundare_selector"
-        android:text="@string/vizualizeaza_incasari_pacienti"
-        android:textAllCaps="false"
-        android:textColor="@color/custom_blue"
         android:textSize="16sp" />
 
 </RelativeLayout>

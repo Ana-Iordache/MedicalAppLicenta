@@ -308,7 +308,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:text="@string/logout"
                 android:textColor="@color/black"
-                app:drawableStartCompat="@drawable/ic_log_out"
+                app:drawableEndCompat="@drawable/ic_logout"
                 app:drawableTint="@color/black" />
         </RelativeLayout>
 

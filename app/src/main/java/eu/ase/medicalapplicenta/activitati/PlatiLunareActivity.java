@@ -4,12 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,12 +22,10 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.collection.LLRBNode;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -43,7 +36,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import eu.ase.medicalapplicenta.R;
@@ -51,7 +43,7 @@ import eu.ase.medicalapplicenta.entitati.Factura;
 import eu.ase.medicalapplicenta.entitati.Programare;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-public class IncasariActivity extends AppCompatActivity implements View.OnClickListener {
+public class PlatiLunareActivity extends AppCompatActivity implements View.OnClickListener {
     private final FirebaseService firebaseService = new FirebaseService("Programari");
     private final HSSFWorkbook workbook = new HSSFWorkbook();
     private final String[] lunileAnului = new String[]{"Ianuarie", "Februarie", "Martie", "Aprilie",
@@ -60,26 +52,25 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
     private Toolbar toolbar;
     private BarChart barChart;
     private List<Factura> facturiPlatite = new ArrayList<>();
-    private String idMedicConectat;
-    private double[] incasariPeLuna = new double[12];
     private List<String> dateProgramari = new ArrayList<>();
+    private double[] platiPeLuna = new double[12];
+    private String idPacientConectat;
     private AutoCompleteTextView actvAni;
     private int anSelectat;
     private AppCompatButton btnExportaDate;
-    private AppCompatButton btnIncasariPacient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_incasari);
+        setContentView(R.layout.activity_plati_lunare);
 
         initializeazaAtribute();
 
         seteazaToolbar();
 
-        firebaseService.preiaDateDinFirebase(preiaProgramari());
-
         seteazaAdaptorAni();
+
+        firebaseService.preiaDateDinFirebase(preiaProgramari());
 
         actvAni.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,13 +80,22 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
-
         btnExportaDate.setOnClickListener(this);
-        btnIncasariPacient.setOnClickListener(this);
+    }
 
-//        deseneazaGrafic();
+    private void initializeazaAtribute() {
+        toolbar = findViewById(R.id.toolbar);
+        barChart = findViewById(R.id.barChart);
+        idPacientConectat = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        actvAni = findViewById(R.id.actvAni);
+        btnExportaDate = findViewById(R.id.btnExportaDate);
+    }
+
+    private void seteazaToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void seteazaAdaptorAni() {
@@ -105,37 +105,31 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
         anSelectat = Integer.parseInt(actvAni.getText().toString());
     }
 
+
     private ValueEventListener preiaProgramari() {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 facturiPlatite.clear();
                 dateProgramari.clear();
-                incasariPeLuna = new double[12];
+                platiPeLuna = new double[12];
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Programare programare = dataSnapshot.getValue(Programare.class);
                     Factura factura = programare.getFactura();
-                    if (programare.getIdMedic().equals(idMedicConectat) && factura.getStatus().equals(getString(R.string.achitata))) {
+                    if (programare.getIdPacient().equals(idPacientConectat)
+                            && factura.getStatus().equals(getString(R.string.achitata))) {
                         facturiPlatite.add(factura);
                         dateProgramari.add(programare.getData());
                     }
                 }
 
-                if (facturiPlatite.isEmpty()) {
-                    btnExportaDate.setEnabled(false);
-                    btnIncasariPacient.setEnabled(false);
-                    btnIncasariPacient.setTextColor(getResources().getColor(R.color.custom_light_blue));
-                } else {
-                    btnExportaDate.setEnabled(true);
-                    btnIncasariPacient.setEnabled(true);
-                    btnIncasariPacient.setTextColor(getResources().getColor(R.color.custom_blue));
-                }
+                btnExportaDate.setEnabled(!facturiPlatite.isEmpty());
 
                 for (int i = 0; i < facturiPlatite.size(); i++) {
                     int luna = Integer.parseInt(dateProgramari.get(i).split("/")[1]);
                     int an = Integer.parseInt(dateProgramari.get(i).split("/")[2]);
                     if (an == anSelectat) {
-                        incasariPeLuna[luna - 1] += facturiPlatite.get(i).getValoare();
+                        platiPeLuna[luna - 1] += facturiPlatite.get(i).getValoare();
                     }
                 }
 
@@ -151,8 +145,8 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
 
     private void deseneazaGrafic() {
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        for (int i = 0; i < incasariPeLuna.length; i++) {
-            barEntries.add(new BarEntry(i, (float) incasariPeLuna[i]));
+        for (int i = 0; i < platiPeLuna.length; i++) {
+            barEntries.add(new BarEntry(i, (float) platiPeLuna[i]));
         }
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Total încasări pe lună");
@@ -184,22 +178,6 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
         barChart.invalidate();
     }
 
-    private void seteazaToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
-    private void initializeazaAtribute() {
-        toolbar = findViewById(R.id.toolbar);
-        barChart = findViewById(R.id.barChart);
-        idMedicConectat = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        actvAni = findViewById(R.id.actvAni);
-        btnExportaDate = findViewById(R.id.btnExportaDate);
-        btnIncasariPacient = findViewById(R.id.btnIncasariPacient);
-    }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -210,26 +188,8 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnExportaDate:
-                exportaDateInExcel();
-                break;
-            case R.id.btnIncasariPacient:
-                startActivity(new Intent(getApplicationContext(), IncasariPacientiActivity.class));
-                break;
-        }
-    }
-
-    private void exportaDateInExcel() {
-        String denumireSheet = "Incasari" + anSelectat;
+        String denumireSheet = "Plati" + anSelectat;
         HSSFSheet sheet = workbook.getSheet(denumireSheet);
         if (sheet == null) {
             sheet = workbook.createSheet(denumireSheet);
@@ -242,17 +202,17 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
         cell = row.createCell(1);
         cell.setCellValue(anSelectat);
 
-        for (int i = 0; i < incasariPeLuna.length; i++) {
+        for (int i = 0; i < platiPeLuna.length; i++) {
             row = sheet.createRow(i + 1);
 
             cell = row.createCell(0);
             cell.setCellValue(lunileAnului[i]);
 
             cell = row.createCell(1);
-            cell.setCellValue(incasariPeLuna[i]);
+            cell.setCellValue(platiPeLuna[i]);
         }
 
-        String denumireFisier = "/Incasari_clinica_medicala.xls"; // todo sa schimb pt prezentare
+        String denumireFisier = "/Plati_clinica_medicala.xls"; // todo sa schimb pt prezentare
         File filePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + denumireFisier);
 
         try {
