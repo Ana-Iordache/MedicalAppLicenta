@@ -36,7 +36,7 @@
         android:layout_height="@dimen/_400sdp"
         android:layout_below="@+id/view"
         android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         app:cardBackgroundColor="@color/colorBackground"

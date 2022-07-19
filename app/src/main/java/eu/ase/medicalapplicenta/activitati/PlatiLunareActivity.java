@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -80,7 +83,12 @@ public class PlatiLunareActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+
         btnExportaDate.setOnClickListener(this);
+
+        deseneazaGrafic();
     }
 
     private void initializeazaAtribute() {
@@ -149,7 +157,7 @@ public class PlatiLunareActivity extends AppCompatActivity implements View.OnCli
             barEntries.add(new BarEntry(i, (float) platiPeLuna[i]));
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Total încasări pe lună");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Total plăți pe lună");
         barDataSet.setColors(getResources().getColor(R.color.custom_blue));
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(14f);
@@ -212,7 +220,7 @@ public class PlatiLunareActivity extends AppCompatActivity implements View.OnCli
             cell.setCellValue(platiPeLuna[i]);
         }
 
-        String denumireFisier = "/Plati_clinica_medicala.xls"; // todo sa schimb pt prezentare
+        String denumireFisier = "/Plati_clinica_medicala.xls";
         File filePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + denumireFisier);
 
         try {

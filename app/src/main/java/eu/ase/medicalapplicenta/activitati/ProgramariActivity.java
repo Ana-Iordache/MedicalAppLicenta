@@ -528,7 +528,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void incarcaPdf(Uri uriPDF, Programare programare) {
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this, R.style.ProgressDialogStyle);
         progressDialog.setMessage(getString(R.string.pd_incarcare_document));
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -559,6 +559,8 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        progressDialog.dismiss();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -566,10 +568,11 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getApplicationContext(),
                                 "Rețeta nu a putut fi încărcată!", Toast.LENGTH_SHORT).show();
+
+                        progressDialog.dismiss();
                     }
                 });
 
-        progressDialog.dismiss();
     }
 
     private void ataseazaPdf() {
@@ -585,6 +588,7 @@ public class ProgramariActivity extends AppCompatActivity implements View.OnClic
         if (requestCode == REQUEST_CODE_INTENT && resultCode == RESULT_OK && data != null) {
             uriPDF = data.getData();
         }
+        Toast.makeText(getApplicationContext(), "Apăsați din nou pe ”Atașează rețetă” pentru a o încărca.", Toast.LENGTH_LONG).show();
     }
 
     @Override

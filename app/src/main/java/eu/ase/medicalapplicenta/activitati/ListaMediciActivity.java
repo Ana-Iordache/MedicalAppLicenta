@@ -314,6 +314,8 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
 
         } else {
             if (filtruCautare.isEmpty()) {
+                rlNiciunMedic.setVisibility(View.GONE);
+                rwListaMedici.setVisibility(View.VISIBLE);
                 seteazaAdaptorMedici(medici);
             } else {
                 filtreazaMediciDupaNume(filtruCautare);
@@ -345,6 +347,8 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
         } else {
             mediciFiltered.clear();
             if (specialitateSelectata == 0) {
+                rlNiciunMedic.setVisibility(View.GONE);
+                rwListaMedici.setVisibility(View.VISIBLE);
                 seteazaAdaptorMedici(medici);
             } else {
                 filtreazaMediciDupaSpecialitate(specialitati.get(specialitateSelectata - 1).getIdSpecialitate());
@@ -378,16 +382,16 @@ public class ListaMediciActivity extends AppCompatActivity implements MedicAdapt
 
     private void filtreazaMediciDupaNume(String stringCautare) {
         mediciFiltered = medici.stream()
-                .filter(medic -> medic.getNume().toLowerCase().contains(stringCautare)
-                        || medic.getPrenume().toLowerCase().contains(stringCautare))
+                .filter(medic -> medic.getNume().toLowerCase().contains(stringCautare.toLowerCase())
+                        || medic.getPrenume().toLowerCase().contains(stringCautare.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     private void filtreazaMediciDupaSpecialitateSiNume(String idSpecialitate, String stringCautare) {
         mediciFiltered = medici.stream().
                 filter(medic -> medic.getIdSpecialitate().equals(idSpecialitate)
-                        && (medic.getNume().toLowerCase().contains(stringCautare)
-                        || medic.getPrenume().toLowerCase().contains(stringCautare)))
+                        && (medic.getNume().toLowerCase().contains(stringCautare.toLowerCase())
+                        || medic.getPrenume().toLowerCase().contains(stringCautare.toLowerCase())))
                 .collect(Collectors.toList());
     }
 

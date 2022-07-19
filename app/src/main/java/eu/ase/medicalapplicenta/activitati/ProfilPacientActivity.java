@@ -59,7 +59,7 @@ import eu.ase.medicalapplicenta.utile.FirebaseService;
 
 public class ProfilPacientActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 200;
-    private CircleImageView ciwPozaProfilPacient; //todo sa modific si in xml inapoi
+    private CircleImageView ciwPozaProfilPacient;
 
     private TextInputEditText tietNumePacient;
     private TextInputEditText tietPrenumePacient;
@@ -117,7 +117,7 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
         seteazaDialogStergeCont();
 
 //        spGrupaSange.setEnabled(false); // din xml nu merge
-//        actvGrupeSange.setDropDownHeight(0); todo hmmmmm
+//        actvGrupeSange.setDropDownHeight(0);
 
         btnModificaDate.setOnClickListener(this);
         btnSalveaza.setOnClickListener(this);
@@ -530,6 +530,8 @@ public class ProfilPacientActivity extends AppCompatActivity implements View.OnC
                                                         Toast.LENGTH_SHORT).show();
                                                 Log.d("stergereCont", "Contul a fost sters.");
                                                 referintaUserConectat.child("contSters").setValue(true);
+                                                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
+                                                finish();
                                             } else {
                                                 Log.e("stergereCont", task.getException().getMessage());
                                                 Toast.makeText(getApplicationContext(),

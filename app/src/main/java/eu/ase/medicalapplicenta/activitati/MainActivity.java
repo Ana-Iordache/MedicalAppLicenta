@@ -212,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         incarcaInfoNavMenu();
+        preiaNotificari();
     }
 
     public void incarcaInfoNavMenu() {

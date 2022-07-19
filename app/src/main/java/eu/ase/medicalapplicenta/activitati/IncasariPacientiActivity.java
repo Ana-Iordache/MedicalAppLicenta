@@ -178,7 +178,7 @@ public class IncasariPacientiActivity extends AppCompatActivity implements View.
             if (numePrenume[0].contains("-")) {
                 numePacienti.add(numePrenume[0].split("-")[0] +
                         " " + numePrenume[numePrenume.length - 1].charAt(0));
-            } else {
+            } else if(numePrenume[numePrenume.length - 1].length() != 0) {
                 numePacienti.add(numePrenume[0] + " "
                         + numePrenume[numePrenume.length - 1].charAt(0));
             }

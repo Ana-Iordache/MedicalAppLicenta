@@ -55,7 +55,6 @@ import eu.ase.medicalapplicenta.R;
 import eu.ase.medicalapplicenta.entitati.Pacient;
 import eu.ase.medicalapplicenta.utile.FirebaseService;
 
-//todo sa testez inca o data ca merge
 public class InregistrarePacientActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int REQUEST_CODE = 200;
     public static final String PACIENTI = "Pacienti";
@@ -173,9 +172,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             Long cnp = Long.parseLong(tietCnp.getText().toString().trim());
             Long nrTelefon = Long.parseLong("4" + tietNrTelefonPacient.getText().toString().trim());
 
-//        radioButton = findViewById(rgSex.getCheckedRadioButtonId());
-//        String sex = String.valueOf(radioButton.getText().toString().charAt(0));
-
             String sex = "";
             int primaCifraCnp = Integer.parseInt(String.valueOf(String.valueOf(cnp).charAt(0)));
             if (primaCifraCnp == 1 || primaCifraCnp == 5) {
@@ -183,8 +179,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             } else if (primaCifraCnp == 6 || primaCifraCnp == 2) {
                 sex = FEMININ;
             }
-
-//        String adresa = tietAdresa.getText().toString();
 
             String dataNasterii = tietDataNasterii.getText().toString();
             int varsta = 0;
@@ -200,10 +194,6 @@ public class InregistrarePacientActivity extends AppCompatActivity implements Vi
             }
 
             String grupaSange = actvGrupeSange.getText().toString();
-
-//        Double greutate = Double.valueOf(tietGreutate.getText().toString());
-//        Double inaltime = Double.valueOf(tietInaltime.getText().toString());
-
 
             String adresaEmail = tietEmailPacient.getText().toString().trim();
             String parola = tietParolaPacient.getText().toString().trim();

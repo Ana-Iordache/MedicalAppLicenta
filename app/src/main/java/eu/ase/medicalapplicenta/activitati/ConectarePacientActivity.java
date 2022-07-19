@@ -252,7 +252,7 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
 //                        Toast.makeText(getApplicationContext(), "Accesati link-ul primit pe email pentru verificare!", Toast.LENGTH_SHORT).show();
 //                    }
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish(); //TODO daca dau back din main sa nu ma intoarca la login
+                    finish(); // sa nu ma intoarca la login
                     // dar daca pun asa cand dau back ma scoate din ap, e ok
                     // dar daca vreau sa revin in ap imi deschide pagina de log in in loc de main
                 } else {
@@ -277,12 +277,26 @@ public class ConectarePacientActivity extends AppCompatActivity implements View.
         preferinteConectareEditor.commit();
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+//            moveTaskToBack(true);
+//        }
+//    }
+
+    // ca daca ies din ap si intru iar sa mi deschida pagina principala
+    // dar daca dau back prima data imi deschide tot pag principala
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            moveTaskToBack(true);
+    protected void onResume() {
+        super.onResume();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if (FirebaseAuth.getInstance().getCurrentUser().getEmail().contains("clinica-medicala.ro")) {
+                startActivity(new Intent(getApplicationContext(), HomeMedicActivity.class));
+            } else {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+            finish();
         }
     }
-
 }

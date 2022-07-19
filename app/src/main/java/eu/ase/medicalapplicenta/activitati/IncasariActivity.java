@@ -95,7 +95,7 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
         btnExportaDate.setOnClickListener(this);
         btnIncasariPacient.setOnClickListener(this);
 
-//        deseneazaGrafic();
+        deseneazaGrafic();
     }
 
     private void seteazaAdaptorAni() {
@@ -252,7 +252,7 @@ public class IncasariActivity extends AppCompatActivity implements View.OnClickL
             cell.setCellValue(incasariPeLuna[i]);
         }
 
-        String denumireFisier = "/Incasari_clinica_medicala.xls"; // todo sa schimb pt prezentare
+        String denumireFisier = "/Incasari_clinica_medicala.xls";
         File filePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + denumireFisier);
 
         try {

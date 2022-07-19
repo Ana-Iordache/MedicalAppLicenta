@@ -82,6 +82,7 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
             holder.tvOraProgramarii.setText(p.getOra());
             holder.tvStatus.setText(p.getStatus());
 
+            holder.tvStatus.setTextColor(context.getColor(R.color.black));
             if (p.getStatus().equals(context.getString(R.string.status_anulata))
                     || p.getStatus().equals(context.getString(R.string.status_neonorata))) {
                 holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0);
@@ -121,13 +122,17 @@ public class ProgramareAdaptor extends RecyclerView.Adapter<ProgramareAdaptor.Pr
                     holder.btnReteta.setEnabled(false);
                     holder.btnReteta.setTextColor(context.getColor(R.color.custom_light_blue));
                     holder.btnReteta.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_download_light_blue, 0);
+                } else {
+                    holder.btnReteta.setEnabled(true);
+                    holder.btnReteta.setTextColor(context.getColor(R.color.custom_blue));
+                    holder.btnReteta.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_download_blue, 0);
                 }
                 seteazaDateMedic(p, holder);
             } else {
                 holder.tvSpecialitate.setVisibility(View.GONE);
                 holder.btnFeedback.setVisibility(View.GONE);
 
-                if (p.getUrlReteta().equals("")) { //daca nu a atatsat inca nicio reteta
+                if (p.getUrlReteta().equals("")) { //daca nu a atasat inca nicio reteta
                     holder.btnReteta.setText(context.getString(R.string.ataseaza_reteta));
                     holder.btnReteta.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_attach_file_blue, 0);
                 }

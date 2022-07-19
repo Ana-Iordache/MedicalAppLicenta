@@ -256,4 +256,3 @@ public class ConectareMedicActivity extends AppCompatActivity implements View.On
     }
 
 }
-// todo daca ultima data a fost conectat un medic, ar trb sa ramana pagina de pornire ConectareMedicActivity

@@ -156,7 +156,7 @@
             android:textSize="16sp" />
 
 
-        <!--todo pagina de admin-->
+        <!--todo de sters-->
         <TextView
             android:id="@+id/tv"
             android:layout_width="wrap_content"

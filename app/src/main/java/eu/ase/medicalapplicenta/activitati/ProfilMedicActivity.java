@@ -493,6 +493,8 @@ public class ProfilMedicActivity extends AppCompatActivity implements View.OnCli
                                                         Toast.LENGTH_SHORT).show();
                                                 Log.d("stergereCont", "Contul a fost sters.");
                                                 referintaUserConectat.child("contSters").setValue(true);
+                                                startActivity(new Intent(getApplicationContext(), ConectarePacientActivity.class));
+                                                finish();
                                             } else {
                                                 Log.e("stergereCont", task.getException().getMessage());
                                                 Toast.makeText(getApplicationContext(),

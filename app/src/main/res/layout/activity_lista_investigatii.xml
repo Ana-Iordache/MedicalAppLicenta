@@ -64,6 +64,7 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/background_edit_text_selector"
         android:drawableEnd="@drawable/ic_cauta"
         android:focusable="false"

@@ -239,7 +239,7 @@
     <string name="niciun_document_atasat">Niciun document atașat</string>
     <string name="card_de_sanatate">Card de sănătate</string>
     <string name="buletin">Buletin</string>
-    <string name="text_normoponderal">Felicitări! Ai o greutate normală, proporțională cu înălțimea ta. Îți recomandăm să te consulți cu unul din medicii noștri pentru a te ajuta să-ți menții un stil de viață sănătos și să efectuezi o serie de analize pentru a te asigura că totul este în regulă în corpul tău.</string>
+    <string name="text_normoponderal">Felicitări! Ai o greutate normală, proporțională cu înălțimea ta. Îți recomandăm să te consulți cu unul din medicii noștri pentru a te ajuta să-ți menții un stil de viață sănătos și să efectuezi o serie de analize pentru a te asigura că totul este în regulă în organismul tău.</string>
     <string name="text_subponderal">Subponderalitatea implică o greutate mai mică decât este cea considerată normală pentru o anumită înălțime. Aceasta afectează creșterea și dezvoltarea corpului, poate cauza infertilitate, oboseală, lipsa concentrației, anemie, dar poate afecta și capacitatea organismului de termoreglare. Din cauza răspunsului imun scăzut, persoanele subponderale sunt mai puțin rezistente la infecții și boli. Consultă-te cu unul din medicii noștri pentru stabilirea unui regim potrivit.</string>
     <string name="text_supraponderal">Supraponderalitatea implică o greutate mai mare decât este cea considerată normală pentru o anumită înălțime. Riscurile la care ești expus sunt depresia și hipertensiunea arterială. Supraponderalitatea poate fi combatută prin sport și reducerea consumului de calorii, înainte a ajunge la gradul 1 de obezitate. Consultă-te cu unul din medicii noștri pentru stabilirea unui regim potrivit nevoilor tale.</string>
     <string name="text_obezitate1">Obezitatea este o boală metabolică caracterizată de țesutul adipos excesiv, ce crește riscul de diabet, hipertensiune, boli cardiovasculare, pietre la nivelul vezicii biliare și alte boli cronice. Cu cât gradul de obezitate este mai mare, cu atât riscurile devin și mai mari. Pentru obezitatea de grad 1 se recomandă tratamentul nechirurgical: activitatea fizică și regimul alimentar. Consultă-te cu unul din medicii noștri pentru stabilirea unui regim potrivit nevoilor tale.</string>
@@ -266,4 +266,5 @@
     <string name="title_total_note_feedback">Total note feedback</string>
     <string name="vizualizeaza_incasari_pacienti">Vizualizează încasări pacienți</string>
     <string name="title_plati_lunare">Plăți lunare</string>
+    <string name="document_incarcat">Documentul a fost încărcat cu succes!</string>
 </resources>

@@ -329,7 +329,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
 
                 oreDisponibile.removeAll(oreIndisponibile);
 
-                //todo sa testez (cand toate orele din program sunt indisponibile)
+                // cand toate orele din program sunt indisponibile
                 if (oreDisponibile.isEmpty()) {
                     rwOreDisponibile.setVisibility(View.GONE);
                     tvNicioOra.setText(getString(R.string.nicio_ora));
@@ -355,7 +355,7 @@ public class OreDisponibileActivity extends AppCompatActivity implements View.On
         if (!actvInvestigatii.getText().toString().equals(getString(R.string.selectati_investigatia))) {
             AlertDialog dialog = new AlertDialog.Builder(OreDisponibileActivity.this)
                     .setTitle("Confirmare programare")
-                    .setMessage("Trimiteti programarea pentru data " + tietDataProgramarii.getText().toString() + " la ora " + oreDisponibile.get(position) + "?")
+                    .setMessage("Trimiteți programarea pentru data " + tietDataProgramarii.getText().toString() + " la ora " + oreDisponibile.get(position) + "?")
                     .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

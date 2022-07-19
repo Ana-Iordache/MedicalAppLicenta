@@ -88,13 +88,12 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
 
     private ProgressBar progressBar;
 
-    private AlertDialog dialogPlata;
-    private AppCompatButton btnAdauga;
-
     private Factura factura;
     private AutoCompleteTextView actvStatus;
 
     private FloatingActionButton fabBarChart;
+
+    private List<Factura> facturiFiltered = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +105,6 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
         seteazaToolbar();
 
         seteazaRecyclerView();
-
-//        seteazaDialogPlatesteFactura();
 
         firebaseService.preiaDateDinFirebase(preiaFacturi());
 
@@ -286,159 +283,6 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
         actvStatus.setAdapter(adapter);
     }
 
-//    private void seteazaDialogPlatesteFactura() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Plată factură");
-//
-//        View view = getLayoutInflater().inflate(R.layout.dialog_plateste_factura, null);
-//        TextInputEditText tietNumeTitular = view.findViewById(R.id.tietNumeTitular);
-//        TextInputEditText tietNumarCard = view.findViewById(R.id.tietNumarCard);
-//        TextInputEditText tietDataExpirarii = view.findViewById(R.id.tietDataExpirarii);
-//        TextInputEditText tietCvv = view.findViewById(R.id.tietCvv);
-//        btnAdauga = view.findViewById(R.id.btnAdauga);
-//
-//        tietNumarCard.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-//                String stringCurent = charSequence.toString();
-//                if ((stringCurent.length() == 4 && start == 3) || (stringCurent.length() == 9 && start == 8) ||
-//                        (stringCurent.length() == 14 && start == 13)) {
-//                    tietNumarCard.setText(stringCurent + " ");
-//                    tietNumarCard.setSelection(stringCurent.length() + 1);
-//                }
-//                //todo atunci cand sterg inainte de " " sa-mi stearga automat si " " si numarul de dianinte de spatiu
-//                /*else if ((stringCurent.length() == 4 && before == 3)) {
-//                    stringCurent = stringCurent.substring(0, 3);
-//                    tietNumarCard.setText(stringCurent);
-//                    tietNumarCard.setSelection(stringCurent.length());
-//                }*/
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
-//
-//        tietDataExpirarii.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-//                String stringCurent = charSequence.toString();
-//                if (stringCurent.length() == 2 && start == 1) {
-//                    tietDataExpirarii.setText(stringCurent + "/");
-//                    tietDataExpirarii.setSelection(stringCurent.length() + 1);
-//                } else if (stringCurent.length() == 2 && before == 1) {
-//                    stringCurent = stringCurent.substring(0, 1);
-//                    tietDataExpirarii.setText(stringCurent);
-//                    tietDataExpirarii.setSelection(stringCurent.length());
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//            }
-//        });
-//
-//        btnAdauga.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                preiaCustomerID();
-////                paymentFlow();
-////                String numeTitular = tietNumeTitular.getText().toString().trim();
-////                if (numeTitular.isEmpty()) {
-////                    tietNumeTitular.setError(getString(R.string.err_empty_nume_titular));
-////                    tietNumeTitular.requestFocus();
-////                    return;
-////                }
-////
-////                if (tietNumarCard.getText().toString().isEmpty()) {
-////                    tietNumarCard.setError(getString(R.string.err_empty_numar_card));
-////                    tietNumarCard.requestFocus();
-////                    return;
-////                }
-////
-////                if (tietNumarCard.getText().toString().length() != 19) {
-////                    tietNumarCard.setError(getString(R.string.err_not_valid_numar_card));
-////                    tietNumarCard.requestFocus();
-////                    return;
-////                }
-////
-////                String dataExpirariiString = tietDataExpirarii.getText().toString();
-////                if (dataExpirariiString.isEmpty()) {
-////                    tietDataExpirarii.setError(getString(R.string.err_empty_data_expirarii));
-////                    tietDataExpirarii.requestFocus();
-////                    return;
-////                }
-////
-////                Pattern pattern = Pattern.compile(getString(R.string.pattern_data_expirarii));
-////                Matcher matcher = pattern.matcher(tietDataExpirarii.getText().toString());
-////                if (!matcher.matches()) {
-////                    tietDataExpirarii.setError(getString(R.string.err_not_valid_data_expirarii));
-////                    tietDataExpirarii.requestFocus();
-////                    return;
-////                }
-////
-////                String cvv = tietCvv.getText().toString();
-////                if (cvv.isEmpty()) {
-////                    tietCvv.setError(getString(R.string.err_empty_cvv));
-////                    tietCvv.requestFocus();
-////                    return;
-////                }
-////
-////                if (cvv.length() < 3) {
-////                    tietCvv.setError(getString(R.string.err_not_valid_cvv));
-////                    tietCvv.requestFocus();
-////                    return;
-////                }
-//////                try {
-//////                    Date dataExpirarii = new SimpleDateFormat("MM/yy", Locale.US).parse(dataExpirariiString);
-//////                    Toast.makeText(getApplicationContext(), dataExpirarii.toString(), Toast.LENGTH_SHORT).show();
-//////                } catch (ParseException e) {
-////////                    e.printStackTrace();
-//////                    tietDataExpirarii.setError("input gresit");
-//////                    tietDataExpirarii.requestFocus();
-//////                    return;
-//////                }
-////
-////                firebaseService.databaseReference
-////                        .child(factura.getIdFactura())
-////                        .child("factura")
-////                        .child("status")
-////                        .setValue(getString(R.string.achitata));
-////
-////
-////                tietNumeTitular.setText("");
-////                tietNumeTitular.clearFocus();
-////
-////                tietNumarCard.setText("");
-////                tietNumarCard.clearFocus();
-////
-////                tietDataExpirarii.setText("");
-////                tietDataExpirarii.clearFocus();
-////
-////                tietCvv.setText("");
-////                tietCvv.clearFocus();
-////
-////                dialogPlata.dismiss();
-////
-////                Toast.makeText(getApplicationContext(), "Plata a fost efectuată cu succes!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        builder.setView(view);
-//        dialogPlata = builder.create();
-//    }
-
     private void seteazaRecyclerView() {
         rwFacturi.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -520,7 +364,11 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
 
     @Override
     public void onBtnPlataClick(int position) {
-        factura = facturi.get(position);
+        if (facturiFiltered.isEmpty()) {
+            factura = facturi.get(position);
+        } else {
+            factura = facturiFiltered.get(position);
+        }
 //        String text = getString(R.string.plateste) + " " + factura.getValoare() + " RON";
 //        btnAdauga.setText(text);
 //        dialogPlata.show();
@@ -528,28 +376,30 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
 //        Toast.makeText(getApplicationContext(), String.valueOf(factura.getValoare()), Toast.LENGTH_SHORT).show();
         preiaCustomerID();
 //        paymentFlow();
+        actvStatus.setText(R.string.toate);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (i != 0) {
-            List<Factura> facturiFiltered = facturi.stream()
+            facturiFiltered = facturi.stream()
                     .filter(f -> f.getStatus().startsWith(actvStatus.getText().toString().toLowerCase().substring(0, 4)))
                     .collect(Collectors.toList());
             if (!facturiFiltered.isEmpty()) {
                 ryNicioFactura.setVisibility(View.GONE);
-                seteazaAdaptorFacturi(facturiFiltered);
                 rwFacturi.setVisibility(View.VISIBLE);
+                seteazaAdaptorFacturi(facturiFiltered);
             } else {
                 ryNicioFactura.setVisibility(View.VISIBLE);
                 rwFacturi.setVisibility(View.GONE);
             }
         } else {
+            facturiFiltered.clear();
             if (!facturi.isEmpty()) {
                 ryNicioFactura.setVisibility(View.GONE);
-                seteazaAdaptorFacturi(facturi);
                 rwFacturi.setVisibility(View.VISIBLE);
+                seteazaAdaptorFacturi(facturi);
             } else {
                 ryNicioFactura.setVisibility(View.VISIBLE);
                 rwFacturi.setVisibility(View.GONE);
@@ -560,5 +410,11 @@ public class FacturiActivity extends AppCompatActivity implements FacturaAdaptor
     @Override
     public void onClick(View view) {
         startActivity(new Intent(getApplicationContext(), PlatiLunareActivity.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        seteazaAdaptorStatus();
     }
 }

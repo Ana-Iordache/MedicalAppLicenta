@@ -43,7 +43,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
 
     private TextView tvInaltimeCurenta;
     private TextView tvGreutateCurenta;
-//    private TextView tvVarstaCurenta;
 
     private SeekBar sbInaltime;
     private SeekBar sbGreutate;
@@ -52,10 +51,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
     private ImageView plusInaltime;
     private ImageView minusGreutate;
     private ImageView plusGreutate;
-//    private ImageView minusVarsta;
-//    private ImageView plusVarsta;
-
-//    private AppCompatButton btnCalculeaza;
 
     private LinearLayout llRezultat;
     private ImageView ivBmi;
@@ -70,7 +65,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
     private Pacient pacient;
 
     private int inaltimeCurenta = INALTIME_MINIMA;
-    //    private int varstaCurenta;
     private double greutateCurenta = GREUTATE_MINIMA;
 
     private String text;
@@ -89,10 +83,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
         plusInaltime.setOnClickListener(this);
         minusGreutate.setOnClickListener(this);
         plusGreutate.setOnClickListener(this);
-//        minusVarsta.setOnClickListener(this);
-//        plusVarsta.setOnClickListener(this);
-
-//        btnCalculeaza.setOnClickListener(this);
 
         seteazaSeekbars();
 
@@ -143,7 +133,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
                 greutateCurenta = (double) i / 10;
                 text = DECIMAL_FORMAT.format(greutateCurenta) + KG;
                 tvGreutateCurenta.setText(text);
-                //merge din 2 in 2 nush dc.. si la regima maria tot asa face hmm
                 calculeazaBmi();
             }
 
@@ -240,7 +229,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
 
         tvInaltimeCurenta = findViewById(R.id.tvInaltimeCurenta);
         tvGreutateCurenta = findViewById(R.id.tvGreutateCurenta);
-//        tvVarstaCurenta = findViewById(R.id.tvVarstaCurenta);
         tvInformatiiBmi = findViewById(R.id.tvInformatiiBmi);
 
         sbInaltime = findViewById(R.id.sbInaltime);
@@ -250,10 +238,6 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
         plusInaltime = findViewById(R.id.plusInaltime);
         minusGreutate = findViewById(R.id.minusGreutate);
         plusGreutate = findViewById(R.id.plusGreutate);
-//        minusVarsta = findViewById(R.id.minusVarsta);
-//        plusVarsta = findViewById(R.id.plusVarsta);
-
-//        btnCalculeaza = findViewById(R.id.btnCalculeaza);
 
         llRezultat = findViewById(R.id.llRezultat);
         ivBmi = findViewById(R.id.ivBmi);
@@ -312,9 +296,4 @@ public class CalculatorBmiActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-//    @Override
-//    public void finish() {
-//        super.finish();
-//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-//    }
 }

@@ -70,6 +70,17 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
 
         seteazaToolbar();
 
+        preiaUrlDocumente();
+
+        ivAtaseazaCardSanatate.setOnClickListener(this);
+        ivIncarcaCardSanatate.setOnClickListener(this);
+        ivDescarcaCardSanatate.setOnClickListener(this);
+        ivAtaseazaBuletin.setOnClickListener(this);
+        ivIncarcaBuletin.setOnClickListener(this);
+        ivDescarcaBuletin.setOnClickListener(this);
+    }
+
+    private void preiaUrlDocumente() {
         referintaBuletin.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -95,13 +106,6 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
                 tvPdfCardSanatate.setText(getString(R.string.niciun_document_atasat));
             }
         });
-
-        ivAtaseazaCardSanatate.setOnClickListener(this);
-        ivIncarcaCardSanatate.setOnClickListener(this);
-        ivDescarcaCardSanatate.setOnClickListener(this);
-        ivAtaseazaBuletin.setOnClickListener(this);
-        ivIncarcaBuletin.setOnClickListener(this);
-        ivDescarcaBuletin.setOnClickListener(this);
     }
 
     private void initializeazaAtribute() {
@@ -114,12 +118,6 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
         ivAtaseazaBuletin = findViewById(R.id.ivAtaseazaBuletin);
         ivIncarcaBuletin = findViewById(R.id.ivIncarcaBuletin);
         ivDescarcaBuletin = findViewById(R.id.ivDescarcaBuletin);
-
-//        urlCardSanatate = FirebaseStorage.getInstance().getReference().child(DOCUMENTE_PACIENTI)
-//                .child(idPacientConectat).child(CARD_DE_SANATATE).getDownloadUrl().toString();
-//
-//        urlBuletin = FirebaseStorage.getInstance().getReference().child(DOCUMENTE_PACIENTI)
-//                .child(idPacientConectat).child(BULETIN);
     }
 
     private void seteazaToolbar() {
@@ -194,7 +192,7 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
     }
 
     private void incarcaPdf(Uri uriPDF) {
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this, R.style.ProgressDialogStyle);
         progressDialog.setMessage(getString(R.string.pd_incarcare_document));
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -204,16 +202,18 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getApplicationContext(), "Documentul a fost incarcat cu succes!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.document_incarcat, Toast.LENGTH_SHORT).show();
                         if (tipDocument.equals(CARD_DE_SANATATE)) {
                             tvPdfCardSanatate.setText(denumirePdfCardSanatate);
                             ivDescarcaCardSanatate.setVisibility(View.VISIBLE);
                             ivIncarcaCardSanatate.setVisibility(View.GONE);
+
                         } else {
                             tvPdfBuletin.setText(denumirePdfBuletin);
                             ivDescarcaBuletin.setVisibility(View.VISIBLE);
                             ivIncarcaBuletin.setVisibility(View.GONE);
                         }
+                        preiaUrlDocumente();
                         progressDialog.dismiss();
                     }
                 })
@@ -221,6 +221,7 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getApplicationContext(), "Documentul nu a putut fi incarcat!", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 });
     }
@@ -255,8 +256,5 @@ public class DocumentePersonaleActivity extends AppCompatActivity implements Vie
         if (requestCode == REQUEST_CODE_READ_EXTERNAL_STORAGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             ataseazaPdf();
         }
-//        else {
-//            Toast.makeText(getApplicationContext(), "Va rugam sa acordati perimisiunea pentru accesul memoriei de stocare.", Toast.LENGTH_SHORT).show();
-//        }
     }
 }

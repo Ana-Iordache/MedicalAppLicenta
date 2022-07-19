@@ -221,6 +221,7 @@ public class HomeMedicActivity extends AppCompatActivity implements View.OnClick
     protected void onResume() {
         super.onResume();
         incarcaInfoNavMenu();
+        preiaNotificari();
     }
 
     private void incarcaInfoNavMenu() {

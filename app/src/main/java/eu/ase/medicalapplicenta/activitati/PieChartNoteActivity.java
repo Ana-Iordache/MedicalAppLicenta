@@ -1,18 +1,19 @@
 package eu.ase.medicalapplicenta.activitati;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
-
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import eu.ase.medicalapplicenta.R;
@@ -80,7 +80,7 @@ public class PieChartNoteActivity extends AppCompatActivity {
             }
         }
 
-        PieDataSet pieDataSet = new PieDataSet(note, "Totalul de note acordate");
+        PieDataSet pieDataSet = new PieDataSet(note, "Note acordate");
         pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
@@ -89,7 +89,15 @@ public class PieChartNoteActivity extends AppCompatActivity {
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
         pieChart.setCenterText("Medie: " + MedicAdaptor.NUMBER_FORMAT.format(medieNote));
-        pieChart.animate();
+//        pieChart.animate();
+        pieData.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        });
+        pieChart.invalidate();
+        pieChart.animateY(1000, Easing.EaseInQuad);
     }
 
     private void initializeazaAtribute() {
