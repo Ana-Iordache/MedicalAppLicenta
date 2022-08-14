@@ -1,5 +1,5 @@
 # General description
-This is an application for final exam (bachelor's degree) developed in Java for Android mobiles which has two perspective: one for doctors and another for patients.
+This is an application for bachelor exam developed in Java for Android mobiles which has two perspective: one for doctors and another for patients.
 Each of them can create an account and after registration they will have various functionalities specific to the type of connected user.
 <br><br>The Google Firebase platform is used for data storage: 
 * Authentification - for creating and managind user accounts;
