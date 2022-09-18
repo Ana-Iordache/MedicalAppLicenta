@@ -27,4 +27,4 @@ Application-wide, for both type of users, the following are available:
 * notification page for canceled and new appointments
 * a Body Mass Index calculator
 * a chat where patients and doctors can communicate
-* an info page about clinic and application
+* an info page about the clinic and the application
