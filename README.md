@@ -25,14 +25,14 @@ for appointments that are honored he/she can attach the medical prescription as 
 
 * Feedbacks <br> <img src="https://user-images.githubusercontent.com/100632281/206258816-78d51b64-6107-4fe1-9fbd-327a71159646.jpg" width=219px height=430px>  <img src="https://user-images.githubusercontent.com/100632281/206259658-07f0cc0c-599b-4a18-813d-d2e8dd798c1c.jpg" width=219px height=430px>
 
-* Monthly earnings and per patient <br> <img src="https://user-images.githubusercontent.com/100632281/206260376-a471c650-495f-415b-8502-40aa0963c5d5.jpg" width=219px height=430px>  <img src="https://user-images.githubusercontent.com/100632281/206260429-a18953bc-0303-4680-844e-ee3d947c2c59.jpg" width=219px height=430px>  <img src="https://user-images.githubusercontent.com/100632281/206260657-f5ca017e-a632-4c70-b1e3-c77751f1cedd.jpg" width=219px height=430pxx> <img src="https://user-images.githubusercontent.com/100632281/206260810-2c8c6c8a-dbe3-4cc8-b50c-e0737f584b9f.jpg" width=219px height=430px>
+* Monthly earnings and per patient <br> <img src="https://user-images.githubusercontent.com/100632281/206260376-a471c650-495f-415b-8502-40aa0963c5d5.jpg" width=219px height=430px>  <img src="https://user-images.githubusercontent.com/100632281/206260429-a18953bc-0303-4680-844e-ee3d947c2c59.jpg" width=219px height=430px> <br> <img src="https://user-images.githubusercontent.com/100632281/206260657-f5ca017e-a632-4c70-b1e3-c77751f1cedd.jpg" width=219px height=430pxx> <img src="https://user-images.githubusercontent.com/100632281/206260810-2c8c6c8a-dbe3-4cc8-b50c-e0737f584b9f.jpg" width=219px height=430px>
 
 * Profile (accessible from navigation menu) <br> <img src="https://user-images.githubusercontent.com/100632281/206273084-7486066b-32d9-46d4-943a-2dd535f9f0c2.jpg" width=219px height=430px>
 
 
 # Patient's perspective
 On patient's page the following are available:
-* a list of all doctors in the clinic; for each of them are available specific information
+* a list of all doctors in the clinic; for each of them is available specific information
 * a list of investigations and their prices; each speciality has more investigations (e.g ophthalmology has consultation, control and other interventions)
 * the appointments he/she will have and has had; for future appointments he/she will be able to cancel them; for the past ones, which has the status "onorată", he/she can give feedback (a grade from 1 to 10 and the justification of it) and also he/she can download the medical prescription
 * posibility to make an appointment to any doctor and at any time depending on availability, with no necessity of additional confirmation from the clinic
@@ -63,7 +63,7 @@ On patient's page the following are available:
 * Personal documents (accessible from navigation menu) <br> <img src="https://user-images.githubusercontent.com/100632281/206271873-b41da979-8cf2-445c-9d25-101a7f6f4f2e.jpg" width=219px height=430px>
 
 
-# Both perspective
+# Both perspectives
 Application-wide, for both type of users, the following are available:
 * the profile where the personal information and the credentials can be changed and the account can be deleted
 * notification page for canceled and new appointments
